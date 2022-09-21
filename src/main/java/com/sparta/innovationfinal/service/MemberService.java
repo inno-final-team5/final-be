@@ -1,5 +1,6 @@
 package com.sparta.innovationfinal.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sparta.innovationfinal.dto.requestDto.CheckDto;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
@@ -67,4 +68,6 @@ public class MemberService {
     public Member isPresentNickname(String nickname) {
         return (memberRepository.findByNickname(nickname)).orElse(null);
     }
+
+
 }
