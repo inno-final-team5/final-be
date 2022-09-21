@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostResponseDto {
-    private Long id;
-    private String nickname;
+    private Long postId;
+    private Long memberId;
     private String postTitle;
     private String postCategory;
     private String postContent;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private String createdAt;
+    private String modifiedAt;
 }
