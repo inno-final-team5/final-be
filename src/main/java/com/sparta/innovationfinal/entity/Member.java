@@ -2,16 +2,19 @@ package com.sparta.innovationfinal.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Member {
 
@@ -31,6 +34,8 @@ public class Member {
 
     @Column(unique = true)
     private Long kakaoId;
+
+
 
     public Member(MemberRequestDto memberRequestDto, String password) {
         this.email = memberRequestDto.getEmail();
