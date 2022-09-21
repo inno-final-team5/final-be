@@ -47,13 +47,13 @@ public class PostService {
         postRepository.save(post);
         return ResponseDto.success(
                 PostResponseDto.builder()
-                        .id(post.getId())
-                        .nickname(post.getMember().getNickname())
+                        .postId(post.getId())
+                        .memberId(post.getMember().getId())
                         .postTitle(post.getPostTitle())
                         .postContent(post.getPostContent())
                         .postCategory(post.getPostCategory())
-                        .createdAt(post.getCreatedAt())
-                        .modifiedAt(post.getModifiedAt())
+                        .createdAt(String.valueOf(post.getCreatedAt()))
+                        .modifiedAt(String.valueOf(post.getModifiedAt()))
                         // 좋아요 개수 추가
                         .build()
         );
