@@ -72,8 +72,8 @@ public class KakaoService {
         // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", "0c78b157f83bf35ad52ed725bd7888ca");
-        body.add("redirect_uri", "http://localhost:3000/api/oauth/kakao?code=");
+        body.add("client_id", KakaoClientId);
+        body.add("redirect_uri", KakaoRedirectUri);
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -81,7 +81,7 @@ public class KakaoService {
                 new HttpEntity<>(body, headers);
         RestTemplate rt = new RestTemplate();
         ResponseEntity<String> response = rt.exchange(
-                "https://kauth.kakao.com/oauth/token",
+                "https://kapi.kakao.com/v2/user/me",
                 HttpMethod.POST,
                 kakaoTokenRequest,
                 String.class
