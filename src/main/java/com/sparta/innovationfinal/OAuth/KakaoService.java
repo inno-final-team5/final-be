@@ -37,11 +37,11 @@ public class KakaoService {
     private final MemberRepository memberRepository;
     private final TokenProvider jwtTokenProvider;
 
-    @Value("${kakao.client-id}")
-    private String KakaoClientId;
-
-    @Value("${kakao.redirect-uri}")
-    private String KakaoRedirectUri;
+//    @Value("${kakao.client-id}")
+//    private String KakaoClientId;
+//
+//    @Value("${kakao.redirect-uri}")
+//    private String KakaoRedirectUri;
 
     public ResponseDto<?> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
