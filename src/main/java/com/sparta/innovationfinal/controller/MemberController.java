@@ -1,5 +1,6 @@
 package com.sparta.innovationfinal.controller;
 
+import com.sparta.innovationfinal.dto.requestDto.LoginRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.CheckDto;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -32,4 +34,8 @@ public class MemberController {
         return memberService.checkNicknameDuplicate(nicknameCheck);
     }
 
+    @PostMapping(value = "/api/members/login")
+    public ResponseDto<?> login(@RequestBody @Valid LoginRequestDto requestDto, HttpServletResponse response) {
+        return memberService.login(requestDto, response);
+    }
 }

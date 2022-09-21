@@ -1,18 +1,22 @@
 package com.sparta.innovationfinal.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sparta.innovationfinal.dto.TokenDto;
 import com.sparta.innovationfinal.dto.requestDto.CheckDto;
+import com.sparta.innovationfinal.dto.requestDto.LoginRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.exception.ErrorCode;
+import com.sparta.innovationfinal.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +24,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TokenProvider tokenProvider;
 
     // 회원가입
     @Transactional
@@ -37,6 +42,21 @@ public class MemberService {
         memberRepository.save(member);
 
         return ResponseDto.success("signup Success");
+    }
+
+    @Transactional
+    public ResponseDto<?> login(LoginRequestDto requstDto, HttpServletResponse response) {
+        Member member = isPresentEmail(requstDto.getEmail());
+        if (member == null) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+        if (!member.validatePassword(passwordEncoder, requstDto.getPassword())) {
+            return ResponseDto.fail(ErrorCode.INVALD_MEMBER);
+        }
+        TokenDto tokenDto = tokenProvider.generateTokenDto(member);
+        tokenToHeaders(tokenDto, response);
+
+        return ResponseDto.success("success login");
     }
 
     // 이메일 중복체크
@@ -67,6 +87,30 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Member isPresentNickname(String nickname) {
         return (memberRepository.findByNickname(nickname)).orElse(null);
+    }
+
+    @Transactional
+    public void tokenToHeaders(TokenDto tokenDto, HttpServletResponse response) {
+        response.addHeader("Authorization", "Bearer " + tokenDto.getAccessToken());
+        response.addHeader("Refresh-Token", tokenDto.getRefreshToken());
+    }
+
+    @Transactional
+    public ResponseDto<?> checkMember(HttpServletRequest request) {
+        if(null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail(ErrorCode.NULL_TOKEN);
+        }
+
+        if(null == request.getHeader("Authorization")) {
+            return ResponseDto.fail(ErrorCode.NULL_TOKEN);
+        }
+
+        if(!tokenProvider.validateToken(request.getHeader("Refresh-Token")))
+            return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
+
+        Member member = tokenProvider.getMemberFromAuthentication();
+
+        return ResponseDto.success(member);
     }
 
 

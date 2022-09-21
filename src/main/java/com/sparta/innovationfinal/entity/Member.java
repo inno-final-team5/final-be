@@ -5,6 +5,7 @@ import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
@@ -35,6 +36,10 @@ public class Member {
         this.email = memberRequestDto.getEmail();
         this.nickname = memberRequestDto.getNickname();
         this.password = password;
+    }
+
+    public boolean validatePassword(PasswordEncoder passwordEncoder, String password) {
+        return passwordEncoder.matches(password, this.password);
     }
 
     public Member(String email, String nickname) {
