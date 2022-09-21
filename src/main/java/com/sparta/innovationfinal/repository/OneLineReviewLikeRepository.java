@@ -1,4 +1,4 @@
 package com.sparta.innovationfinal.repository;
 
-public class OneLineReviewLikeRepository {
+public interface OneLineReviewLikeRepository {
 }

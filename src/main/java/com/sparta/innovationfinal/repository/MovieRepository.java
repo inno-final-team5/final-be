@@ -1,4 +1,4 @@
 package com.sparta.innovationfinal.repository;
 
-public class MovieRepository {
+public interface MovieRepository {
 }
