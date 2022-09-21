@@ -1,5 +1,6 @@
 package com.sparta.innovationfinal.config;
 
+import com.sparta.innovationfinal.jwt.JwtAuthFilter;
 import com.sparta.innovationfinal.jwt.TokenProvider;
 import com.sparta.innovationfinal.jwt.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class JwtSecurityConfiguration extends SecurityConfigurerAdapter<DefaultS
     @Override
     public void configure(HttpSecurity httpSecurity) {
 
-        JwtFilter customJwtFilter = new JwtFilter(SECRET_KEY, tokenProvider, userDetailsService);
+        JwtAuthFilter customJwtFilter = new JwtAuthFilter(SECRET_KEY, tokenProvider, userDetailsService);
         httpSecurity.addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -1,7 +1,6 @@
 package com.sparta.innovationfinal.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.innovation.innovation_clone_be.Member.Service.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -28,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     public static String AUTHORIZATION_HEADER = "Authorization";
@@ -52,7 +52,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if(StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             Claims claims;
             try {
-                claims = Jwts.parserBuilder().setStigningKey(key).build().parseClaimsJws(jwt).getBody();
+                claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
             } catch (ExpiredJwtException e) {
                 claims = e.getClaims();
             }
@@ -66,7 +66,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             // 클레임에서 권한 정보 가져오기
             String subject = claims.getSubject();
-            Collection<? extends GranteAuthority> authorities =
+            Collection<? extends GrantedAuthority> authorities =
                     Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                             .map(SimpleGrantedAuthority::new)
                             .collect(Collectors.toList());
@@ -77,7 +77,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             Authentication authentication = new UsernamePasswordAuthenticationToken(principal, jwt, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        filterCahin.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 
     // HttpServletRequest 객체의 Header에서 token 꺼내는 역할

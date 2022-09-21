@@ -1,4 +1,11 @@
 package com.sparta.innovationfinal.repository;
 
-public class RefreshTokenRepository {
+import com.sparta.innovationfinal.entity.Member;
+import com.sparta.innovationfinal.entity.RefreshToken;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
+    Optional<RefreshToken> findByMember(Member member);
 }

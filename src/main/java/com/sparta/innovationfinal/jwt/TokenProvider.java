@@ -1,6 +1,10 @@
 package com.sparta.innovationfinal.jwt;
 
 
+import com.sparta.innovationfinal.dto.TokenDto;
+import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
+import com.sparta.innovationfinal.entity.Member;
+import com.sparta.innovationfinal.entity.RefreshToken;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.repository.RefreshTokenRepository;
 import com.sparta.innovationfinal.shared.Authority;
@@ -19,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Optional;
 
 
 @Slf4j
@@ -35,7 +40,7 @@ public class TokenProvider {
 
     public TokenProvider(@Value("${jwt.secret}") String secretKey, RefreshTokenRepository refreshTokenRepository) {
         this.refreshTokenRepository = refreshTokenRepository;
-        byte[] keyBytes = Decoders.BASE64.decod(secretKey);
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -108,7 +113,7 @@ public class TokenProvider {
     public ResponseDto<?> deleteRefreshToken(Member member) {
         RefreshToken refreshToken = isPresentRefreshToken(member);
         if(null == refreshToken) {
-            return ResponseDto.fail(ErrorCode.TOKEN_NOT_FOUND);
+            return ResponseDto.fail(ErrorCode.NULL_TOKEN);
         }
         refreshTokenRepository.delete(refreshToken);
         return ResponseDto.success("success");

@@ -1,4 +1,4 @@
 package com.sparta.innovationfinal.repository;
 
-public class MemberBadgeRepository {
+public interface MemberBadgeRepository {
 }
