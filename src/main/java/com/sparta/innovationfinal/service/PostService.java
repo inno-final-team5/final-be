@@ -32,6 +32,18 @@ public class PostService {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
 
+        if (null == requestDto.getPostCategory()) {
+            return ResponseDto.fail(ErrorCode.INVALID_CATEGORY);
+        }
+
+        if (null == requestDto.getPostContent()) {
+            return ResponseDto.fail(ErrorCode.INVALID_CONTENT);
+        }
+
+        if (null == requestDto.getPostTitle()) {
+            return ResponseDto.fail(ErrorCode.INVALD_TITLE);
+        }
+
         Member member = validateMember(request);
         if (null == member) {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
