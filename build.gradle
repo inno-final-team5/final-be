@@ -28,6 +28,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    //spring batch 사용
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    testImplementation 'org.springframework.batch:spring-batch-test'
+
+    //다운받은 라이브러리와 json데이터를 처리해주기 위한 json-simple 라이브러리를 추가
+    implementation files('libs/kobis-opcl-rest-v1.0.jar')
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
     //시큐리티
     implementation 'org.springframework.boot:spring-boot-starter-security'

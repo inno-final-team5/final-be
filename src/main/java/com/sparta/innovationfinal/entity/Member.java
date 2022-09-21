@@ -29,6 +29,9 @@ public class Member {
     @JsonIgnore
     private String password;
 
+    @Column(unique = true)
+    private Long kakaoId;
+
     public Member(MemberRequestDto memberRequestDto, String password) {
         this.email = memberRequestDto.getEmail();
         this.nickname = memberRequestDto.getNickname();
@@ -39,4 +42,10 @@ public class Member {
         return passwordEncoder.matches(password, this.password);
     }
 
+    public Member(String email, String nickname) {
+        this.password = "kakao user";
+        this.email = email;
+        this.nickname = nickname;
+        this.kakaoId = null;
+    }
 }

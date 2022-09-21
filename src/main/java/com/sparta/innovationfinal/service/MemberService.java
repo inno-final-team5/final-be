@@ -1,5 +1,6 @@
 package com.sparta.innovationfinal.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sparta.innovationfinal.dto.TokenDto;
 import com.sparta.innovationfinal.dto.requestDto.CheckDto;
 import com.sparta.innovationfinal.dto.requestDto.LoginRequestDto;
@@ -111,4 +112,6 @@ public class MemberService {
 
         return ResponseDto.success(member);
     }
+
+
 }

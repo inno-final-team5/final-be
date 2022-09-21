@@ -20,7 +20,11 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.sparta.innovationfinal.dto.TokenDto;
+import com.sparta.innovationfinal.entity.Member;
+import com.sparta.innovationfinal.shared.Authority;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.security.Key;
 import java.util.Date;
 import java.util.Optional;
@@ -28,6 +32,8 @@ import java.util.Optional;
 
 @Slf4j
 @Component
+
+
 public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
@@ -120,3 +126,7 @@ public class TokenProvider {
     }
 
 }
+
+
+
+
