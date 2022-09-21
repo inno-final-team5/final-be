@@ -37,11 +37,11 @@ public class KakaoService {
     private final MemberRepository memberRepository;
     private final TokenProvider jwtTokenProvider;
 
-//    @Value("${kakao.client-id}")
-//    private String KakaoClientId;
-//
-//    @Value("${kakao.redirect-uri}")
-//    private String KakaoRedirectUri;
+    @Value("${kakao.client-id}")
+    private String KakaoClientId;
+
+    @Value("${kakao.redirect-uri}")
+    private String KakaoRedirectUri;
 
     public ResponseDto<?> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
@@ -73,7 +73,7 @@ public class KakaoService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "0c78b157f83bf35ad52ed725bd7888ca");
-        body.add("redirect_uri", "http://localhost:8080/api/oauth/kakao?code=");
+        body.add("redirect_uri", "http://localhost:3000/api/oauth/kakao?code=");
         body.add("code", code);
 
         // HTTP 요청 보내기
