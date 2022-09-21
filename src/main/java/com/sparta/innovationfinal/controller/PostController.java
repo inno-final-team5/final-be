@@ -6,6 +6,7 @@ import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.repository.PostRepository;
 import com.sparta.innovationfinal.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,4 +26,8 @@ public class PostController {
         return postService.createPost(requestDto, request);
     }
 
+    @GetMapping(value = "/api/post")
+    public ResponseDto<?> getAllPost() {
+        return postService.getAllPost();
+    }
 }
