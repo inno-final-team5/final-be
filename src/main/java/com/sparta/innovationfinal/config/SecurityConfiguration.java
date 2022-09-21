@@ -1,5 +1,8 @@
 package com.sparta.innovationfinal.config;
 
+import com.sparta.innovationfinal.jwt.AuthenticationEntryPointException;
+import com.sparta.innovationfinal.jwt.TokenProvider;
+import com.sparta.innovationfinal.jwt.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -24,6 +27,9 @@ public class SecurityConfiguration {
 
     @Value("${jwt.secret}")
     String SECRET_KEY;
+    private final TokenProvider tokenProvider;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final AuthenticationEntryPointException authenticationEntryPointException;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -37,20 +43,20 @@ public class SecurityConfiguration {
 
         http.csrf().disable()
 
-//                .exceptionHandling()
-//                .authenticationEntryPoint(authenticationEntryPointException)
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPointException)
 
-//                .and()
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").authenticated()
-                .anyRequest().permitAll();
+                .anyRequest().permitAll()
 //                // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
-//                .and()
-//                .apply(new JwtSecurityConfiguration(SECRET_KEY, tokenProvider, userDetailsService));
+                .and()
+                .apply(new JwtSecurityConfiguration(SECRET_KEY, tokenProvider, userDetailsService));
 
         return http.build();
     }
