@@ -32,3 +32,16 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+          host: ${{ secrets.REMOTE_IP }}
+          username: ${{ secrets.REMOTE_SSH_ID }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            cd /home/ubuntu
+            sudo git pull
+            sudo yarn
+            sudo yarn build
+            pm2 reload all
