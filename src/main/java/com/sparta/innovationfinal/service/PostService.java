@@ -63,7 +63,7 @@ public class PostService {
         return ResponseDto.success(
                 PostResponseDto.builder()
                         .postId(post.getId())
-                        .memberId(post.getMember().getId())
+                        .nickname(post.getMember().getNickname())
                         .postTitle(post.getPostTitle())
                         .postContent(post.getPostContent())
                         .postCategory(post.getPostCategory())
@@ -83,7 +83,7 @@ public class PostService {
             postResponseDtoList.add(
                     PostResponseDto.builder()
                             .postId(post.getId())
-                            .memberId(post.getMember().getId())
+                            .nickname(post.getMember().getNickname())
                             .postTitle(post.getPostTitle())
                             .postCategory(post.getPostCategory())
                             .createdAt(String.valueOf(post.getCreatedAt()))
