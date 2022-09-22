@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final TokenProvider tokenProvider;
 
+    // 게시글 생성
     @Transactional
     public ResponseDto<?> createPost(PostRequestDto requestDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
@@ -30,6 +33,18 @@ public class PostService {
 
         if (null == request.getHeader("Authorization")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        if (null == requestDto.getPostCategory()) {
+            return ResponseDto.fail(ErrorCode.INVALID_CATEGORY);
+        }
+
+        if (null == requestDto.getPostContent()) {
+            return ResponseDto.fail(ErrorCode.INVALID_CONTENT);
+        }
+
+        if (null == requestDto.getPostTitle()) {
+            return ResponseDto.fail(ErrorCode.INVALD_TITLE);
         }
 
         Member member = validateMember(request);
@@ -48,7 +63,7 @@ public class PostService {
         return ResponseDto.success(
                 PostResponseDto.builder()
                         .postId(post.getId())
-                        .memberId(post.getMember().getId())
+                        .nickname(post.getMember().getNickname())
                         .postTitle(post.getPostTitle())
                         .postContent(post.getPostContent())
                         .postCategory(post.getPostCategory())
@@ -59,6 +74,24 @@ public class PostService {
         );
     }
 
+    // 게시글 전체 조회
+    @Transactional
+    public ResponseDto<?> getAllPost() {
+        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+        for (Post post : postList) {
+            postResponseDtoList.add(
+                    PostResponseDto.builder()
+                            .postId(post.getId())
+                            .nickname(post.getMember().getNickname())
+                            .postTitle(post.getPostTitle())
+                            .postCategory(post.getPostCategory())
+                            .createdAt(String.valueOf(post.getCreatedAt()))
+                            .build()
+            );
+        }
+        return ResponseDto.success(postResponseDtoList);
+    }
 
     @Transactional
     public Member validateMember(HttpServletRequest request) {
