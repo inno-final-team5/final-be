@@ -2,9 +2,7 @@ package com.sparta.innovationfinal.OAuth;
 
 import com.sparta.innovationfinal.dto.TokenDto;
 import com.sparta.innovationfinal.entity.Member;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter

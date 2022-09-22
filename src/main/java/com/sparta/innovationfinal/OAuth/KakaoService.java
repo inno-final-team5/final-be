@@ -37,11 +37,11 @@ public class KakaoService {
     private final MemberRepository memberRepository;
     private final TokenProvider jwtTokenProvider;
 
-    @Value("${kakao.client-id}")
-    private String KakaoClientId;
-
-    @Value("${kakao.redirect-uri}")
-    private String KakaoRedirectUri;
+//    @Value("${kakao.client-id}")
+//    private String KakaoClientId;
+//
+//    @Value("${kakao.redirect-uri}")
+//    private String KakaoRedirectUri;
 
     public ResponseDto<?> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
@@ -72,8 +72,8 @@ public class KakaoService {
         // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", KakaoClientId);
-        body.add("redirect_uri", KakaoRedirectUri);
+        body.add("client_id", "0c78b157f83bf35ad52ed725bd7888ca");
+        body.add("redirect_uri", "http://localhost:3000/kakaoLogin");
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -81,7 +81,7 @@ public class KakaoService {
                 new HttpEntity<>(body, headers);
         RestTemplate rt = new RestTemplate();
         ResponseEntity<String> response = rt.exchange(
-                "https://kapi.kakao.com/v2/user/me",
+                "https://kauth.kakao.com/oauth/token",
                 HttpMethod.POST,
                 kakaoTokenRequest,
                 String.class
@@ -93,6 +93,7 @@ public class KakaoService {
         JsonNode jsonNode = objectMapper.readTree(responseBody);
         return jsonNode.get("access_token").asText();
     }
+
     // 2. 토큰으로 카카오 API 호출
     private OAuthMemberDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
         // HTTP Header 생성
@@ -122,6 +123,7 @@ public class KakaoService {
         System.out.println("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
         return new OAuthMemberDto(id, email, nickname);
     }
+
     //카카오 회원가입
     private Member registerKakaoUserIfNeeded(OAuthMemberDto kakaoUserInfo) {
         // DB 에 중복된 Kakao Id 가 있는지 확인
