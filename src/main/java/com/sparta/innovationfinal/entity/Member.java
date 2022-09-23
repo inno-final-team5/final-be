@@ -47,6 +47,10 @@ public class Member {
         return passwordEncoder.matches(password, this.password);
     }
 
+    public boolean validateMember(Member member) {
+        return this.id == (member.getId());
+    }
+
     public Member(String email, String nickname) {
         this.password = "kakao user";
         this.email = email;

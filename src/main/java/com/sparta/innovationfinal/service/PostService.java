@@ -146,11 +146,11 @@ public class PostService {
         if (null == post) {
             return ResponseDto.fail(ErrorCode.INVALID_POST);
         }
-        if (post.validateMember(member)) {
+        if (!post.getMember().validateMember(member)) {
             return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
         }
         post.update(requestDto);
-        return ResponseDto.success(post);
+        return ResponseDto.success("success");
     }
 
     @Transactional
