@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -94,11 +95,37 @@ public class PostService {
         return ResponseDto.success(allPostResponseDtos);
     }
 
+    // 게시글 개별 조회
+    @Transactional(readOnly = true)
+    public ResponseDto<?> getPost(Long id) {
+        Post post = isPresentPost(id);
+        if (null == post) {
+            return ResponseDto.fail(ErrorCode.INVALID_POST);
+        }
+        return ResponseDto.success(
+                PostResponseDto.builder()
+                        .postId(post.getId())
+                        .postTitle(post.getPostTitle())
+                        .postCategory(post.getPostCategory())
+                        .postContent(post.getPostContent())
+                        .createdAt(String.valueOf(post.getCreatedAt()))
+                        .modifiedAt(String.valueOf(post.getModifiedAt()))
+                        // 좋아요 수 추가
+                        .build()
+                );
+    }
+
     @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return null;
         }
         return tokenProvider.getMemberFromAuthentication();
+    }
+
+    @Transactional(readOnly = true)
+    public Post isPresentPost(Long id){
+        Optional<Post> optionalPost = postRepository.findById(id);
+        return optionalPost.orElse(null);
     }
 }

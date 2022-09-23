@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class PostLikeController {
 
-    private final PostService postService;
     private final PostLikeService postLikeService;
 
     @PostMapping(value = "/api/auth/post/like")
