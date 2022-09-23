@@ -14,6 +14,7 @@ public enum ErrorCode {
     // 회원가입 관련 오류
     DUPLICATE_EMAIL("DUPLICATE_EMAIL","이메일 중복"),
     DUPLICATE_NICKNAME("DUPLICATE_NICKNAME","닉네임 중복"),
+    DUPLICATE_LIKE("DUPLICATE_LIKE","이미 좋아요 누름"),
 
     //서비스 관련 오류
     INVALID_BADGEID("INVALID_BADGEID","배지가 없음"),

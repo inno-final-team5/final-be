@@ -6,10 +6,7 @@ import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.repository.PostRepository;
 import com.sparta.innovationfinal.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,4 +27,16 @@ public class PostController {
     public ResponseDto<?> getAllPost() {
         return postService.getAllPost();
     }
+
+    @GetMapping(value = "/api/post/{id}")
+    public ResponseDto<?> getPost(@PathVariable Long id){
+        return postService.getPost(id);
+    }
+
+    @PutMapping(value = "api/auth/post/{id}")
+    public ResponseDto<?> updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto,
+                                     HttpServletRequest request) {
+        return postService.updatePost(id, requestDto, request);
+    }
+
 }

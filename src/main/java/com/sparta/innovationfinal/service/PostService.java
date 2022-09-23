@@ -1,6 +1,7 @@
 package com.sparta.innovationfinal.service;
 
 import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
+import com.sparta.innovationfinal.dto.responseDto.AllPostResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.PostResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -78,10 +80,10 @@ public class PostService {
     @Transactional
     public ResponseDto<?> getAllPost() {
         List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+        List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
         for (Post post : postList) {
-            postResponseDtoList.add(
-                    PostResponseDto.builder()
+            allPostResponseDtos.add(
+                    AllPostResponseDto.builder()
                             .postId(post.getId())
                             .nickname(post.getMember().getNickname())
                             .postTitle(post.getPostTitle())
@@ -90,7 +92,65 @@ public class PostService {
                             .build()
             );
         }
-        return ResponseDto.success(postResponseDtoList);
+        return ResponseDto.success(allPostResponseDtos);
+    }
+
+    // 게시글 개별 조회
+    @Transactional(readOnly = true)
+    public ResponseDto<?> getPost(Long id) {
+        Post post = isPresentPost(id);
+        if (null == post) {
+            return ResponseDto.fail(ErrorCode.INVALID_POST);
+        }
+        return ResponseDto.success(
+                PostResponseDto.builder()
+                        .postId(post.getId())
+                        .postTitle(post.getPostTitle())
+                        .postCategory(post.getPostCategory())
+                        .postContent(post.getPostContent())
+                        .createdAt(String.valueOf(post.getCreatedAt()))
+                        .modifiedAt(String.valueOf(post.getModifiedAt()))
+                        // 좋아요 수 추가
+                        .build()
+                );
+    }
+
+    @Transactional
+    public ResponseDto<?> updatePost(Long id, PostRequestDto requestDto, HttpServletRequest request) {
+        if (null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        if (null == request.getHeader("Authorization")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        if (null == requestDto.getPostCategory()) {
+            return ResponseDto.fail(ErrorCode.INVALID_CATEGORY);
+        }
+
+        if (null == requestDto.getPostContent()) {
+            return ResponseDto.fail(ErrorCode.INVALID_CONTENT);
+        }
+
+        if (null == requestDto.getPostTitle()) {
+            return ResponseDto.fail(ErrorCode.INVALD_TITLE);
+        }
+
+        Member member = validateMember(request);
+        if (null == member) {
+            return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
+        }
+
+        Post post = isPresentPost(id);
+        if (null == post) {
+            return ResponseDto.fail(ErrorCode.INVALID_POST);
+        }
+        if (post.validateMember(member)) {
+            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+        }
+        post.update(requestDto);
+        return ResponseDto.success(post);
     }
 
     @Transactional
@@ -99,5 +159,11 @@ public class PostService {
             return null;
         }
         return tokenProvider.getMemberFromAuthentication();
+    }
+
+    @Transactional(readOnly = true)
+    public Post isPresentPost(Long id){
+        Optional<Post> optionalPost = postRepository.findById(id);
+        return optionalPost.orElse(null);
     }
 }
