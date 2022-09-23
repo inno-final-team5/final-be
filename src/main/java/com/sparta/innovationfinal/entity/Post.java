@@ -28,9 +28,23 @@ public class Post extends Timestamped{
     @Column(nullable = false)
     private String postContent;
 
+    @Column(nullable = false)
+    private int likeNum;
+
     @JoinColumn(name = "member_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
+
+    public void pushLike() {
+        this.likeNum++;
+    }
+
+    public void pushDislike() {
+        if(this.likeNum>0)
+        {
+            this.likeNum--;
+        }
+    }
 
 //    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Post> posts;
