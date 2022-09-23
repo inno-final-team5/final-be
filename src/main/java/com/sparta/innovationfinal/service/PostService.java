@@ -1,6 +1,7 @@
 package com.sparta.innovationfinal.service;
 
 import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
+import com.sparta.innovationfinal.dto.responseDto.AllPostResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.PostResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
@@ -78,10 +79,10 @@ public class PostService {
     @Transactional
     public ResponseDto<?> getAllPost() {
         List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+        List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
         for (Post post : postList) {
-            postResponseDtoList.add(
-                    PostResponseDto.builder()
+            allPostResponseDtos.add(
+                    AllPostResponseDto.builder()
                             .postId(post.getId())
                             .nickname(post.getMember().getNickname())
                             .postTitle(post.getPostTitle())
@@ -90,7 +91,7 @@ public class PostService {
                             .build()
             );
         }
-        return ResponseDto.success(postResponseDtoList);
+        return ResponseDto.success(allPostResponseDtos);
     }
 
     @Transactional
