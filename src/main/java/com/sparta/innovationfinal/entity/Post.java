@@ -34,7 +34,7 @@ public class Post extends Timestamped{
     private int likeNum;
 
     @JoinColumn(name = "member_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Member member;
 
 //    public boolean validateMember(Member member) {
