@@ -116,6 +116,44 @@ public class PostService {
     }
 
     @Transactional
+    public ResponseDto<?> updatePost(Long id, PostRequestDto requestDto, HttpServletRequest request) {
+        if (null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        if (null == request.getHeader("Authorization")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        if (null == requestDto.getPostCategory()) {
+            return ResponseDto.fail(ErrorCode.INVALID_CATEGORY);
+        }
+
+        if (null == requestDto.getPostContent()) {
+            return ResponseDto.fail(ErrorCode.INVALID_CONTENT);
+        }
+
+        if (null == requestDto.getPostTitle()) {
+            return ResponseDto.fail(ErrorCode.INVALD_TITLE);
+        }
+
+        Member member = validateMember(request);
+        if (null == member) {
+            return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
+        }
+
+        Post post = isPresentPost(id);
+        if (null == post) {
+            return ResponseDto.fail(ErrorCode.INVALID_POST);
+        }
+        if (post.validateMember(member)) {
+            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+        }
+        post.update(requestDto);
+        return ResponseDto.success(post);
+    }
+
+    @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return null;

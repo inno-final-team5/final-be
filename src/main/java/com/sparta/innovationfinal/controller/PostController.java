@@ -32,4 +32,11 @@ public class PostController {
     public ResponseDto<?> getPost(@PathVariable Long id){
         return postService.getPost(id);
     }
+
+    @PutMapping(value = "api/auth/post/{id}")
+    public ResponseDto<?> updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto,
+                                     HttpServletRequest request) {
+        return postService.updatePost(id, requestDto, request);
+    }
+
 }

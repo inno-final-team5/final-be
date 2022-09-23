@@ -1,5 +1,7 @@
 package com.sparta.innovationfinal.entity;
 
+import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
+import com.sparta.innovationfinal.dto.responseDto.PostResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,6 +37,15 @@ public class Post extends Timestamped{
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    public boolean validateMember(Member member) {
+        return !this.member.equals(member);
+    }
+
+    public void update(PostRequestDto requestDto) {
+        this.postTitle = requestDto.getPostTitle();
+        this.postContent = requestDto.getPostContent();
+        this.postCategory = requestDto.getPostCategory();
+    }
     public void pushLike() {
         this.likeNum++;
     }
