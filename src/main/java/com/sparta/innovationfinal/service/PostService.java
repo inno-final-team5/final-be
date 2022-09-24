@@ -105,6 +105,7 @@ public class PostService {
         return ResponseDto.success(
                 PostResponseDto.builder()
                         .postId(post.getId())
+                        .nickname(post.getMember().getNickname())
                         .postTitle(post.getPostTitle())
                         .postCategory(post.getPostCategory())
                         .postContent(post.getPostContent())
@@ -150,7 +151,17 @@ public class PostService {
             return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
         }
         post.update(requestDto);
-        return ResponseDto.success("success");
+        return ResponseDto.success(
+                PostResponseDto.builder()
+                        .postId(post.getId())
+                        .nickname(post.getMember().getNickname())
+                        .postTitle(post.getPostTitle())
+                        .postCategory(post.getPostCategory())
+                        .postContent(post.getPostContent())
+                        .createdAt(String.valueOf(post.getCreatedAt()))
+                        .modifiedAt(String.valueOf(post.getModifiedAt()))
+                        // 좋아요 수 추가
+                        .build());
     }
 
     @Transactional
