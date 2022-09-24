@@ -164,6 +164,28 @@ public class PostService {
                         .build());
     }
 
+    public ResponseDto<?> deletePost(Long id, HttpServletRequest request) {
+        if (null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        if (null == request.getHeader("Authorization")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+        Post post = isPresentPost(id);
+        if (null == post) {
+            return ResponseDto.fail(ErrorCode.INVALID_POST);
+        }
+        Member member = validateMember(request);
+        if (!post.getMember().validateMember(member)) {
+            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+        }
+        postRepository.delete(post);
+        return ResponseDto.success("success delete");
+
+    }
+
+
     @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
