@@ -95,6 +95,25 @@ public class PostService {
         return ResponseDto.success(allPostResponseDtos);
     }
 
+    // 최신 게시글 10개 조회
+    @Transactional
+    public ResponseDto<?> getRecentPost() {
+        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+        List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            allPostResponseDtos.add(
+                    AllPostResponseDto.builder()
+                            .postId(postList.get(i).getId())
+                            .nickname(postList.get(i).getMember().getNickname())
+                            .postTitle(postList.get(i).getPostTitle())
+                            .postCategory(postList.get(i).getPostCategory())
+                            .createdAt(String.valueOf(postList.get(i).getCreatedAt()))
+                            .build()
+            );
+        }
+        return ResponseDto.success(allPostResponseDtos);
+    }
+
     // 게시글 개별 조회
     @Transactional(readOnly = true)
     public ResponseDto<?> getPost(Long id) {

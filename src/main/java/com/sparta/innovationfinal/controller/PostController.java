@@ -33,14 +33,19 @@ public class PostController {
         return postService.getPost(id);
     }
 
-    @PutMapping(value = "api/auth/post/{id}")
+    @PutMapping(value = "/api/auth/post/{id}")
     public ResponseDto<?> updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto,
                                      HttpServletRequest request) {
         return postService.updatePost(id, requestDto, request);
     }
 
-    @DeleteMapping(value = "api/auth/post/{id}")
+    @DeleteMapping(value = "/api/auth/post/{id}")
     public ResponseDto<?> deletePost(@PathVariable Long id, HttpServletRequest request) {
         return postService.deletePost(id, request);
+    }
+
+    @GetMapping(value = "/api/main/post")
+    public ResponseDto<?> getRecentPost() {
+        return postService.getRecentPost();
     }
 }
