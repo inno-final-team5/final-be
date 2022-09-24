@@ -98,16 +98,16 @@ public class PostService {
     // 최신 게시글 10개 조회
     @Transactional
     public ResponseDto<?> getRecentPost() {
-        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+        List<Post> postList = postRepository.findTop10ByOrderByCreatedAtDesc();
         List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (Post post : postList) {
             allPostResponseDtos.add(
                     AllPostResponseDto.builder()
-                            .postId(postList.get(i).getId())
-                            .nickname(postList.get(i).getMember().getNickname())
-                            .postTitle(postList.get(i).getPostTitle())
-                            .postCategory(postList.get(i).getPostCategory())
-                            .createdAt(String.valueOf(postList.get(i).getCreatedAt()))
+                            .postId(post.getId())
+                            .nickname(post.getMember().getNickname())
+                            .postTitle(post.getPostTitle())
+                            .postCategory(post.getPostCategory())
+                            .createdAt(String.valueOf(post.getCreatedAt()))
                             .build()
             );
         }
