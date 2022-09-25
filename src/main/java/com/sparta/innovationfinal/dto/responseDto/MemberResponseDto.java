@@ -17,7 +17,7 @@ public class MemberResponseDto {
     private String email;
     private String nickname;
     //배지도 나중에 추가해야함
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private String createdAt;
+    private String modifiedAt;
     
 }

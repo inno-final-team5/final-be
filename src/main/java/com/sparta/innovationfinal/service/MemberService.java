@@ -42,7 +42,15 @@ public class MemberService {
         Member member = new Member(memberRequestDto, pw);
         memberRepository.save(member);
 
-        return ResponseDto.success("signup Success");
+        return ResponseDto.success(
+                MemberResponseDto.builder()
+                        .memberId(member.getId())
+                        .email(member.getEmail())
+                        .nickname(member.getNickname())
+                        .createdAt(String.valueOf(member.getCreatedAt()))
+                        .modifiedAt(String.valueOf(member.getModifiedAt()))
+                        .build()
+        );
     }
 
     @Transactional
@@ -62,8 +70,8 @@ public class MemberService {
                 .memberId(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
-                .createdAt(member.getCreatedAt())
-                .modifiedAt(member.getModifiedAt())
+                .createdAt(String.valueOf(member.getCreatedAt()))
+                .modifiedAt(String.valueOf(member.getModifiedAt()))
                 .build()
         );
     }
