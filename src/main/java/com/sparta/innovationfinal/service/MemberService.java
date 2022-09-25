@@ -5,6 +5,7 @@ import com.sparta.innovationfinal.dto.TokenDto;
 import com.sparta.innovationfinal.dto.requestDto.CheckDto;
 import com.sparta.innovationfinal.dto.requestDto.LoginRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
+import com.sparta.innovationfinal.dto.responseDto.MemberResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.exception.ErrorCode;
@@ -56,7 +57,15 @@ public class MemberService {
         TokenDto tokenDto = tokenProvider.generateTokenDto(member);
         tokenToHeaders(tokenDto, response);
 
-        return ResponseDto.success("success login");
+        return ResponseDto.success(
+                MemberResponseDto.builder()
+                .memberId(member.getId())
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .createdAt(member.getCreatedAt())
+                .modifiedAt(member.getModifiedAt())
+                .build()
+        );
     }
 
     // 이메일 중복체크

@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 @Builder
 public class MemberResponseDto {
     
-    private Long id;
+    private Long memberId;
+    private String email;
     private String nickname;
     //배지도 나중에 추가해야함
     private LocalDateTime createdAt;
