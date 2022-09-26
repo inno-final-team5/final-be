@@ -18,9 +18,9 @@ public class PostLikeController {
 
     private final PostLikeService postLikeService;
 
-    @PostMapping(value = "/api/auth/post/like")
-    public ResponseDto<?> likePost(@RequestBody PostLikeRequestDto requestDto, HttpServletRequest request) {
-        return postLikeService.pushPostLike(requestDto, request);
+    @PostMapping(value = "/api/auth/post/like/{id}")
+    public ResponseDto<?> likePost(@PathVariable Long id, HttpServletRequest request) {
+        return postLikeService.pushPostLike(id, request);
     }
 
 }

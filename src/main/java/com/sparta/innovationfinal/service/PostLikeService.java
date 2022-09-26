@@ -21,16 +21,16 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PostLikeService {
-    private MemberRepository memberRepository;
-    private PostLikeRepository postLikeRepository;
-    private TokenProvider tokenProvider;
-    private PostRepository postRepository;
+    private final MemberRepository memberRepository;
+    private final PostLikeRepository postLikeRepository;
+    private final TokenProvider tokenProvider;
+    private final PostRepository postRepository;
 
     // 게시글 좋아요
     @Transactional
-    public ResponseDto<?> pushPostLike(PostLikeRequestDto requestDto, HttpServletRequest request) {
+    public ResponseDto<?> pushPostLike(Long id, HttpServletRequest request) {
 
-
+        // 로그인 예외처리
         if (null == request.getHeader(("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
@@ -44,50 +44,55 @@ public class PostLikeService {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
         }
 
-        Post post = postRepository.findPostById(requestDto.getPostId());
+        // 해당하는 게시글 id가 없을 시 오류코드 반환
+        Post post = postRepository.findPostById(id);
         if (post == null) {
             return ResponseDto.fail(ErrorCode.INVALID_POST);
         }
 
-        PostLike findPost = postLikeRepository.findByPostIdAndMemberId(member,post);
-
-        if (findPost != null) {
+        // 이미 좋아요를 눌렀다면 오류코드 반환
+        PostLike findPostLike = postLikeRepository.findPostByMemberAndPost(member, post);
+        if (findPostLike != null) {
             return ResponseDto.fail(ErrorCode.DUPLICATE_LIKE);
         } else {
-            PostLike postLike = new PostLike(post, member);
+            PostLike postLike= PostLike.builder()
+                    .member(member)
+                    .post(post)
+                    .build();
+
             postLikeRepository.save(postLike);
 
-        } return ResponseDto.success("success post");
-//        Post post = isPresentPost(postId);
-//        if (null == post) {
-//            return ResponseDto.fail(ErrorCode.INVALID_POST);
-//        }
-//
-//        PostLike postLikes = postLikeRepository.findByPostIdAndMemberId(post.getId(), member.getId());
-//        if (postLikes == null) {
-//            post.pushLike();
-//            PostLike postLike = PostLike.builder()
-//                    .member(member)
-//                    .post(post)
-//                    .build();
-//            postLikeRepository.save(postLike);
-//
-//            return ResponseDto.success("success post");
-//        } else {
-//            postLikeRepository.deleteById(postLikes.getId());
-//        }
-//
-//        return ResponseDto.success("success post");
+            // 해당 게시글의 좋아요 수도 업데이트
+            List<PostLike> posts = postLikeRepository.findAllByPost(post);
+            post.setLikeNum(posts.size());
+
+        }
+
+        return ResponseDto.success("like success");
+
     }
 
 
 
     
-    @Transactional(readOnly = true)
-    public Post isPresentPost(Long id) {
-        Optional<Post> optionalPost = postRepository.findById(id);
-        return optionalPost.orElse(null);
-    }
+//    @Transactional(readOnly = true)
+//    public Post isPresentPost(Long id) {
+//        Optional<Post> optionalPost = postRepository.findById(id);
+//        return optionalPost.orElse(null);
+//    }
+//
+//    // 게시물에 해당 사용자가 좋아요를 눌렀는지 확인
+//    @Transactional(readOnly = true)
+//    public PostLike isPresentPostlike(Post post, Member member) {
+////        Optional<PostLike> optionalPostLike = postLikeRepository.findById(id);
+//         return postLikeRepository.findByMemberAndPost(member, post);
+//    }
+//
+//    // 게시물의 좋아요 개수 반환
+//    public int getLikeCount(Post post) {
+//        List<PostLike> likeList = postLikeRepository.findAllByPost(post);
+//        return likeList.size();
+//    }
 
     @Transactional
     public Member validateMember(HttpServletRequest request) {

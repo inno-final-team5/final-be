@@ -2,15 +2,13 @@ package com.sparta.innovationfinal.entity;
 
 import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.PostResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
