@@ -48,4 +48,9 @@ public class PostController {
     public ResponseDto<?> getRecentPost() {
         return postService.getRecentPost();
     }
+
+    @GetMapping(value = "/api/auth/post")
+    public ResponseDto<?> getMyPost(HttpServletRequest request) {
+        return postService.getMyPost(request);
+    }
 }

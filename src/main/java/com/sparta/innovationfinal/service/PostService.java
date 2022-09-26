@@ -135,6 +135,7 @@ public class PostService {
                 );
     }
 
+    // 게시글 수정
     @Transactional
     public ResponseDto<?> updatePost(Long id, PostRequestDto requestDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
@@ -183,6 +184,7 @@ public class PostService {
                         .build());
     }
 
+    // 게시글 삭제
     public ResponseDto<?> deletePost(Long id, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -204,6 +206,25 @@ public class PostService {
 
     }
 
+    public ResponseDto<?> getMyPost(HttpServletRequest request) {
+        Member member = validateMember(request);
+        List<PostResponseDto> responseDtoList = new ArrayList<>();
+        List<Post> posts = postRepository.findPostByMember(member);
+
+        for (Post post : posts) {
+            responseDtoList.add(PostResponseDto.builder()
+                    .postId(post.getId())
+                    .nickname(post.getMember().getNickname())
+                    .postTitle(post.getPostTitle())
+                    .postCategory(post.getPostCategory())
+                    .postContent(post.getPostContent())
+                    .createdAt(String.valueOf(post.getCreatedAt()))
+                    .modifiedAt(String.valueOf(post.getModifiedAt()))
+                    // 좋아요 수 추가
+                    .build());
+        }
+        return ResponseDto.success(responseDtoList);
+    }
 
     @Transactional
     public Member validateMember(HttpServletRequest request) {
