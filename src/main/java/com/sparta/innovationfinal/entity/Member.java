@@ -33,7 +33,7 @@ public class Member extends Timestamped{
     private String password;
 
     @Column(unique = true)
-    private String kakaoId;
+    private Long kakaoId;
 
 
 
@@ -53,8 +53,8 @@ public class Member extends Timestamped{
 
     public Member(String email, String nickname) {
         this.password = "kakao user";
-        this.email = null;
+        this.email = email;
         this.nickname = nickname;
-        this.kakaoId = email;
+        this.kakaoId = null;
     }
 }
