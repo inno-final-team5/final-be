@@ -19,7 +19,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PostLikeService {
-    private final MemberRepository memberRepository;
     private final PostLikeRepository postLikeRepository;
     private final TokenProvider tokenProvider;
     private final PostRepository postRepository;
@@ -70,6 +69,7 @@ public class PostLikeService {
 
     }
 
+    // 게시글 좋아요 취소
     @Transactional
     public ResponseDto<?> postLikeCancel(Long id, HttpServletRequest request) {
 
@@ -95,7 +95,7 @@ public class PostLikeService {
         }
 
         // 좋아요 누른사람과 취소하려는 유저가 다름
-//        PostLike postLike = postLikeRepository.findPostLikeByIdAndMember(id, member);
+//        PostLike postLike = postLikeRepository.findPostLikeById(id);
 //        if (!postLike.getMember().validateMember(member)) {
 //            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
 //        }
