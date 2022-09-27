@@ -87,7 +87,6 @@ public class PostLikeService {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
         }
 
-
         // 해당하는 게시글 id가 없을 시 오류코드 반환
         Post post = postRepository.findPostById(id);
         if (post == null) {
@@ -105,10 +104,6 @@ public class PostLikeService {
         if (findPostLike == null) {
             return ResponseDto.fail(ErrorCode.DUPLICATE_LIKE);
         } else {
-//            PostLike postLike1 = PostLike.builder()
-//                    .member(member)
-//                    .post(post)
-//                    .build();
 
             postLikeRepository.delete(findPostLike);
 
@@ -119,26 +114,6 @@ public class PostLikeService {
         return ResponseDto.success("success delete");
     }
 
-
-    
-//    @Transactional(readOnly = true)
-//    public Post isPresentPost(Long id) {
-//        Optional<Post> optionalPost = postRepository.findById(id);
-//        return optionalPost.orElse(null);
-//    }
-//
-//    // 게시물에 해당 사용자가 좋아요를 눌렀는지 확인
-//    @Transactional(readOnly = true)
-//    public PostLike isPresentPostlike(Post post, Member member) {
-////        Optional<PostLike> optionalPostLike = postLikeRepository.findById(id);
-//         return postLikeRepository.findByMemberAndPost(member, post);
-//    }
-//
-//    // 게시물의 좋아요 개수 반환
-//    public int getLikeCount(Post post) {
-//        List<PostLike> likeList = postLikeRepository.findAllByPost(post);
-//        return likeList.size();
-//    }
 
     @Transactional
     public Member validateMember(HttpServletRequest request) {
