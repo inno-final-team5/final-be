@@ -17,6 +17,7 @@ public class PostResponseDto {
     private String postTitle;
     private String postCategory;
     private String postContent;
+    private int LikeNum;
     private String createdAt;
     private String modifiedAt;
 }
