@@ -1,6 +1,5 @@
 package com.sparta.innovationfinal.service;
 
-import com.sparta.innovationfinal.dto.requestDto.PostLikeRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.entity.Post;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,7 +71,7 @@ public class PostLikeService {
     }
 
     @Transactional
-    public ResponseDto<?> postLikeCancle(Long id, HttpServletRequest request) {
+    public ResponseDto<?> postLikeCancel(Long id, HttpServletRequest request) {
 
         // 로그인 예외처리
         if (null == request.getHeader(("Refresh-Token"))) {

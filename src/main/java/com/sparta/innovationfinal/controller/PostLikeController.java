@@ -19,8 +19,8 @@ public class PostLikeController {
     }
 
     @DeleteMapping(value = "/api/auth/post/like/{id}")
-    public ResponseDto<?> postLikeCancle(@PathVariable Long id, HttpServletRequest request) {
-        return postLikeService.postLikeCancle(id, request);
+    public ResponseDto<?> postLikeCancel(@PathVariable Long id, HttpServletRequest request) {
+        return postLikeService.postLikeCancel(id, request);
     }
 
 }
