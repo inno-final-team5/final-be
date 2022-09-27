@@ -114,6 +114,7 @@ public class PostService {
         return ResponseDto.success(allPostResponseDtos);
     }
 
+    
 
     // 게시글 개별 조회
     @Transactional(readOnly = true)
