@@ -46,6 +46,7 @@ public class PostLikeService {
         if (post == null) {
             return ResponseDto.fail(ErrorCode.INVALID_POST);
         }
+        
 
         // 이미 좋아요를 눌렀다면 오류코드 반환
         PostLike findPostLike = postLikeRepository.findPostByMemberAndPost(member, post);
