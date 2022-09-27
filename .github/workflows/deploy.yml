@@ -33,7 +33,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      ## application.properties 생성
+      # (2.5) application.properties 생성
       - name: make application.properties
         run:
           mkdir ./src/main/resources |
