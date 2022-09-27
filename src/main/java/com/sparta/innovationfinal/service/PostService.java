@@ -115,6 +115,7 @@ public class PostService {
     }
 
 
+
     // 게시글 개별 조회
     @Transactional(readOnly = true)
     public ResponseDto<?> getPost(Long id) {
