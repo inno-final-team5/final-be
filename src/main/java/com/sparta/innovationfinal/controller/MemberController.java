@@ -5,6 +5,7 @@ import com.sparta.innovationfinal.dto.requestDto.CheckDto;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.service.MemberService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"멤버 CRUD API"})
 public class MemberController {
 
     private final MemberService memberService;
