@@ -114,6 +114,8 @@ public class PostService {
         return ResponseDto.success(allPostResponseDtos);
     }
 
+    
+
     // 게시글 개별 조회
     @Transactional(readOnly = true)
     public ResponseDto<?> getPost(Long id) {
@@ -128,9 +130,9 @@ public class PostService {
                         .postTitle(post.getPostTitle())
                         .postCategory(post.getPostCategory())
                         .postContent(post.getPostContent())
+                        .LikeNum(post.getLikeNum())
                         .createdAt(String.valueOf(post.getCreatedAt()))
                         .modifiedAt(String.valueOf(post.getModifiedAt()))
-                        // 좋아요 수 추가
                         .build()
                 );
     }
@@ -178,9 +180,9 @@ public class PostService {
                         .postTitle(post.getPostTitle())
                         .postCategory(post.getPostCategory())
                         .postContent(post.getPostContent())
+                        .LikeNum(post.getLikeNum())
                         .createdAt(String.valueOf(post.getCreatedAt()))
                         .modifiedAt(String.valueOf(post.getModifiedAt()))
-                        // 좋아요 수 추가
                         .build());
     }
 
@@ -218,9 +220,9 @@ public class PostService {
                     .postTitle(post.getPostTitle())
                     .postCategory(post.getPostCategory())
                     .postContent(post.getPostContent())
+                    .LikeNum(post.getLikeNum())
                     .createdAt(String.valueOf(post.getCreatedAt()))
                     .modifiedAt(String.valueOf(post.getModifiedAt()))
-                    // 좋아요 수 추가
                     .build());
         }
         return ResponseDto.success(responseDtoList);
