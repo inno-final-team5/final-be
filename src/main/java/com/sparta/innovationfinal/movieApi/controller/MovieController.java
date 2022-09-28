@@ -29,27 +29,27 @@ public class MovieController {
     }
     // 상세 조회
     @GetMapping("/api/movie/detail{movieId}")
-    public MovieResponseDto detailMovie() throws Exception {
+    public MovieResponseDto detailMovie(@PathVariable int movieId) throws Exception {
 
-        MovieDetailResponseDto movieDetailResponseDto = movieSearchApi.MovieDetailSearch(532639L);
+        MovieDetailResponseDto movieDetailResponseDto = movieSearchApi.MovieDetailSearch(movieId);
 
         return new MovieResponseDto(200L, successMsg, movieDetailResponseDto);
     }
 
     // 장르 조회
-    @GetMapping("/api/main/search?tag={태그}")
-    public MovieResponseDto genreMovie() throws Exception {
+    @GetMapping(value = {"/api/main/search/{genre}/{pageNum}"})
+    public MovieResponseDto genreMovie(@PathVariable MovieGenre genre, @PathVariable int pageNum) throws Exception {
 
-        MovieGenreResponseDto movieGenreResponseDto = movieSearchApi.MovieGenreSearch(MovieGenre.Action);
+        MovieGenreResponseDto movieGenreResponseDto = movieSearchApi.MovieGenreSearch(genre, pageNum);
 
         return new MovieResponseDto(200L, successMsg, movieGenreResponseDto);
     }
 
     // 제목 검색 조회
-    @GetMapping("/api/main/search?keyword={검색어}")
-    public MovieResponseDto titleSearchMovie() throws Exception {
+    @GetMapping("/api/main/search/title/{movieTitle}/{pageNum}")
+    public MovieResponseDto titleSearchMovie(@PathVariable String movieTitle, @PathVariable int pageNum) throws Exception {
 
-        MovieTitleSearchResponseDto movieTitleSearchResponseDto = movieSearchApi.MovieTitleSearch("공조");
+        MovieTitleSearchResponseDto movieTitleSearchResponseDto = movieSearchApi.MovieTitleSearch(movieTitle, pageNum);
 
         return new MovieResponseDto(200L, successMsg, movieTitleSearchResponseDto);
     }

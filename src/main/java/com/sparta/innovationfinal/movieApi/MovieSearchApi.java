@@ -45,7 +45,7 @@ public class MovieSearchApi {
     }
 
     // 상세조회
-    public MovieDetailResponseDto MovieDetailSearch(Long movieId) throws Exception{
+    public MovieDetailResponseDto MovieDetailSearch(int movieId) throws Exception{
         HttpHeaders httpHeaders = makeHeaders();
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
@@ -64,7 +64,7 @@ public class MovieSearchApi {
     }
 
     // 장르 조회
-    public MovieGenreResponseDto MovieGenreSearch(MovieGenre genre) throws Exception{
+    public MovieGenreResponseDto MovieGenreSearch(MovieGenre genre, int pageNum) throws Exception{
         HttpHeaders httpHeaders = makeHeaders();
         String genreStringId = Integer.toString(genre.getValue());
 
@@ -73,7 +73,7 @@ public class MovieSearchApi {
 
         ResponseEntity responseEntity = restTemplate.exchange(
                 "https://api.themoviedb.org/3/discover/movie?api_key="+api_key+
-                        "&language=ko-KR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1" +
+                        "&language=ko-KR&sort_by=popularity.desc&include_adult=false&include_video=false&page="+ pageNum +
                         "&primary_release_date.gte=2000-01-01&primary_release_date.lte=2100-12-31&with_genres="+genreStringId+"\n",
                 HttpMethod.GET, httpEntity, String.class);
 
@@ -87,14 +87,14 @@ public class MovieSearchApi {
     }
 
     // 제목으로 검색하기
-    public MovieTitleSearchResponseDto MovieTitleSearch(String movieTitle) throws Exception{
+    public MovieTitleSearchResponseDto MovieTitleSearch(String movieTitle, int pageNum) throws Exception{
         HttpHeaders httpHeaders = makeHeaders();
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity responseEntity = restTemplate.exchange(
                 "https://api.themoviedb.org/3/search/movie?api_key="+api_key
-                        +"&language=ko&query="+movieTitle+"&page=1&include_adult=false&region=KR",
+                        +"&language=ko&query="+movieTitle+"&page="+pageNum+"&include_adult=false&region=KR",
                 HttpMethod.GET, httpEntity, String.class);
 
         JSONParser jsonParser = new JSONParser();
