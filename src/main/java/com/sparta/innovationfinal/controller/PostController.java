@@ -5,7 +5,10 @@ import com.sparta.innovationfinal.dto.responseDto.PostResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.repository.PostRepository;
 import com.sparta.innovationfinal.service.PostService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,10 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"게시물 CRUD API"})
 public class PostController {
     private final PostService postService;
     private final PostRepository postRepository;
 
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "게시물 생성", notes = "게시물을 생성합니다.")
     @PostMapping(value = "/api/auth/post")
     public ResponseDto<?> creatPost(@RequestBody PostRequestDto requestDto,
                                     HttpServletRequest request) {
