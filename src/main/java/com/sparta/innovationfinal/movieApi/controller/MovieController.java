@@ -28,7 +28,7 @@ public class MovieController {
         return new MovieResponseDto(200L, successMsg, movieAllResponseDto);
     }
     // 상세 조회
-    @GetMapping("/api/movie/detail{movieId}")
+    @GetMapping("/api/movie/detail/{movieId}")
     public MovieResponseDto detailMovie(@PathVariable int movieId) throws Exception {
 
         MovieDetailResponseDto movieDetailResponseDto = movieSearchApi.MovieDetailSearch(movieId);
