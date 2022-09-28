@@ -4,6 +4,7 @@ import com.sparta.innovationfinal.movieApi.MovieGenre;
 import com.sparta.innovationfinal.movieApi.MovieSearchApi;
 import com.sparta.innovationfinal.movieApi.dto.*;
 import com.sparta.innovationfinal.movieApi.service.MovieService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"영화 API"})
 public class MovieController {
 
     private final MovieService movieService;

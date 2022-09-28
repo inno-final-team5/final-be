@@ -21,8 +21,6 @@ public class PostController {
     private final PostService postService;
     private final PostRepository postRepository;
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "게시물 생성", notes = "게시물을 생성합니다.")
     @PostMapping(value = "/api/auth/post")
     public ResponseDto<?> creatPost(@RequestBody PostRequestDto requestDto,
                                     HttpServletRequest request) {
