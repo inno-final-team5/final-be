@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieAllResponseDto {
-
     private Long page;
     private List<MovieResultResponseDto> results = new ArrayList<>();
 }

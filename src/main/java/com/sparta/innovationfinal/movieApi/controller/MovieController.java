@@ -6,6 +6,7 @@ import com.sparta.innovationfinal.movieApi.dto.*;
 import com.sparta.innovationfinal.movieApi.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,16 +20,15 @@ public class MovieController {
     MovieSearchApi movieSearchApi = new MovieSearchApi();
 
     // 전체 영화 조회
-    @GetMapping("/api/movie")
-    public MovieResponseDto allMovie() throws Exception {
-        MovieAllResponseDto movieAllResponseDto = movieSearchApi.movieAllSearch(1);
+    @GetMapping("/api/movie/{pageNum}")
+    public MovieResponseDto allMovie(@PathVariable int pageNum) throws Exception {
+
+        MovieAllResponseDto movieAllResponseDto = movieSearchApi.movieAllSearch(pageNum);
 
         return new MovieResponseDto(200L, successMsg, movieAllResponseDto);
-
     }
-
     // 상세 조회
-    @GetMapping("/api/movie/{movieId}")
+    @GetMapping("/api/movie/detail{movieId}")
     public MovieResponseDto detailMovie() throws Exception {
 
         MovieDetailResponseDto movieDetailResponseDto = movieSearchApi.MovieDetailSearch(532639L);

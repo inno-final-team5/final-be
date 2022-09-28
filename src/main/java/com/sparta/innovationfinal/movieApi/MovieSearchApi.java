@@ -24,25 +24,24 @@ public class MovieSearchApi {
     private ObjectMapper objectMapper;
 
     // 전체 조회
-    public MovieAllResponseDto movieAllSearch(int page) throws Exception {
+    public MovieAllResponseDto movieAllSearch(int pageNum) throws Exception {
 
-            HttpHeaders httpHeaders = makeHeaders();
-            //Object Mapper를 통한 JSON 바인딩
-            HttpEntity httpEntity = new HttpEntity(httpHeaders);
-            RestTemplate restTemplate = new RestTemplate();
-
+        HttpHeaders httpHeaders = makeHeaders();
+        //Object Mapper를 통한 JSON 바인딩
+        HttpEntity httpEntity = new HttpEntity(httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
             ResponseEntity responseEntity = restTemplate.exchange(
-                    "https://api.themoviedb.org/3/movie/popular?api_key=" + api_key + "&language=ko&page="+ page +"&region=KR",
+                    "https://api.themoviedb.org/3/movie/popular?api_key=" + api_key + "&language=ko&page=" + pageNum + "&region=KR",
                     HttpMethod.GET, httpEntity, String.class);
 
 
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(responseEntity.getBody().toString());
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(responseEntity.getBody().toString());
 
-            Gson gson = new Gson();
-            MovieAllResponseDto movieAllResponseDto = gson.fromJson(jsonObject.toJSONString(), MovieAllResponseDto.class);
+        Gson gson = new Gson();
+        MovieAllResponseDto movieAllResponseDto = gson.fromJson(jsonObject.toJSONString(), MovieAllResponseDto.class);
 
-            return movieAllResponseDto;
+        return movieAllResponseDto;
     }
 
     // 상세조회
