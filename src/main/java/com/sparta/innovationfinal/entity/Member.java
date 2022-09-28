@@ -51,6 +51,7 @@ public class Member extends Timestamped{
         return this.id == (member.getId());
     }
 
+    
     public Member(String email, String nickname) {
         this.password = "kakao user";
         this.email = email;
