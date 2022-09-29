@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckDto {
+public class EmailCheckDto {
     String email;
-    String nickname;
 }
