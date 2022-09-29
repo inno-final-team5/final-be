@@ -211,7 +211,7 @@ public class PostService {
     public ResponseDto<?> getMyPost(HttpServletRequest request) {
         Member member = validateMember(request);
         List<PostResponseDto> responseDtoList = new ArrayList<>();
-        List<Post> posts = postRepository.findPostByMember(member);
+        List<Post> posts = postRepository.findPostByMemberOrderByCreatedAtDesc(member);
 
         for (Post post : posts) {
             responseDtoList.add(PostResponseDto.builder()
