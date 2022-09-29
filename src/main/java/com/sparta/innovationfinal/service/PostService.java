@@ -95,7 +95,7 @@ public class PostService {
         return ResponseDto.success(allPostResponseDtos);
     }
 
-    // 최신 게시글 10개 조회
+    // 메인페이지 최신 게시글 10개 조회
     @Transactional
     public ResponseDto<?> getRecentPost() {
         List<Post> postList = postRepository.findTop10ByOrderByCreatedAtDesc();
@@ -208,10 +208,11 @@ public class PostService {
 
     }
 
+    // 마이페이지 나의게시글 조회
     public ResponseDto<?> getMyPost(HttpServletRequest request) {
         Member member = validateMember(request);
         List<PostResponseDto> responseDtoList = new ArrayList<>();
-        List<Post> posts = postRepository.findPostByMember(member);
+        List<Post> posts = postRepository.findPostByMemberOrderByCreatedAtDesc(member);
 
         for (Post post : posts) {
             responseDtoList.add(PostResponseDto.builder()
