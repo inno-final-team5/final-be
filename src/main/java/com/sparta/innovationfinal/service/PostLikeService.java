@@ -94,16 +94,18 @@ public class PostLikeService {
             return ResponseDto.fail(ErrorCode.INVALID_POST);
         }
 
-        // 좋아요 누른사람과 취소하려는 유저가 다름
-//        PostLike postLike = postLikeRepository.findPostLikeById(id);
-//        if (!postLike.getMember().validateMember(member)) {
-//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-//        }
+//        // 좋아요 누른사람과 취소하려는 유저가 다름
+//        // 필요없는 예외처리였다. -> 좋아요 누른사람은 나이기 때문.
+//        PostLike postLike = postLikeRepository.findPostLikeByPostAndMember(post, member);
+////        if (!postLike.getMember().validateMember(member)) {
+////            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+////        }
+//        System.out.println("postLike = " + postLike);
 
         // 해당게시글에 해당 유저가 좋아요를 누르지 않았다면 오류코드 반환
         PostLike findPostLike = postLikeRepository.findPostLikeByMemberAndPost(member, post);
         if (findPostLike == null) {
-            return ResponseDto.fail(ErrorCode.DUPLICATE_LIKE);
+            return ResponseDto.fail(ErrorCode.INVALD_LIKE);
         } else {
 
             postLikeRepository.delete(findPostLike);
