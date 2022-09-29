@@ -19,12 +19,12 @@ public class OAuthController {
 
     private final KakaoService kakaoService;
 
-    @PostMapping("/api/oauth/kakao")
+    @PostMapping("/oauth/kakao")
     public ResponseDto<?> callBackKakao(@RequestParam(name = "code") String code, HttpServletResponse response) throws JsonProcessingException {
         return kakaoService.kakaoLogin(code, response);
     }
 
-    @GetMapping("/api/oauth/kakao/logout")
+    @GetMapping("/oauth/kakao/logout")
     public ResponseDto<?> logout(HttpServletRequest request){
         return kakaoService.logout(request);
     }

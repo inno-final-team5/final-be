@@ -22,22 +22,22 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping(value = "/api/members/signup")
+    @PostMapping(value = "/members/signup")
     public ResponseDto<?> signup(@RequestBody @Valid MemberRequestDto memberRequestDto) {
         return memberService.createMember(memberRequestDto);
     }
 
-    @PostMapping(value = "/api/members/signup/email")
+    @PostMapping(value = "/members/signup/email")
     public ResponseDto<?> emailCheck(@RequestBody @Valid EmailCheckDto emailCheckDto) {
         return memberService.checkEmailDuplicate(emailCheckDto);
     }
 
-    @PostMapping(value = "/api/members/signup/nickname")
+    @PostMapping(value = "/members/signup/nickname")
     public ResponseDto<?> nicknameCheck(@RequestBody @Valid NickNameCheckDto nickNameCheckDto) {
         return memberService.checkNicknameDuplicate(nickNameCheckDto);
     }
 
-    @PostMapping(value = "/api/members/login")
+    @PostMapping(value = "/members/login")
     public ResponseDto<?> login(@RequestBody @Valid LoginRequestDto requestDto, HttpServletResponse response) {
         return memberService.login(requestDto, response);
     }
