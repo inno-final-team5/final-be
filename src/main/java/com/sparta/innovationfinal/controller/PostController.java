@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = {"게시물 CRUD API"})
 public class PostController {
     private final PostService postService;
-    private final PostRepository postRepository;
 
     @PostMapping(value = "/auth/post")
     public ResponseDto<?> creatPost(@RequestBody PostRequestDto requestDto,
@@ -30,6 +29,16 @@ public class PostController {
     @GetMapping(value = "/post")
     public ResponseDto<?> getAllPost() {
         return postService.getAllPost();
+    }
+
+    @GetMapping(value = "/post/movies")
+    public ResponseDto<?> getAllMoviePost() {
+        return postService.getAllMoviePost();
+    }
+
+    @GetMapping(value = "/post/cinemas")
+    public ResponseDto<?> getAllCinemasPost() {
+        return postService.getAllCinemasPost();
     }
 
     @GetMapping(value = "/post/{id}")
