@@ -2,7 +2,6 @@ package com.sparta.innovationfinal.movieApi.service;
 
 import com.sparta.innovationfinal.movieApi.MovieGenre;
 import com.sparta.innovationfinal.movieApi.dto.MovieGenreDto;
-import com.sparta.innovationfinal.movieApi.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +11,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
-
-    private final MovieRepository movieRepository;
-
-    private final String movie = "movie";
 
     @Override
     public MovieGenreDto findmoviegenre() {

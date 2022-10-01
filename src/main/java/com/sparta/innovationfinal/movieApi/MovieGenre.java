@@ -6,12 +6,12 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum MovieGenre {
-    Action(28, "Action"), Adventure(12, "Adventure"), Animation(16, "Animation"),
-    Comedy(35, "Comedy"), Crime(80, "Crime"), Documentary(99, "Documentary"), Drama(18, "Drama"),
-    Family(10751, "Family"), Fantasy(14, "Fantasy"), History(36, "History"), Horror(27, "Horror"),
-    Music(10402, "Music"), Mystery(9648, "Mystery"), Romance(10749, "Romance"),
-    ScienceFiction(878, "ScienceFiction"), TVMovie(10770, "TVMovie"), Thriller(53, "Thriller"),
-    War(10752, "War"), Western(37, "Western");
+        action(28, "action"), adventure(12, "adventure"), animation(16, "animation"),
+        comedy(35, "comedy"), crime(80, "crime"), documentary(99, "documentary"), drama(18, "drama"),
+        family(10751, "family"), fantasy(14, "fantasy"), history(36, "history"), horror(27, "horror"),
+        music(10402, "music"), mystery(9648, "mystery"), romance(10749, "romance"),
+        scienceFiction(878, "scienceFiction"), tvmovie(10770, "tvmovie"), thriller(53, "thriller"),
+        war(10752, "war"), western(37, "western");
 
     private final int value;
     private final String GenreName;

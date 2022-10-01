@@ -17,9 +17,15 @@ public class Movie {
     private Long id;
 
     @Column(nullable = false)
+    private Long movieId;
+
+    @Column(nullable = false)
     private String title;
 
-    @Column( length = 100000 )
+    @Column(nullable = false)
+    private String genres;
+
+    @Column(length = 100000 )
     private String overview;
 
     @Column

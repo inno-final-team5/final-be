@@ -6,6 +6,7 @@ import com.sparta.innovationfinal.movieApi.dto.MovieAllResponseDto;
 import com.sparta.innovationfinal.movieApi.dto.MovieDetailResponseDto;
 import com.sparta.innovationfinal.movieApi.dto.MovieGenreResponseDto;
 import com.sparta.innovationfinal.movieApi.dto.MovieTitleSearchResponseDto;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +57,18 @@ public class MovieSearchApi {
 
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(responseEntity.getBody().toString());
+//        JSONArray jsonArray = (JSONArray)jsonObject.get("genres");
+//
+//        if(jsonArray.size() > 0) {
+//            for(int i = 0; i <jsonArray.size(); i++) {
+//                jsonObject = (JSONObject)jsonArray.get(i);
+//                System.out.println((String)jsonObject.get("name"));
+//            }
+//        }
 
         Gson gson = new Gson();
         MovieDetailResponseDto movieDetailResponseDto = gson.fromJson(jsonObject.toString(), MovieDetailResponseDto.class);
+
 
         return movieDetailResponseDto;
     }

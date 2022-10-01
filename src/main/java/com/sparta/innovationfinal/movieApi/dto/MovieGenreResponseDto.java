@@ -16,4 +16,5 @@ public class MovieGenreResponseDto {
 
     private Long page;
     private List<MovieResultResponseDto> results = new ArrayList<>();
+
 }
