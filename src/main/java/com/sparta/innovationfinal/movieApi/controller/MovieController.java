@@ -4,6 +4,7 @@ import com.sparta.innovationfinal.movieApi.MovieGenre;
 import com.sparta.innovationfinal.movieApi.MovieSearchApi;
 import com.sparta.innovationfinal.movieApi.dto.*;
 import com.sparta.innovationfinal.movieApi.service.MovieService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"영화 API"})
 public class MovieController {
 
     private final MovieService movieService;
@@ -20,7 +22,7 @@ public class MovieController {
     MovieSearchApi movieSearchApi = new MovieSearchApi();
 
     // 전체 영화 조회
-    @GetMapping("/api/movie/{pageNum}")
+    @GetMapping("/movie/{pageNum}")
     public MovieResponseDto allMovie(@PathVariable int pageNum) throws Exception {
 
         MovieAllResponseDto movieAllResponseDto = movieSearchApi.movieAllSearch(pageNum);
@@ -28,7 +30,7 @@ public class MovieController {
         return new MovieResponseDto(200L, successMsg, movieAllResponseDto);
     }
     // 상세 조회
-    @GetMapping("/api/movie/detail/{movieId}")
+    @GetMapping("/movie/detail/{movieId}")
     public MovieResponseDto detailMovie(@PathVariable int movieId) throws Exception {
 
         MovieDetailResponseDto movieDetailResponseDto = movieSearchApi.MovieDetailSearch(movieId);
@@ -37,7 +39,7 @@ public class MovieController {
     }
 
     // 장르 조회
-    @GetMapping(value = {"/api/main/search/{genre}/{pageNum}"})
+    @GetMapping(value = {"/main/search/{genre}/{pageNum}"})
     public MovieResponseDto genreMovie(@PathVariable MovieGenre genre, @PathVariable int pageNum) throws Exception {
 
         MovieGenreResponseDto movieGenreResponseDto = movieSearchApi.MovieGenreSearch(genre, pageNum);
@@ -46,7 +48,7 @@ public class MovieController {
     }
 
     // 제목 검색 조회
-    @GetMapping("/api/main/search/title/{movieTitle}/{pageNum}")
+    @GetMapping("/main/search/title/{movieTitle}/{pageNum}")
     public MovieResponseDto titleSearchMovie(@PathVariable String movieTitle, @PathVariable int pageNum) throws Exception {
 
         MovieTitleSearchResponseDto movieTitleSearchResponseDto = movieSearchApi.MovieTitleSearch(movieTitle, pageNum);
