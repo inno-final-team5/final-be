@@ -33,7 +33,7 @@ public class MovieController {
     @GetMapping("/movie/detail/{movieId}")
     public MovieResponseDto detailMovie(@PathVariable int movieId) throws Exception {
 
-        MovieDetailResponseDto movieDetailResponseDto = movieSearchApi.MovieDetailSearch(movieId);
+        MovieDetailResponseDto movieDetailResponseDto = movieSearchApi.movieDetailSearch(movieId);
 
         return new MovieResponseDto(200L, successMsg, movieDetailResponseDto);
     }

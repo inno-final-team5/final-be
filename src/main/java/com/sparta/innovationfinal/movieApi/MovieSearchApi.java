@@ -46,7 +46,7 @@ public class MovieSearchApi {
     }
 
     // 상세조회
-    public MovieDetailResponseDto MovieDetailSearch(int movieId) throws Exception{
+    public MovieDetailResponseDto movieDetailSearch(int movieId) throws Exception{
         HttpHeaders httpHeaders = makeHeaders();
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
@@ -112,6 +112,7 @@ public class MovieSearchApi {
 
         Gson gson = new Gson();
         MovieTitleSearchResponseDto movieTitleSearchResponseDto = gson.fromJson(jsonObject.toString(), MovieTitleSearchResponseDto.class);
+
         return movieTitleSearchResponseDto;
     }
 
