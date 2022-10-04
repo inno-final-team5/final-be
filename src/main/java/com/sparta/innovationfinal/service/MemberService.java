@@ -1,10 +1,10 @@
 package com.sparta.innovationfinal.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sparta.innovationfinal.dto.TokenDto;
-import com.sparta.innovationfinal.dto.requestDto.CheckDto;
+import com.sparta.innovationfinal.dto.requestDto.EmailCheckDto;
 import com.sparta.innovationfinal.dto.requestDto.LoginRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
+import com.sparta.innovationfinal.dto.requestDto.NickNameCheckDto;
 import com.sparta.innovationfinal.dto.responseDto.MemberResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
@@ -78,7 +78,7 @@ public class MemberService {
 
     // 이메일 중복체크
     @Transactional
-    public ResponseDto<?> checkEmailDuplicate(CheckDto email) {
+    public ResponseDto<?> checkEmailDuplicate(EmailCheckDto email) {
         if (isPresentEmail(email.getEmail()) != null) {
             return ResponseDto.fail(ErrorCode.DUPLICATE_EMAIL);
         } else {
@@ -88,7 +88,7 @@ public class MemberService {
 
     // 닉네임 중복체크
     @Transactional
-    public ResponseDto<?> checkNicknameDuplicate(CheckDto nickname) {
+    public ResponseDto<?> checkNicknameDuplicate(NickNameCheckDto nickname) {
         if (isPresentNickname(nickname.getNickname()) != null) {
             return ResponseDto.fail(ErrorCode.DUPLICATE_NICKNAME);
         } else {

@@ -14,5 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 public class MovieTitleSearchResponseDto {
 
+    private Long page;
     private List<MovieResultResponseDto> results = new ArrayList<>();
 }

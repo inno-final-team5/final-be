@@ -1,4 +1,29 @@
 package com.sparta.innovationfinal.entity;
 
-public class Favorite {
+import com.sparta.innovationfinal.movieApi.entity.Movie;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Favorite extends Timestamped{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
+
+    @JoinColumn(name = "movie_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Movie movie;
 }

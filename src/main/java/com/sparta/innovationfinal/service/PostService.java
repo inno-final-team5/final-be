@@ -95,7 +95,46 @@ public class PostService {
         return ResponseDto.success(allPostResponseDtos);
     }
 
-    // 최신 게시글 10개 조회
+    // 커뮤니티게시판 영화 카테고리 전체 조회
+    @Transactional
+    public ResponseDto<?> getAllMoviePost() {
+        List<Post> postList = postRepository.findPostByPostCategory("영화");
+        List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+            allPostResponseDtos.add(
+                    AllPostResponseDto.builder()
+                            .postId(post.getId())
+                            .nickname(post.getMember().getNickname())
+                            .postTitle(post.getPostTitle())
+                            .postCategory(post.getPostCategory())
+                            .createdAt(String.valueOf(post.getCreatedAt()))
+                            .build()
+            );
+        }
+        return ResponseDto.success(allPostResponseDtos);
+    }
+
+    // 커뮤니티게시판 영화관 카테고리 전체 조회
+    @Transactional
+    public ResponseDto<?> getAllCinemasPost() {
+        List<Post> postList = postRepository.findPostByPostCategory("영화관");
+        List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+            allPostResponseDtos.add(
+                    AllPostResponseDto.builder()
+                            .postId(post.getId())
+                            .nickname(post.getMember().getNickname())
+                            .postTitle(post.getPostTitle())
+                            .postCategory(post.getPostCategory())
+                            .createdAt(String.valueOf(post.getCreatedAt()))
+                            .build()
+            );
+        }
+        return ResponseDto.success(allPostResponseDtos);
+    }
+
+
+    // 메인페이지 최신 게시글 10개 조회
     @Transactional
     public ResponseDto<?> getRecentPost() {
         List<Post> postList = postRepository.findTop10ByOrderByCreatedAtDesc();
@@ -208,10 +247,11 @@ public class PostService {
 
     }
 
+    // 마이페이지 나의게시글 조회
     public ResponseDto<?> getMyPost(HttpServletRequest request) {
         Member member = validateMember(request);
         List<PostResponseDto> responseDtoList = new ArrayList<>();
-        List<Post> posts = postRepository.findPostByMember(member);
+        List<Post> posts = postRepository.findPostByMemberOrderByCreatedAtDesc(member);
 
         for (Post post : posts) {
             responseDtoList.add(PostResponseDto.builder()

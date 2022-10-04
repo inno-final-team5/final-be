@@ -15,12 +15,12 @@ public class PostLikeController {
 
     private final PostLikeService postLikeService;
 
-    @PostMapping(value = "/api/auth/post/like/{id}")
+    @PostMapping(value = "/auth/post/like/{id}")
     public ResponseDto<?> postLike(@PathVariable Long id, HttpServletRequest request) {
         return postLikeService.pushPostLike(id, request);
     }
 
-    @DeleteMapping(value = "/api/auth/post/like/{id}")
+    @DeleteMapping(value = "/auth/post/like/{id}")
     public ResponseDto<?> postLikeCancel(@PathVariable Long id, HttpServletRequest request) {
         return postLikeService.postLikeCancel(id, request);
     }

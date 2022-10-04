@@ -1,15 +1,14 @@
 package com.sparta.innovationfinal.movieApi.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Movie {
 
     @Id
@@ -17,15 +16,12 @@ public class Movie {
     private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private Long movieId;
 
-    @Column( length = 100000 )
-    private String overview;
+    @Column(nullable = false)
+    private String title;
 
     @Column
     private String posterPath;
-
-    @Column
-    private String release_date;
 
 }
