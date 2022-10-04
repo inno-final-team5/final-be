@@ -3,6 +3,7 @@ package com.sparta.innovationfinal.controller;
 import com.sparta.innovationfinal.dto.requestDto.FavoriteRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.service.FavoriteService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,11 @@ public class FavoriteController {
     @DeleteMapping(value = "/auth/movie/favorite/{id}")
     public ResponseDto<?> favoriteDelete(@PathVariable Long id, HttpServletRequest request) {
         return favoriteService.deleteFavorite(id, request);
+    }
+
+    @GetMapping(value = "/auth/movie/favorites")
+    public ResponseDto<?> favoriteGetAll(HttpServletRequest request) {
+        return favoriteService.getAllFavorite(request);
     }
 
 }

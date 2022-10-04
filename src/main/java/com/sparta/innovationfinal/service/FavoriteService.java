@@ -1,6 +1,7 @@
 package com.sparta.innovationfinal.service;
 
 import com.sparta.innovationfinal.dto.requestDto.FavoriteRequestDto;
+import com.sparta.innovationfinal.dto.responseDto.AllFavoriteResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Favorite;
 import com.sparta.innovationfinal.entity.Member;
@@ -13,16 +14,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
 @RequiredArgsConstructor
-public class FavoriteService {
+public class FavoriteService{
 
     private final TokenProvider tokenProvider;
     private final FavoriteRepository favoriteRepository;
     private final MovieRepository movieRepository;
 
+    // 즐겨찾기 추가
     @Transactional
     public ResponseDto<?> checkFavorite(FavoriteRequestDto favoriteRequestDto, HttpServletRequest request) {
 
@@ -77,6 +81,7 @@ public class FavoriteService {
         return ResponseDto.success("favorite success");
     }
 
+    // 즐겨찾기 삭제
     @Transactional
     public ResponseDto<?> deleteFavorite(Long id, HttpServletRequest request) {
 
@@ -106,6 +111,24 @@ public class FavoriteService {
             favoriteRepository.delete(favorite);
         }
         return ResponseDto.success("favorite success");
+    }
+
+    // 즐겨찾기 전체조회
+    @Transactional
+    public ResponseDto<?> getAllFavorite(HttpServletRequest request) {
+        Member member = validateMember(request);
+        List<Favorite> favoriteList = favoriteRepository.findFavoriteByMemberOrderByCreatedAtDesc(member);
+        List<AllFavoriteResponseDto> allFavoriteResponseDtos = new ArrayList<>();
+        for (Favorite favorite : favoriteList) {
+            allFavoriteResponseDtos.add(
+                    AllFavoriteResponseDto.builder()
+                            .movieId(favorite.getMovie().getMovieId())
+                            .posterPath(favorite.getMovie().getPosterPath())
+                            .title(favorite.getMovie().getTitle())
+                            .build()
+            );
+        }
+        return ResponseDto.success(allFavoriteResponseDtos);
     }
 
 

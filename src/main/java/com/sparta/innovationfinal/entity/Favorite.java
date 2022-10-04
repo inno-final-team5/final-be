@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Favorite {
+public class Favorite extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
