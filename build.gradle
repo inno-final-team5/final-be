@@ -33,8 +33,12 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
     // oauth
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // 크롤링 jsoup
+    implementation 'org.jsoup:jsoup:1.15.3'
 
     //다운받은 라이브러리와 json데이터를 처리해주기 위한 json-simple 라이브러리를 추가
     implementation files('libs/kobis-opcl-rest-v1.0.jar')
