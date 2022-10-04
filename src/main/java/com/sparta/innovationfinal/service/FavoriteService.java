@@ -99,7 +99,7 @@ public class FavoriteService{
         }
 
         // 해당 영화 없음
-        Favorite favorite = favoriteRepository.findFavoritById(id);
+        Favorite favorite = favoriteRepository.findFavoriteById(id);
         if (favorite == null) {
             return ResponseDto.fail(ErrorCode.INVAILD_MOVIE);
 //        }
@@ -110,7 +110,7 @@ public class FavoriteService{
         } else {
             favoriteRepository.delete(favorite);
         }
-        return ResponseDto.success("favorite success");
+        return ResponseDto.success("delete success");
     }
 
     // 즐겨찾기 전체조회
@@ -122,6 +122,7 @@ public class FavoriteService{
         for (Favorite favorite : favoriteList) {
             allFavoriteResponseDtos.add(
                     AllFavoriteResponseDto.builder()
+                            .Id(favorite.getId())
                             .movieId(favorite.getMovie().getMovieId())
                             .posterPath(favorite.getMovie().getPosterPath())
                             .title(favorite.getMovie().getTitle())

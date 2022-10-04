@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AllFavoriteResponseDto {
-
+    private Long Id;
     private Long movieId;
     private String posterPath;
     private String title;

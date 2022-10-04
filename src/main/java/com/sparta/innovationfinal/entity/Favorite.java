@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Favorite extends Timestamped{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JoinColumn(name = "member_id", nullable = false)
