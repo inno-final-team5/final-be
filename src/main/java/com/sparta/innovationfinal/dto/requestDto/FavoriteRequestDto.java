@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FavoriteRequestDto {
 
-    private Long id;
     private Long movieId;
-    private String poster_path;
+    private String posterPath;
     private String title;
 
 }

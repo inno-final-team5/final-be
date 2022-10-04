@@ -4,4 +4,9 @@ import com.sparta.innovationfinal.movieApi.entity.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
+
+    Movie findMovieByMovieId(Long movieId);
+    Movie findMovieByMovieIdAndTitle(Long movieId, String title);
+    Movie findMovieById(Long Id);
+
 }
