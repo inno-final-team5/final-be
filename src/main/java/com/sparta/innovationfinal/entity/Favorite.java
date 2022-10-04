@@ -1,6 +1,5 @@
 package com.sparta.innovationfinal.entity;
 
-import com.sparta.innovationfinal.movieApi.entity.Movie;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

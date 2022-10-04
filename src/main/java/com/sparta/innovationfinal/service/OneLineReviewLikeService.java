@@ -7,7 +7,7 @@ import com.sparta.innovationfinal.entity.OneLineReview;
 import com.sparta.innovationfinal.entity.OneLineReviewLike;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
-import com.sparta.innovationfinal.movieApi.repository.MovieRepository;
+import com.sparta.innovationfinal.repository.MovieRepository;
 import com.sparta.innovationfinal.repository.OneLineReviewLikeRepository;
 import com.sparta.innovationfinal.repository.OneLineReviewRepository;
 import lombok.RequiredArgsConstructor;

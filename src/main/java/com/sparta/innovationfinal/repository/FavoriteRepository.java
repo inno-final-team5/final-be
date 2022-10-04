@@ -2,7 +2,7 @@ package com.sparta.innovationfinal.repository;
 
 import com.sparta.innovationfinal.entity.Favorite;
 import com.sparta.innovationfinal.entity.Member;
-import com.sparta.innovationfinal.movieApi.entity.Movie;
+import com.sparta.innovationfinal.entity.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
