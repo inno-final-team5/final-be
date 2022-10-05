@@ -193,7 +193,7 @@ public class OneLineReviewService {
     @Transactional
     // 6. 베스트 나의 한줄평 조회
     public ResponseDto<?> getBestReview() {
-        List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findTop10ByOrderByLikeNumDesc();
+        List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findTop5ByOrderByLikeNumDesc();
         List<AllOneLineReviewResponseDto> allOneLineReviewResponseDtos = new ArrayList<>();
         for (OneLineReview oneLineReview : oneLineReviewList) {
             allOneLineReviewResponseDtos.add(

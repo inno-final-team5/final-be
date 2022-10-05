@@ -137,7 +137,7 @@ public class PostService {
     // 메인페이지 최신 게시글 10개 조회
     @Transactional
     public ResponseDto<?> getRecentPost() {
-        List<Post> postList = postRepository.findTop10ByOrderByCreatedAtDesc();
+        List<Post> postList = postRepository.findTop5ByOrderByCreatedAtDesc();
         List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
         for (Post post : postList) {
             allPostResponseDtos.add(
