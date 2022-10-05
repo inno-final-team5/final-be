@@ -98,7 +98,7 @@ public class PostService {
     // 커뮤니티게시판 영화 카테고리 전체 조회
     @Transactional
     public ResponseDto<?> getAllMoviePost() {
-        List<Post> postList = postRepository.findPostByPostCategory("영화");
+        List<Post> postList = postRepository.findPostByPostCategoryOrderByCreatedAtDesc("영화");
         List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
         for (Post post : postList) {
             allPostResponseDtos.add(
@@ -117,7 +117,7 @@ public class PostService {
     // 커뮤니티게시판 영화관 카테고리 전체 조회
     @Transactional
     public ResponseDto<?> getAllCinemasPost() {
-        List<Post> postList = postRepository.findPostByPostCategory("영화관");
+        List<Post> postList = postRepository.findPostByPostCategoryOrderByCreatedAtDesc("영화관");
         List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
         for (Post post : postList) {
             allPostResponseDtos.add(
