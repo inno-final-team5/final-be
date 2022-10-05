@@ -149,7 +149,7 @@ public class OneLineReviewService {
             return ResponseDto.fail(ErrorCode.INVAILD_MOVIE);
         }
         // 한줄평 전체 조회 로직
-        List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findAllByOrderByCreatedAtDesc();
+        List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findAllByMovie_MovieIdOrderByCreatedAtDesc(movieId);
         List<AllOneLineReviewResponseDto> allOneLineReviewResponseDtos = new ArrayList<>();
         for(OneLineReview oneLineReview : oneLineReviewList){
             allOneLineReviewResponseDtos.add(AllOneLineReviewResponseDto.builder()
