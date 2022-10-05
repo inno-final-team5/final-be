@@ -42,7 +42,7 @@ public class OneLineReviewLikeService {
         Member member = validateMember(request);
          // 예외처리(유저를 찾을 수 없는 경우)
         if (member == null){
-            return ResponseDto.fail(ErrorCode.INVALD_MEMBER);
+            return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
 //        // 예외처리(영화가 삭제되었을 경우)
 //        Movie movie = movieRepository.findMovieById(id);
@@ -87,12 +87,12 @@ public class OneLineReviewLikeService {
         Member member = validateMember(request);
         // 예외처리(유저를 찾을 수 없는 경우)
         if (member == null){
-            return ResponseDto.fail(ErrorCode.INVALD_MEMBER);
+            return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
         // 예외처리(영화가 삭제되었을 경우)
         Movie movie = movieRepository.findMovieById(id);
         if (movie.getMovieId() == 0) {
-            return ResponseDto.fail(ErrorCode.INVAILD_MOVIE);
+            return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
         }
         // 예외처리(한줄평이 없을 경우)
         OneLineReview oneLineReview = oneLineReviewRepository.findOneLineReviewById(id);
@@ -104,7 +104,7 @@ public class OneLineReviewLikeService {
         // 좋아요를 누르지 않았을 경우 오류 코드 반환 -> 눌렀을 경우 좋아요 삭제
         OneLineReviewLike findReviewLike = oneLineReviewLikeRepository.findOneLineReviewLikeByMemberAndOneLineReview(member, oneLineReview);
         if (findReviewLike == null) {
-            return ResponseDto.fail(ErrorCode.INVALD_LIKE);
+            return ResponseDto.fail(ErrorCode.INVALID_LIKE);
         } else {
             oneLineReviewLikeRepository.delete(findReviewLike);
 

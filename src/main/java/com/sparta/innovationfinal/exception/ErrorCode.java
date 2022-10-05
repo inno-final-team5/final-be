@@ -18,15 +18,15 @@ public enum ErrorCode {
 
     //서비스 관련 오류
     INVALID_BADGEID("INVALID_BADGEID","배지가 없음"),
-    INVAILD_MOVIE("INVAILD_MOVIE","해당 영화 없음"),
-    INVALD_MEMBER("INVALD_MEMBER","해당 유저 없음"),
+    INVALID_MOVIE("INVALID_MOVIE","해당 영화 없음"),
+    INVALID_MEMBER("INVALID_MEMBER","해당 유저 없음"),
     INVALID_POST("INVALID_POST","해당 포스트 없음"),
     INVALID_REVIEW("INVALID_REVIEW","해당 한줄평 없음"),
     INVALID_CONTENT("INVALID_CONTENT","해당 내용 없음"),
     INVALID_STAR("INVALID_STAR","한줄평 별점 없음"),
-    INVALD_TITLE("INVALD_TITLE","해당 제목 없음"),
+    INVALID_TITLE("INVALID_TITLE","해당 제목 없음"),
     INVALID_CATEGORY("INVALID_CATEGORY","해당 카테고리 미설정"),
-    INVALD_LIKE("INVALD_LIKE","해당 게시글에 해당 유저가 좋아요를 누르지 않음"),
+    INVALID_LIKE("INVALID_LIKE","해당 게시글에 해당 유저가 좋아요를 누르지 않음"),
     NON_FAVORITE_MOVIE("NON_FAVORITE_MOVIE","유저 즐겨찾기 목록에 해당 영화 없음"),
     NOT_AUTHOR("NOT_AUTHOR","작성자와 요청자가 다름"),
     DUPLICATE_FAVORITE_MOVIE("DUPLICATE_FAVORITE_MOVIE", "영화가 이미 즐겨찾기에 추가됨");

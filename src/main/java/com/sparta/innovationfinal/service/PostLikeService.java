@@ -105,7 +105,7 @@ public class PostLikeService {
         // 해당게시글에 해당 유저가 좋아요를 누르지 않았다면 오류코드 반환
         PostLike findPostLike = postLikeRepository.findPostLikeByMemberAndPost(member, post);
         if (findPostLike == null) {
-            return ResponseDto.fail(ErrorCode.INVALD_LIKE);
+            return ResponseDto.fail(ErrorCode.INVALID_LIKE);
         } else {
 
             postLikeRepository.delete(findPostLike);

@@ -46,7 +46,7 @@ public class OneLineReviewService {
         movieRepository.save(movie);
 
         if (movie.getMovieId() == 0) {
-            return ResponseDto.fail(ErrorCode.INVAILD_MOVIE);
+            return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
         }
 
         if (requestDto.getOneLineReviewStar() == 0) {
@@ -108,7 +108,7 @@ public class OneLineReviewService {
     public ResponseDto<?> updateReview(Long movieId, OneLineReviewRequestDto requestDto, HttpServletRequest request){
         // 예외처리(한줄평)
         if (movieId == 0){
-            return ResponseDto.fail(ErrorCode.INVAILD_MOVIE);
+            return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
         }
         if (requestDto.getOneLineReviewContent() == null){
             return ResponseDto.fail(ErrorCode.INVALID_REVIEW);
@@ -146,7 +146,7 @@ public class OneLineReviewService {
     public ResponseDto<?> getAllReview(Long movieId) {
         // 예외처리
         if (movieId == null){
-            return ResponseDto.fail(ErrorCode.INVAILD_MOVIE);
+            return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
         }
         // 한줄평 전체 조회 로직
         List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findAllByMovie_MovieIdOrderByCreatedAtDesc(movieId);

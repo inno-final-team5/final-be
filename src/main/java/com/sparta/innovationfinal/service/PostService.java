@@ -46,7 +46,7 @@ public class PostService {
         }
 
         if (null == requestDto.getPostTitle()) {
-            return ResponseDto.fail(ErrorCode.INVALD_TITLE);
+            return ResponseDto.fail(ErrorCode.INVALID_TITLE);
         }
 
         Member member = validateMember(request);
@@ -196,7 +196,7 @@ public class PostService {
         }
 
         if (null == requestDto.getPostTitle()) {
-            return ResponseDto.fail(ErrorCode.INVALD_TITLE);
+            return ResponseDto.fail(ErrorCode.INVALID_TITLE);
         }
 
         Member member = validateMember(request);

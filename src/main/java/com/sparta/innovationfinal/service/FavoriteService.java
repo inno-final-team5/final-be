@@ -40,7 +40,7 @@ public class FavoriteService{
 
         Member member = validateMember(request);
         if (null == member) {
-            return ResponseDto.fail(ErrorCode.INVALD_MEMBER);
+            return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
 
 //        try{
@@ -95,13 +95,13 @@ public class FavoriteService{
 
         Member member = validateMember(request);
         if (null == member) {
-            return ResponseDto.fail(ErrorCode.INVALD_MEMBER);
+            return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
 
         // 해당 영화 없음
         Favorite favorite = favoriteRepository.findFavoriteById(id);
         if (favorite == null) {
-            return ResponseDto.fail(ErrorCode.INVAILD_MOVIE);
+            return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
 //        }
 //
 //        Favorite findFavorite = favoriteRepository.findFavoriteByMemberAndMovie(member, movie);

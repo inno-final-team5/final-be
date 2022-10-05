@@ -60,7 +60,7 @@ public class MemberService {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
         if (!member.validatePassword(passwordEncoder, requstDto.getPassword())) {
-            return ResponseDto.fail(ErrorCode.INVALD_MEMBER);
+            return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
         TokenDto tokenDto = tokenProvider.generateTokenDto(member);
         tokenToHeaders(tokenDto, response);

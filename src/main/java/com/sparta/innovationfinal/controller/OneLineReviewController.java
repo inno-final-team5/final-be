@@ -37,7 +37,7 @@ public class OneLineReviewController {
         return oneLineReviewService.getAllReview((long)movieId);
     }
 
-    @GetMapping(value = "/auth/movie/on-line-review")
+    @GetMapping(value = "/auth/movie/one-line-review")
     public ResponseDto<?> getMyReview(HttpServletRequest request){
         return oneLineReviewService.getMyReview(request);
     }
