@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -117,6 +118,24 @@ public class OneLineReviewLikeService {
             oneLineReview.setLikeNum(oneLineReviewLikes.size());
         }
         return ResponseDto.success("success delete");
+        }
+
+        // 나의 한줄평좋아요 전체 조회
+        @Transactional
+        public ResponseDto<?> getAllReviewLike(HttpServletRequest request) {
+
+            Member member = validateMember(request);
+
+            List<OneLineReviewLikeResponseDto> responseDtoList = new ArrayList<>();
+            List<OneLineReviewLike> oneLineReviewLikes = oneLineReviewLikeRepository.findOneLineReviewLikeByMember(member);
+
+            for (OneLineReviewLike oneLineReviewLike : oneLineReviewLikes) {
+                responseDtoList.add(OneLineReviewLikeResponseDto.builder()
+                        .oneLineReviewId(oneLineReviewLike.getId())
+                        .oneLineReviewContent(oneLineReviewLike.getOneLineReview().getOneLineReviewContent())
+                        .build());
+            }
+            return ResponseDto.success(responseDtoList);
         }
 
     @Transactional

@@ -17,4 +17,5 @@ public interface OneLineReviewLikeRepository extends JpaRepository<OneLineReview
 
     OneLineReviewLike findOneLineReviewByMemberAndOneLineReview(Member member, OneLineReview oneLineReview);
     List<OneLineReviewLike> findOneLineReviewLikeByOneLineReviewId(Long id);
+    List<OneLineReviewLike> findOneLineReviewLikeByMember(Member member);
 }

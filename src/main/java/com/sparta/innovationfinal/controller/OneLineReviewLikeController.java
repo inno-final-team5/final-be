@@ -24,4 +24,9 @@ public class OneLineReviewLikeController {
         return oneLineReviewLikeService.reviewLikeCancel(id,request);
     }
 
+    @GetMapping(value = "/auth/movie/like")
+    public ResponseDto<?> getAllReviewLike(HttpServletRequest request) {
+        return oneLineReviewLikeService.getAllReviewLike(request);
+    }
+
 }
