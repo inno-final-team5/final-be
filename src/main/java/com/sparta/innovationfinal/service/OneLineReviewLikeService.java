@@ -1,5 +1,6 @@
 package com.sparta.innovationfinal.service;
 
+import com.sparta.innovationfinal.dto.responseDto.OneLineReviewLikeResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.entity.Movie;
@@ -71,7 +72,10 @@ public class OneLineReviewLikeService {
             List<OneLineReviewLike> oneLineReviewLikes = oneLineReviewLikeRepository.findAllByOneLineReview(oneLineReview);
             oneLineReview.setLikeNum(oneLineReviewLikes.size());
         }
-        return ResponseDto.success("like success");
+        return ResponseDto.success(OneLineReviewLikeResponseDto.builder()
+                .oneLineReviewId(oneLineReview.getId())
+                .oneLineReviewContent(oneLineReview.getOneLineReviewContent())
+                .build());
     }
     @Transactional
     // 2.한줄평 좋아요 취소

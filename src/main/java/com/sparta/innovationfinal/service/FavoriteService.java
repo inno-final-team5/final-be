@@ -43,13 +43,6 @@ public class FavoriteService{
             return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
 
-//        try{
-//            String txt = favoriteRequestDto.getTitle();
-//            System.out.println(URLDecoder.decode(txt, "UTF-8"));
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-
         // 해당 영화 없음
         Movie findMovie = movieRepository.findMovieByMovieId(favoriteRequestDto.getMovieId());
         if (findMovie == null) {
@@ -68,7 +61,7 @@ public class FavoriteService{
         Favorite findFavorite = favoriteRepository.findMovieByMemberAndMovie(member, movie);
         System.out.println("findFavorite = " + findFavorite);
         if(findFavorite != null) {
-            return ResponseDto.fail(ErrorCode.DUPLICATE_FAVORITE_MOVIE);    //
+            return ResponseDto.fail(ErrorCode.DUPLICATE_FAVORITE_MOVIE);
         } else {
             Favorite favorite = Favorite.builder()
                     .member(member)
