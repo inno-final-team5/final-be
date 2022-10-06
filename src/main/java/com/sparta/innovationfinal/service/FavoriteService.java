@@ -98,18 +98,15 @@ public class FavoriteService{
             return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
 
-        // 해당 영화 없음
+        // 해당 즐겨찾기 없음
         Favorite favorite = favoriteRepository.findFavoriteById(id);
         if (favorite == null) {
             return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
-//        }
-//
-//        Favorite findFavorite = favoriteRepository.findFavoriteByMemberAndMovie(member, movie);
-//        if(findFavorite == null) {
-//            return ResponseDto.fail(ErrorCode.NON_FAVORITE_MOVIE);
-        } else {
-            favoriteRepository.delete(favorite);
         }
+        if (!favorite.getMember().validateMember(member)) {
+            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+        }
+        favoriteRepository.delete(favorite);
         return ResponseDto.success("delete success");
     }
 
