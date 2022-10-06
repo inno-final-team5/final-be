@@ -7,9 +7,11 @@ import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.entity.Movie;
 import com.sparta.innovationfinal.entity.OneLineReview;
+import com.sparta.innovationfinal.entity.OneLineReviewLike;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.MovieRepository;
+import com.sparta.innovationfinal.repository.OneLineReviewLikeRepository;
 import com.sparta.innovationfinal.repository.OneLineReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OneLineReviewService {
     private final OneLineReviewRepository oneLineReviewRepository;
+    private final OneLineReviewLikeRepository oneLineReviewLikeRepository;
     private final MovieRepository movieRepository;
     private final TokenProvider tokenProvider;
     @Transactional
@@ -99,8 +102,8 @@ public class OneLineReviewService {
 
     @Transactional
     // 2.한줄평 삭제
-    public ResponseDto<?> deleteReview(Long Id, HttpServletRequest request){
-        OneLineReview oneLineReview = isPresentOneLineReview(Id);
+    public ResponseDto<?> deleteReview(Long id, HttpServletRequest request){
+        OneLineReview oneLineReview = isPresentOneLineReview(id);
         if(oneLineReview == null){
             return ResponseDto.fail(ErrorCode.INVALID_REVIEW);
         }
@@ -112,6 +115,9 @@ public class OneLineReviewService {
         }
 
         // 한줄평 삭제 로직
+        // 한줄평에 딸린 좋아요먼저 삭제
+        List<OneLineReviewLike> findOneLineReviewLike = oneLineReviewLikeRepository.findOneLineReviewLikeByOneLineReviewId(id);
+        oneLineReviewLikeRepository.deleteAll(findOneLineReviewLike);
         oneLineReviewRepository.delete(oneLineReview);
         return ResponseDto.success("success delete");
     }
