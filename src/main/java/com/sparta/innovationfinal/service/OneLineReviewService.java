@@ -38,51 +38,64 @@ public class OneLineReviewService {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
         // 예외처리(한줄평)
-        Movie movie = Movie.builder()
-                .movieId(requestDto.getMovieId())
-                .title(requestDto.getTitle())
-                .posterPath(requestDto.getPosterPath())
-                .build();
-        movieRepository.save(movie);
-
-        if (movie.getMovieId() == 0) {
-            return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
+        // 해당영화 없음
+        Movie findMovie = movieRepository.findMovieByMovieId(requestDto.getMovieId());
+//        Movie movie = null;
+        if (findMovie == null) {
+            Movie movie = Movie.builder()
+                    .movieId(requestDto.getMovieId())
+                    .title(requestDto.getTitle())
+                    .posterPath(requestDto.getPosterPath())
+                    .build();
+            movieRepository.save(movie);
         }
-
-        if (requestDto.getOneLineReviewStar() == 0) {
-            return ResponseDto.fail(ErrorCode.INVALID_STAR);
-        }
+//
+//        if (requestDto.getMovieId() == 0) {
+//            return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
+//        }
+//
+//        if (requestDto.getOneLineReviewStar() == 0) {
+//            return ResponseDto.fail(ErrorCode.INVALID_STAR);
+//        }
 
         Member member = validateMember(request);
         if (null == member) {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
         }
         // 한줄평 작성 로직
-        if(requestDto.getMovieId() == null){
-            return ResponseDto.fail(ErrorCode.INVALID_REVIEW);//movie Id가 없으면 상세정보가 없는 것이니 해당 한줄평 없음으로 변경
-        }
-        OneLineReview oneLineReview = OneLineReview.builder()
-                .member(member)
-                .movie(movie)
-                .oneLineReviewStar(requestDto.getOneLineReviewStar())
-                .oneLineReviewContent(requestDto.getOneLineReviewContent())
-                .build();
+//        if (requestDto.getMovieId() == null) {
+//            return ResponseDto.fail(ErrorCode.INVALID_REVIEW);//movie Id가 없으면 상세정보가 없는 것이니 해당 한줄평 없음으로 변경
+//        }
+        Movie movie = movieRepository.findMovieByMovieIdAndTitle(requestDto.getMovieId(), requestDto.getTitle());
+        OneLineReview findOneLineReview = oneLineReviewRepository.findOneLineReviewByMemberAndMovie(member, movie);
+        OneLineReview oneLineReview;
+        if (findOneLineReview != null) {
+            return ResponseDto.fail(ErrorCode.DUPLICATE_REVIEW);
+        } else {
+            oneLineReview = OneLineReview.builder()
+                    .member(member)
+                    .movie(movie)
+                    .oneLineReviewStar(requestDto.getOneLineReviewStar())
+                    .oneLineReviewContent(requestDto.getOneLineReviewContent())
+                    .build();
 
             oneLineReviewRepository.save(oneLineReview);
-            return ResponseDto.success(OneLineReviewResponseDto.builder()
-                    .movieId(oneLineReview.getMovie().getMovieId())
-                    .title(oneLineReview.getMovie().getTitle())
-                    .posterPath(oneLineReview.getMovie().getPosterPath())
-                    .nickname(oneLineReview.getMember().getNickname())
-                    .oneLineReviewId(oneLineReview.getId())
-                    .oneLineReviewStar(oneLineReview.getOneLineReviewStar())
-                    .oneLineReviewContent(oneLineReview.getOneLineReviewContent())
-                    .createdAt(String.valueOf(oneLineReview.getCreatedAt()))
-                    .modifiedAt(String.valueOf(oneLineReview.getModifiedAt()))
-                    .build()
-            );
-
         }
+
+        return ResponseDto.success(OneLineReviewResponseDto.builder()
+                .movieId(oneLineReview.getMovie().getMovieId())
+                .title(oneLineReview.getMovie().getTitle())
+                .posterPath(oneLineReview.getMovie().getPosterPath())
+                .nickname(oneLineReview.getMember().getNickname())
+                .oneLineReviewId(oneLineReview.getId())
+                .oneLineReviewStar(oneLineReview.getOneLineReviewStar())
+                .oneLineReviewContent(oneLineReview.getOneLineReviewContent())
+                .createdAt(String.valueOf(oneLineReview.getCreatedAt()))
+                .modifiedAt(String.valueOf(oneLineReview.getModifiedAt()))
+                .build()
+        );
+
+    }
 
     @Transactional
     // 2.한줄평 삭제

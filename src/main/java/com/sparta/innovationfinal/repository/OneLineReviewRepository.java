@@ -1,6 +1,7 @@
 package com.sparta.innovationfinal.repository;
 
 import com.sparta.innovationfinal.entity.Member;
+import com.sparta.innovationfinal.entity.Movie;
 import com.sparta.innovationfinal.entity.OneLineReview;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,6 @@ public interface OneLineReviewRepository extends JpaRepository <OneLineReview,Lo
     List<OneLineReview> findOneLineReviewByMember(Member member);
 
     OneLineReview findOneLineReviewById(Long id);
-
+    OneLineReview findOneLineReviewByMemberAndMovie(Member member, Movie movie);
     List<OneLineReview> findTop5ByOrderByLikeNumDesc();
 }
