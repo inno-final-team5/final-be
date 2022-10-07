@@ -131,7 +131,7 @@ public class OneLineReviewLikeService {
 
             for (OneLineReviewLike oneLineReviewLike : oneLineReviewLikes) {
                 responseDtoList.add(OneLineReviewLikeResponseDto.builder()
-                        .oneLineReviewId(oneLineReviewLike.getId())
+                        .oneLineReviewId(oneLineReviewLike.getOneLineReview().getId())
                         .oneLineReviewContent(oneLineReviewLike.getOneLineReview().getOneLineReviewContent())
                         .build());
             }
