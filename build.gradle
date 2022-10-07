@@ -39,13 +39,13 @@ dependencies {
 
     // 크롤링 jsoup
     implementation 'org.jsoup:jsoup:1.15.3'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
-
-    compileOnly group: 'org.apache.poi', name: 'poi', version: '3.11'
-    compileOnly group: 'org.apache.poi', name: 'poi-ooxml', version: '3.11'
-    compileOnly group: 'org.apache.tika', name: 'tika-core', version: '1.22'
-    compileOnly group: 'commons-io', name: 'commons-io', version: '2.4'
+//    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//
+//
+//    compileOnly group: 'org.apache.poi', name: 'poi', version: '3.11'
+//    compileOnly group: 'org.apache.poi', name: 'poi-ooxml', version: '3.11'
+//    compileOnly group: 'org.apache.tika', name: 'tika-core', version: '1.22'
+//    compileOnly group: 'commons-io', name: 'commons-io', version: '2.4'
 
     //다운받은 라이브러리와 json데이터를 처리해주기 위한 json-simple 라이브러리를 추가
     implementation files('libs/kobis-opcl-rest-v1.0.jar')

@@ -1,5 +1,6 @@
 package com.sparta.innovationfinal.api;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -19,6 +20,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"박스오피스 CRUD API"})
 public class ExcelController {
     private final BoxOfficeRepository boxOfficeRepository;
 
