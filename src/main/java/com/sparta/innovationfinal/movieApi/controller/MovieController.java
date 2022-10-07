@@ -3,7 +3,7 @@ package com.sparta.innovationfinal.movieApi.controller;
 import com.sparta.innovationfinal.movieApi.MovieGenre;
 import com.sparta.innovationfinal.movieApi.MovieSearchApi;
 import com.sparta.innovationfinal.movieApi.dto.*;
-import com.sparta.innovationfinal.movieApi.service.MovieService;
+
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"영화 API"})
 public class MovieController {
 
-    private final MovieService movieService;
     private final String successMsg = "성공";
     private final String failMsg = "실패";
 
