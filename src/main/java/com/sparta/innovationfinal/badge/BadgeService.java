@@ -52,6 +52,22 @@ public class BadgeService {
                     .build()
             );
         }
+
+        // 모든배지 획득(배지 개수가 7개)일 시 배지 부여(8번배지)
+//        List<MemberBadge> findMemberBadge = memberBadgeRepository.findMemberBadgeByMember(member);
+        Badge badge = badgeRepository.findBadgeByBadgeName("배지 마스터");
+        MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
+        if (memberBadges.size() == 7 && findMemberBadge == null) {
+            // 맴버배지 테이블에 저장
+            MemberBadge memberBadge = MemberBadge.builder()
+                    .member(member)
+                    .badge(badge)
+                    .build();
+
+            memberBadgeRepository.save(memberBadge);
+
+        }
+
         return ResponseDto.success(responseDtoList);
     }
 
