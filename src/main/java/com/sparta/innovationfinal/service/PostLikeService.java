@@ -1,5 +1,9 @@
 package com.sparta.innovationfinal.service;
 
+import com.sparta.innovationfinal.badge.Badge;
+import com.sparta.innovationfinal.badge.BadgeRepository;
+import com.sparta.innovationfinal.badge.MemberBadge;
+import com.sparta.innovationfinal.badge.MemberBadgeRepository;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.entity.Post;
@@ -22,6 +26,8 @@ public class PostLikeService {
     private final PostLikeRepository postLikeRepository;
     private final TokenProvider tokenProvider;
     private final PostRepository postRepository;
+    private final BadgeRepository badgeRepository;
+    private final MemberBadgeRepository memberBadgeRepository;
 
     // 게시글 좋아요
     @Transactional
@@ -63,6 +69,21 @@ public class PostLikeService {
             // 해당 게시글의 좋아요 수도 업데이트
             List<PostLike> posts = postLikeRepository.findAllByPost(post);
             post.setLikeNum(posts.size());
+
+        }
+
+        // 게시글 좋아요 수가 총 5개 이상일 시 배지 부여(4번배지)
+        List<PostLike> findPostLikeByMember = postLikeRepository.findPostLikeByMember(member);
+        Badge badge = badgeRepository.findBadgeByBadgeName("공감의 달인");
+        MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
+        if (findPostLikeByMember.size() > 4 && findMemberBadge == null) {
+            // 맴버배지 테이블에 저장
+            MemberBadge memberBadge = MemberBadge.builder()
+                    .member(member)
+                    .badge(badge)
+                    .build();
+
+            memberBadgeRepository.save(memberBadge);
 
         }
 
