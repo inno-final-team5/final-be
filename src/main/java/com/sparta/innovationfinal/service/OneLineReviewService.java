@@ -82,15 +82,30 @@ public class OneLineReviewService {
             oneLineReviewRepository.save(oneLineReview);
         }
 
-        // 작성한 한줄평 수 5개 이상일 시 배지 부여(2번배지)
-        List<OneLineReview> findReview = oneLineReviewRepository.findOneLineReviewByMember(member);
-        Badge badge = badgeRepository.findBadgeByBadgeName("어엿한 평론가");
+        // 별점 5점 준 영화 5개일 시 배지 부여(6번 배지)
+        List<OneLineReview> findReviewByFiveStar = oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 5);
+        Badge badge = badgeRepository.findBadgeByBadgeName("후한 평론가");
         MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
-        if (findReview.size() > 4 && findMemberBadge == null) {
+        if (findReviewByFiveStar.size() > 4 && findMemberBadge == null) {
             // 맴버배지 테이블에 저장
             MemberBadge memberBadge = MemberBadge.builder()
                     .member(member)
                     .badge(badge)
+                    .build();
+
+            memberBadgeRepository.save(memberBadge);
+
+        }
+
+        // 작성한 한줄평 수 5개 이상일 시 배지 부여(2번배지)
+        List<OneLineReview> findReview = oneLineReviewRepository.findOneLineReviewByMember(member);
+        Badge badge1 = badgeRepository.findBadgeByBadgeName("어엿한 평론가");
+        MemberBadge findMemberBadge1 = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
+        if (findReview.size() > 4 && findMemberBadge1 == null) {
+            // 맴버배지 테이블에 저장
+            MemberBadge memberBadge = MemberBadge.builder()
+                    .member(member)
+                    .badge(badge1)
                     .build();
 
             memberBadgeRepository.save(memberBadge);
