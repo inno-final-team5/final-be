@@ -1,5 +1,8 @@
 package com.sparta.innovationfinal.service;
 
+import com.sparta.innovationfinal.badge.Badge;
+import com.sparta.innovationfinal.badge.BadgeRepository;
+import com.sparta.innovationfinal.badge.MemberBadge;
 import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.AllPostResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.PostResponseDto;
@@ -9,12 +12,12 @@ import com.sparta.innovationfinal.entity.Post;
 import com.sparta.innovationfinal.entity.PostLike;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
+import com.sparta.innovationfinal.badge.MemberBadgeRepository;
 import com.sparta.innovationfinal.repository.PostLikeRepository;
 import com.sparta.innovationfinal.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -27,6 +30,8 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PostLikeRepository postLikeRepository;
+    private final BadgeRepository badgeRepository;
+    private final MemberBadgeRepository memberBadgeRepository;
     private final TokenProvider tokenProvider;
 
     // 게시글 생성
@@ -65,6 +70,22 @@ public class PostService {
                 // 좋아요 개수 추가
                 .build();
         postRepository.save(post);
+
+        // 작성한 게시글 수 5개 이상일 시 배지 부여(1번배지)
+        List<Post> findPost = postRepository.findPostByMember(member);
+        Badge badge = badgeRepository.findBadgeByBadgeName("커뮤니티 인싸");
+        MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
+        if (findPost.size() > 4 && findMemberBadge == null) {
+            // 맴버배지 테이블에 저장
+            MemberBadge memberBadge = MemberBadge.builder()
+                    .member(member)
+                    .badge(badge)
+                    .build();
+
+            memberBadgeRepository.save(memberBadge);
+
+        }
+
         return ResponseDto.success(
                 PostResponseDto.builder()
                         .postId(post.getId())

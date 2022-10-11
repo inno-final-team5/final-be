@@ -1,5 +1,9 @@
 package com.sparta.innovationfinal.service;
 
+import com.sparta.innovationfinal.badge.Badge;
+import com.sparta.innovationfinal.badge.BadgeRepository;
+import com.sparta.innovationfinal.badge.MemberBadge;
+import com.sparta.innovationfinal.badge.MemberBadgeRepository;
 import com.sparta.innovationfinal.dto.requestDto.OneLineReviewRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.AllOneLineReviewResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.OneLineReviewResponseDto;
@@ -28,6 +32,8 @@ public class OneLineReviewService {
     private final OneLineReviewRepository oneLineReviewRepository;
     private final OneLineReviewLikeRepository oneLineReviewLikeRepository;
     private final MovieRepository movieRepository;
+    private final MemberBadgeRepository memberBadgeRepository;
+    private final BadgeRepository badgeRepository;
     private final TokenProvider tokenProvider;
     @Transactional
     // 1.한줄평 작성 -- 한줄평 이중 작성 예외처리 필요
@@ -43,7 +49,6 @@ public class OneLineReviewService {
         // 예외처리(한줄평)
         // 해당영화 없음
         Movie findMovie = movieRepository.findMovieByMovieId(requestDto.getMovieId());
-//        Movie movie = null;
         if (findMovie == null) {
             Movie movie = Movie.builder()
                     .movieId(requestDto.getMovieId())
@@ -52,14 +57,6 @@ public class OneLineReviewService {
                     .build();
             movieRepository.save(movie);
         }
-//
-//        if (requestDto.getMovieId() == 0) {
-//            return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
-//        }
-//
-//        if (requestDto.getOneLineReviewStar() == 0) {
-//            return ResponseDto.fail(ErrorCode.INVALID_STAR);
-//        }
 
         Member member = validateMember(request);
         if (null == member) {
@@ -83,6 +80,51 @@ public class OneLineReviewService {
                     .build();
 
             oneLineReviewRepository.save(oneLineReview);
+        }
+
+        // 별점 5점 준 영화 5개일 시 배지 부여(6번 배지)
+        List<OneLineReview> findReviewByFiveStar = oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 5);
+        Badge badge = badgeRepository.findBadgeByBadgeName("후한 평론가");
+        MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
+        if (findReviewByFiveStar.size() > 4 && findMemberBadge == null) {
+            // 맴버배지 테이블에 저장
+            MemberBadge memberBadge = MemberBadge.builder()
+                    .member(member)
+                    .badge(badge)
+                    .build();
+
+            memberBadgeRepository.save(memberBadge);
+
+        }
+
+        // 별점 1점 준 영화 5개일 시 배지 부여(7번 배지)
+        List<OneLineReview> findReviewByOneStar = oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 1);
+        Badge badge1 = badgeRepository.findBadgeByBadgeName("야박한 평론가");
+        MemberBadge findMemberBadge1 = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge1);
+        if (findReviewByOneStar.size() > 4 && findMemberBadge1 == null) {
+            // 맴버배지 테이블에 저장
+            MemberBadge memberBadge1 = MemberBadge.builder()
+                    .member(member)
+                    .badge(badge1)
+                    .build();
+
+            memberBadgeRepository.save(memberBadge1);
+
+        }
+
+        // 작성한 한줄평 수 5개 이상일 시 배지 부여(2번배지)
+        List<OneLineReview> findReview = oneLineReviewRepository.findOneLineReviewByMember(member);
+        Badge badge2 = badgeRepository.findBadgeByBadgeName("어엿한 평론가");
+        MemberBadge findMemberBadge2 = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge2);
+        if (findReview.size() > 4 && findMemberBadge2 == null) {
+            // 맴버배지 테이블에 저장
+            MemberBadge memberBadge2 = MemberBadge.builder()
+                    .member(member)
+                    .badge(badge2)
+                    .build();
+
+            memberBadgeRepository.save(memberBadge2);
+
         }
 
         return ResponseDto.success(OneLineReviewResponseDto.builder()
