@@ -1,5 +1,9 @@
 package com.sparta.innovationfinal.service;
 
+import com.sparta.innovationfinal.badge.Badge;
+import com.sparta.innovationfinal.badge.BadgeRepository;
+import com.sparta.innovationfinal.badge.MemberBadge;
+import com.sparta.innovationfinal.badge.MemberBadgeRepository;
 import com.sparta.innovationfinal.dto.requestDto.FavoriteRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.AllFavoriteResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
@@ -25,6 +29,8 @@ public class FavoriteService{
     private final TokenProvider tokenProvider;
     private final FavoriteRepository favoriteRepository;
     private final MovieRepository movieRepository;
+    private final BadgeRepository badgeRepository;
+    private final MemberBadgeRepository memberBadgeRepository;
 
     // 즐겨찾기 추가
     @Transactional
@@ -69,6 +75,21 @@ public class FavoriteService{
                     .build();
 
             favoriteRepository.save(favorite);
+        }
+
+        // 즐겨찾기 한 영화 5개 이상일 시 배지 부여(5번배지)
+        List<Favorite> findFavoriteByMember = favoriteRepository.findFavoriteByMember(member);
+        Badge badge = badgeRepository.findBadgeByBadgeName("영화 수집가");
+        MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
+        if (findFavoriteByMember.size() > 4 && findMemberBadge == null) {
+            // 맴버배지 테이블에 저장
+            MemberBadge memberBadge = MemberBadge.builder()
+                    .member(member)
+                    .badge(badge)
+                    .build();
+
+            memberBadgeRepository.save(memberBadge);
+
         }
 
         return ResponseDto.success("favorite success");
