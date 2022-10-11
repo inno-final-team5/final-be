@@ -1,5 +1,9 @@
 package com.sparta.innovationfinal.service;
 
+import com.sparta.innovationfinal.badge.Badge;
+import com.sparta.innovationfinal.badge.BadgeRepository;
+import com.sparta.innovationfinal.badge.MemberBadge;
+import com.sparta.innovationfinal.badge.MemberBadgeRepository;
 import com.sparta.innovationfinal.dto.responseDto.OneLineReviewLikeResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
@@ -28,6 +32,8 @@ public class OneLineReviewLikeService {
     private final TokenProvider tokenProvider;
     private final OneLineReviewRepository oneLineReviewRepository;
     private final MovieRepository movieRepository;
+    private final BadgeRepository badgeRepository;
+    private final MemberBadgeRepository memberBadgeRepository;
 
     @Transactional
     // 1.한줄평 좋아요
@@ -46,11 +52,7 @@ public class OneLineReviewLikeService {
         if (member == null){
             return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
-//        // 예외처리(영화가 삭제되었을 경우)
-//        Movie movie = movieRepository.findMovieById(id);
-//        if (movie == null){
-//            return ResponseDto.fail(ErrorCode.INVAILD_MOVIE);
-//        }
+
         // 예외처리(한줄평이 없을 경우)
         OneLineReview oneLineReview = oneLineReviewRepository.findOneLineReviewById(id);
         if (oneLineReview == null){
@@ -73,6 +75,22 @@ public class OneLineReviewLikeService {
             List<OneLineReviewLike> oneLineReviewLikes = oneLineReviewLikeRepository.findAllByOneLineReview(oneLineReview);
             oneLineReview.setLikeNum(oneLineReviewLikes.size());
         }
+
+        // 한줄평 좋아요 수가 총 5개 이상일 시 배지 부여(3번배지)
+        List<OneLineReviewLike> findOneLineReviewLike = oneLineReviewLikeRepository.findOneLineReviewLikeByMember(member);
+        Badge badge = badgeRepository.findBadgeByBadgeName("넘치는 동료애");
+        MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
+        if (findOneLineReviewLike.size() > 4 && findMemberBadge == null) {
+            // 맴버배지 테이블에 저장
+            MemberBadge memberBadge = MemberBadge.builder()
+                    .member(member)
+                    .badge(badge)
+                    .build();
+
+            memberBadgeRepository.save(memberBadge);
+
+        }
+
         return ResponseDto.success(OneLineReviewLikeResponseDto.builder()
                 .oneLineReviewId(oneLineReview.getId())
                 .oneLineReviewContent(oneLineReview.getOneLineReviewContent())
