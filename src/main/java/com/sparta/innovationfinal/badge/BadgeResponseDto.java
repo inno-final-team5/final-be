@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BadgeResponseDto {
+    private Long badgeId;
     private String badgeName;
     private String badgeIcon;
     private String badgeInfo;
-    private Boolean badgeCondition;
 }

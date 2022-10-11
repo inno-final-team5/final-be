@@ -11,18 +11,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BadgeService {
     private final BadgeRepository badgeRepository;
-    public ResponseDto<?> getBadge() {
+
+    // 전체 배지 조회
+    public ResponseDto<?> getAllBadge() {
         List<Badge> badgeList = badgeRepository.findAll();
-        List<BadgeResponseDto> badgeResponseDtoList = new ArrayList<>();
+        List<BadgeResponseDto> allBadgeResponseDto = new ArrayList<>();
         for (Badge badge : badgeList) {
-            badgeResponseDtoList.add(
+            allBadgeResponseDto.add(
                     BadgeResponseDto.builder()
+                            .badgeId(badge.getId())
+                            .badgeIcon(badge.getBadgeIcon())
                             .badgeName(badge.getBadgeName())
                             .badgeInfo(badge.getBadgeInfo())
-                            .badgeIcon(badge.getBadgeIcon())
                             .build()
             );
         }
-        return ResponseDto.success(badgeResponseDtoList);
+        return ResponseDto.success(allBadgeResponseDto);
     }
+
+    // 마이페이지 나의 배지 조회
+
 }

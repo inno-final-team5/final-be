@@ -15,7 +15,7 @@ public class BadgeController {
 
     @GetMapping(value = "/badge")
     public ResponseDto<?> getBadge() {
-        return badgeService.getBadge();
+        return badgeService.getAllBadge();
     }
 
     @PostMapping(value = "/badge/add")
