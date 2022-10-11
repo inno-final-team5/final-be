@@ -6,8 +6,10 @@ import com.sparta.innovationfinal.dto.responseDto.PostResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.entity.Post;
+import com.sparta.innovationfinal.entity.PostLike;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
+import com.sparta.innovationfinal.repository.PostLikeRepository;
 import com.sparta.innovationfinal.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final PostLikeRepository postLikeRepository;
     private final TokenProvider tokenProvider;
 
     // 게시글 생성
@@ -242,6 +245,9 @@ public class PostService {
         if (!post.getMember().validateMember(member)) {
             return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
         }
+        // 게시글에 딸린 좋아요 먼저 삭제
+        List<PostLike> findPostLike = postLikeRepository.findPostLikeByPostId(id);
+        postLikeRepository.deleteAll(findPostLike);
         postRepository.delete(post);
         return ResponseDto.success("success delete");
 
