@@ -73,7 +73,7 @@ public class PostService {
 
         // 작성한 게시글 수 5개 이상일 시 배지 부여
         List<Post> findPost = postRepository.findPostByMember(member);
-        Badge badge = badgeRepository.findBadgeById(1L);
+        Badge badge = badgeRepository.findBadgeByBadgeName("커뮤니티 인싸");
         MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
         if (findPost.size() > 4 && findMemberBadge == null) {
             // 맴버배지 테이블에 저장

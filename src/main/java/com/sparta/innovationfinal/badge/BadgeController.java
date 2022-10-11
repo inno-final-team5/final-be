@@ -1,10 +1,6 @@
 package com.sparta.innovationfinal.badge;
 
-import com.sparta.innovationfinal.dto.responseDto.BoxofficeResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
-import com.sparta.innovationfinal.entity.Boxoffice;
-import com.sparta.innovationfinal.repository.BoxofficeRepository;
-import com.sparta.innovationfinal.service.BoxofficeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
