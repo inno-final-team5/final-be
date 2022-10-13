@@ -2,6 +2,7 @@ package com.sparta.innovationfinal.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
+import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,12 @@ public class Member extends Timestamped{
     @Column(unique = true)
     private Long kakaoId;
 
+    @Column(nullable = false)
+    private Long mainBadge = 0L;
+
+    public void update(Long id) {
+        this.mainBadge = id;
+    }
 
 
     public Member(MemberRequestDto memberRequestDto, String password) {

@@ -16,7 +16,7 @@ public class MemberResponseDto {
     private Long memberId;
     private String email;
     private String nickname;
-    //배지도 나중에 추가해야함
+    private Long mainBadge;
     private String createdAt;
     private String modifiedAt;
     
