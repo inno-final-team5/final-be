@@ -25,4 +25,9 @@ public class PostLikeController {
         return postLikeService.postLikeCancel(id, request);
     }
 
+    @GetMapping(value = "/auth/post/like/{id}")
+    public ResponseDto<?> getPostLike(@PathVariable Long id, HttpServletRequest request) {
+        return postLikeService.getPostLike(id, request);
+    }
+
 }
