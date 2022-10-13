@@ -47,6 +47,7 @@ public class MemberService {
                         .memberId(member.getId())
                         .email(member.getEmail())
                         .nickname(member.getNickname())
+                        .mainBadge(member.getMainBadge())
                         .createdAt(String.valueOf(member.getCreatedAt()))
                         .modifiedAt(String.valueOf(member.getModifiedAt()))
                         .build()
@@ -54,12 +55,12 @@ public class MemberService {
     }
 
     @Transactional
-    public ResponseDto<?> login(LoginRequestDto requstDto, HttpServletResponse response) {
-        Member member = isPresentEmail(requstDto.getEmail());
+    public ResponseDto<?> login(LoginRequestDto requestDto, HttpServletResponse response) {
+        Member member = isPresentEmail(requestDto.getEmail());
         if (member == null) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-        if (!member.validatePassword(passwordEncoder, requstDto.getPassword())) {
+        if (!member.validatePassword(passwordEncoder, requestDto.getPassword())) {
             return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
         TokenDto tokenDto = tokenProvider.generateTokenDto(member);
