@@ -14,9 +14,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Badge {
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false)
     private String badgeName;

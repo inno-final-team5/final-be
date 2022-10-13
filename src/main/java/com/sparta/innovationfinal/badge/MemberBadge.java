@@ -2,10 +2,7 @@ package com.sparta.innovationfinal.badge;
 
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.entity.Movie;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 

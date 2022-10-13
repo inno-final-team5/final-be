@@ -2,10 +2,7 @@ package com.sparta.innovationfinal.badge;
 
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +20,21 @@ public class BadgeController {
     @GetMapping(value = "/auth/badge")
     public ResponseDto<?> getMyBadge(HttpServletRequest request) {
         return badgeService.getMyBadge(request);
+    }
+
+    @PostMapping(value = "/auth/badge/{badgeId}")
+    public ResponseDto<?> addMainBadge(@PathVariable Long badgeId, HttpServletRequest request) {
+        return badgeService.addMainBadge(badgeId, request);
+    }
+
+    @DeleteMapping(value = "/auth/badge")
+    public ResponseDto<?> deleteMainBadge(HttpServletRequest request) {
+        return badgeService.cancelMainBadge(request);
+    }
+
+    @GetMapping(value = "/auth/mainBadge")
+    public ResponseDto<?> getMainBadge(HttpServletRequest request) {
+        return badgeService.getMainBadge(request);
     }
 
     @PostMapping(value = "/badge/add")

@@ -10,4 +10,7 @@ import java.util.List;
 public interface MemberBadgeRepository extends JpaRepository<MemberBadge,Long> {
     MemberBadge findMemberBadgeByMemberAndBadge(Member member, Badge badge);
     List<MemberBadge> findMemberBadgeByMember(Member member);
+    MemberBadge findMemberBadgeByBadgeAndMember(Badge badge, Member member);
+//    MemberBadge findMemberBadgeByBadgeId(Badge badge);
+//    MemberBadge findMemberBadgeById(Long id);
 }
