@@ -22,12 +22,12 @@ public class BadgeController {
         return badgeService.getMyBadge(request);
     }
 
-    @PostMapping(value = "/auth/badge/{badgeId}")
+    @PostMapping(value = "/auth/mainBadge/{badgeId}")
     public ResponseDto<?> addMainBadge(@PathVariable Long badgeId, HttpServletRequest request) {
         return badgeService.addMainBadge(badgeId, request);
     }
 
-    @DeleteMapping(value = "/auth/badge")
+    @DeleteMapping(value = "/auth/mainBadge")
     public ResponseDto<?> deleteMainBadge(HttpServletRequest request) {
         return badgeService.cancelMainBadge(request);
     }
