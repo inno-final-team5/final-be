@@ -1,4 +1,4 @@
-package com.sparta.innovationfinal.badge;
+package com.sparta.innovationfinal.dto.responseDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

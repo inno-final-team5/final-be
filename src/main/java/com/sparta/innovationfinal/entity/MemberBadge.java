@@ -1,7 +1,7 @@
-package com.sparta.innovationfinal.badge;
+package com.sparta.innovationfinal.entity;
 
+import com.sparta.innovationfinal.entity.Badge;
 import com.sparta.innovationfinal.entity.Member;
-import com.sparta.innovationfinal.entity.Movie;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,6 +1,10 @@
-package com.sparta.innovationfinal.badge;
+package com.sparta.innovationfinal.controller;
 
+import com.sparta.innovationfinal.repository.BadgeRepository;
+import com.sparta.innovationfinal.dto.responseDto.BadgeResponseDto;
+import com.sparta.innovationfinal.service.BadgeService;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
+import com.sparta.innovationfinal.entity.Badge;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

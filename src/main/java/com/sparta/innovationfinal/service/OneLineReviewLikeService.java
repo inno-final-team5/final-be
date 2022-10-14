@@ -1,13 +1,12 @@
 package com.sparta.innovationfinal.service;
 
-import com.sparta.innovationfinal.badge.Badge;
-import com.sparta.innovationfinal.badge.BadgeRepository;
-import com.sparta.innovationfinal.badge.MemberBadge;
-import com.sparta.innovationfinal.badge.MemberBadgeRepository;
+import com.sparta.innovationfinal.entity.Badge;
+import com.sparta.innovationfinal.repository.BadgeRepository;
+import com.sparta.innovationfinal.entity.MemberBadge;
+import com.sparta.innovationfinal.repository.MemberBadgeRepository;
 import com.sparta.innovationfinal.dto.responseDto.OneLineReviewLikeResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
-import com.sparta.innovationfinal.entity.Movie;
 import com.sparta.innovationfinal.entity.OneLineReview;
 import com.sparta.innovationfinal.entity.OneLineReviewLike;
 import com.sparta.innovationfinal.exception.ErrorCode;
