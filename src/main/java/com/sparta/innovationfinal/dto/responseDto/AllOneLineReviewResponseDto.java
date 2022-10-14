@@ -16,6 +16,7 @@ public class AllOneLineReviewResponseDto {
     private String posterPath;
     private Long reviewId;
     private String nickname;
+    private Long badgeId;
     private int oneLineReviewStar;
     private int likeNum;
     private String oneLineReviewContent;

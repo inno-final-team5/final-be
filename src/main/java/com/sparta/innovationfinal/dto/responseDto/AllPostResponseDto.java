@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class AllPostResponseDto {
     private Long postId;
     private String nickname;
+    private Long badgeId;
     private String postTitle;
     private String postCategory;
     private String createdAt;
