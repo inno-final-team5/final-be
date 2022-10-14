@@ -1,6 +1,6 @@
-package com.sparta.innovationfinal.badge;
+package com.sparta.innovationfinal.entity;
 
-import com.sparta.innovationfinal.dto.responseDto.BoxofficeResponseDto;
+import com.sparta.innovationfinal.dto.responseDto.BadgeResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

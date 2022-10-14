@@ -1,9 +1,14 @@
-package com.sparta.innovationfinal.badge;
+package com.sparta.innovationfinal.service;
 
+import com.sparta.innovationfinal.dto.responseDto.BadgeResponseDto;
+import com.sparta.innovationfinal.entity.MemberBadge;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
+import com.sparta.innovationfinal.entity.Badge;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
+import com.sparta.innovationfinal.repository.BadgeRepository;
+import com.sparta.innovationfinal.repository.MemberBadgeRepository;
 import com.sparta.innovationfinal.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

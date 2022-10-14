@@ -1,5 +1,7 @@
-package com.sparta.innovationfinal.badge;
+package com.sparta.innovationfinal.repository;
 
+import com.sparta.innovationfinal.entity.MemberBadge;
+import com.sparta.innovationfinal.entity.Badge;
 import com.sparta.innovationfinal.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

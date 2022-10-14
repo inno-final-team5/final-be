@@ -1,9 +1,9 @@
 package com.sparta.innovationfinal.service;
 
-import com.sparta.innovationfinal.badge.Badge;
-import com.sparta.innovationfinal.badge.BadgeRepository;
-import com.sparta.innovationfinal.badge.MemberBadge;
-import com.sparta.innovationfinal.badge.MemberBadgeRepository;
+import com.sparta.innovationfinal.entity.Badge;
+import com.sparta.innovationfinal.repository.BadgeRepository;
+import com.sparta.innovationfinal.entity.MemberBadge;
+import com.sparta.innovationfinal.repository.MemberBadgeRepository;
 import com.sparta.innovationfinal.dto.requestDto.FavoriteRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.AllFavoriteResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
