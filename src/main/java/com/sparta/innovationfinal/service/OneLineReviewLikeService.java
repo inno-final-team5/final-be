@@ -112,17 +112,12 @@ public class OneLineReviewLikeService {
         if (member == null){
             return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
-        // 예외처리(영화가 삭제되었을 경우)
-        Movie movie = movieRepository.findMovieById(id);
-//        if (movie.getMovieId() == 0) {
-//            return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
-//        }
+
         // 예외처리(한줄평이 없을 경우)
         OneLineReview oneLineReview = oneLineReviewRepository.findOneLineReviewById(id);
 //        if (oneLineReview == null){
 //            return ResponseDto.fail(ErrorCode.INVALID_REVIEW);
 //        }
-
 
         // 좋아요를 누르지 않았을 경우 오류 코드 반환 -> 눌렀을 경우 좋아요 삭제
         OneLineReviewLike findReviewLike = oneLineReviewLikeRepository.findOneLineReviewLikeByMemberAndOneLineReview(member, oneLineReview);
