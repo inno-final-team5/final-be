@@ -73,7 +73,7 @@ public class KakaoService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "3ad9053f0b013a449d0f5d06dfb86796");
-        body.add("redirect_uri", "http://moviereviewroom.s3-website.ap-northeast-2.amazonaws.com/kakaoLogin");
+        body.add("redirect_uri", "https://www.moviecritic.site/kakaoLogin");
         body.add("code", code);
 
         // HTTP 요청 보내기
