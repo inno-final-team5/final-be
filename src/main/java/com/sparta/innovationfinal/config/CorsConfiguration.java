@@ -11,11 +11,11 @@ public class CorsConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("https://yjcoding.shop","*")
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE", "HEAD")
                 .allowedHeaders("*")
                 .exposedHeaders("*")
-//                .allowCredentials(false)
+                .allowCredentials(false)
                 //pre-flight 리퀘스트를 캐싱
                 .maxAge(3000);
     }
