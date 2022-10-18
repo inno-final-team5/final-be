@@ -25,4 +25,5 @@ public class Favorite extends Timestamped{
     @JoinColumn(name = "movie_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Movie movie;
+
 }
