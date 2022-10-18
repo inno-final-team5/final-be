@@ -1,10 +1,8 @@
 package com.sparta.innovationfinal.movieApi.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,4 +13,6 @@ public class MovieResultResponseDto {
     private Long id;
     private String poster_path;
     private String title;
+    private Long movieId;
+    private int favoriteNum;
 }
