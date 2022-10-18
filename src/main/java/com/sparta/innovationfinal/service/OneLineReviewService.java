@@ -236,7 +236,7 @@ public class OneLineReviewService {
     public ResponseDto<?> getMyReview(HttpServletRequest request){
         Member member = validateMember(request);
         List<OneLineReviewResponseDto> oneLineReviewResponseDtoList = new ArrayList<>();
-        List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findOneLineReviewByMember(member);
+        List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findOneLineReviewByMemberOrderByCreatedAtDesc(member);
 
         for(OneLineReview oneLineReview : oneLineReviewList){
             oneLineReviewResponseDtoList.add(OneLineReviewResponseDto.builder()

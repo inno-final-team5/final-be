@@ -17,7 +17,7 @@ public interface OneLineReviewRepository extends JpaRepository <OneLineReview,Lo
     List<OneLineReview> findAllByMovie_MovieIdOrderByCreatedAtDesc(Long movieId);
 
     List<OneLineReview> findOneLineReviewByMember(Member member);
-
+    List<OneLineReview> findOneLineReviewByMemberOrderByCreatedAtDesc(Member member);
     OneLineReview findOneLineReviewById(Long id);
     OneLineReview findOneLineReviewByMemberAndMovie(Member member, Movie movie);
     List<OneLineReview> findTop5ByOrderByLikeNumDesc();
