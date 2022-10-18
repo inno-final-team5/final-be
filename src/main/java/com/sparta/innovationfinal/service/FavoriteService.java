@@ -121,8 +121,8 @@ public class FavoriteService{
         }
 
         // 해당 즐겨찾기 없음
-        Movie movie = movieRepository.findMovieById(id);
         Favorite favorite = favoriteRepository.findFavoriteById(id);
+
         if (favorite == null) {
             return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
         }
@@ -130,11 +130,11 @@ public class FavoriteService{
             return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
         }
         favoriteRepository.delete(favorite);
-        Movie movie2 = movieRepository.findMovieById(movie.getId());
-        //즐겨찾기 수 카운트 --
-        List<Favorite> favorites = favoriteRepository.findAllByMovie(movie);
+//        Movie movie2 = movieRepository.findMovieById(favorite.getMovie().getMovieId());
+//        //즐겨찾기 수 카운트 --
+//        List<Favorite> favorites = favoriteRepository.findAllByMovie(movie2);
 
-        movie2.setFavoriteNum(favorites.size());
+//        movie2.setFavoriteNum(favorites.size());
         return ResponseDto.success("delete success");
     }
 
