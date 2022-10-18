@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class BoxofficeResponseDto {
 
     private int ranking;
-    private int movieId;
+    private Long movieId;
     private String title;
     private String tag;
     private String poster_path;

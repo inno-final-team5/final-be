@@ -23,7 +23,7 @@ public class Boxoffice {
     private int ranking;
 
     @Column(nullable = false)
-    private int movieId;
+    private Long movieId;
 
     @Column(nullable = false)
     private String title;
