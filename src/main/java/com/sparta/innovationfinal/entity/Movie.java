@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 @Builder
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -22,5 +21,9 @@ public class Movie {
     private String posterPath;
     @Column(nullable = false)
     private int favoriteNum;
+
+    public void update(int size) {
+        this.favoriteNum = size;
+    }
 
 }

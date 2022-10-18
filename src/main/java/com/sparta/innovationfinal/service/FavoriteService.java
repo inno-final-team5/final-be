@@ -81,7 +81,7 @@ public class FavoriteService{
 
             List<Favorite> favorites = favoriteRepository.findAllByMovie(movie);
 
-            movie2.setFavoriteNum(favorites.size());
+            movie2.update(favorites.size());
         }
 
 
@@ -130,11 +130,10 @@ public class FavoriteService{
             return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
         }
         favoriteRepository.delete(favorite);
-//        Movie movie2 = movieRepository.findMovieById(favorite.getMovie().getMovieId());
-//        //즐겨찾기 수 카운트 --
-//        List<Favorite> favorites = favoriteRepository.findAllByMovie(movie2);
+        //즐겨찾기 수 카운트 --
+        List<Favorite> favorites = favoriteRepository.findAllByMovie(favorite.getMovie());
 
-//        movie2.setFavoriteNum(favorites.size());
+        favorite.getMovie().update(favorites.size());
         return ResponseDto.success("delete success");
     }
 
