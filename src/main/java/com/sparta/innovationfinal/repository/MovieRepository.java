@@ -18,5 +18,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     List<Movie> findTop10ByOrderByFavoriteNumDesc();
 
+
 }
 

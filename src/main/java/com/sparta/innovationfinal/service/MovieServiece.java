@@ -2,6 +2,7 @@ package com.sparta.innovationfinal.service;
 
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Movie;
+import com.sparta.innovationfinal.movieApi.dto.MovieFavoriteRankingDto;
 import com.sparta.innovationfinal.movieApi.dto.MovieResultResponseDto;
 import com.sparta.innovationfinal.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,12 @@ public class MovieServiece {
 
     @Transactional
     public ResponseDto<?> getBestFavorite() {
-//        List<Movie> movieList = movieRepository.findTop10ByOrderByFavoriteNumDese();
         List<Movie> movieList = movieRepository.findTop10ByOrderByFavoriteNumDesc();
-        List<MovieResultResponseDto> movieResultResponseDtos = new ArrayList<>();
+        List<MovieFavoriteRankingDto> movieFavoriteRankingDto = new ArrayList<>();
         for (Movie movie : movieList){
-            movieResultResponseDtos.add(
-                    MovieResultResponseDto.builder()
+            movieFavoriteRankingDto.add(
+                    MovieFavoriteRankingDto.builder()
+                            .ranking(movieFavoriteRankingDto.size()+1)
                             .movieId(movie.getMovieId())
                             .id(movie.getId())
                             .poster_path(movie.getPosterPath())
@@ -34,7 +35,7 @@ public class MovieServiece {
                             .build()
             );
         }
-        return ResponseDto.success(movieResultResponseDtos);
+        return ResponseDto.success(movieFavoriteRankingDto);
     }
 
 }

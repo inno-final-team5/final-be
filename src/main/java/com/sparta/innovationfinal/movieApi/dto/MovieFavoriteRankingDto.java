@@ -7,12 +7,12 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieResultResponseDto {
+public class MovieFavoriteRankingDto {
 
-    private Long[] genre_ids;
+    private int ranking;
     private Long id;
     private String poster_path;
     private String title;
     private Long movieId;
-
+    private int favoriteNum;
 }
