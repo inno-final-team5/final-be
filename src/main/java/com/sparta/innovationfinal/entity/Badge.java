@@ -28,7 +28,10 @@ public class Badge {
     private String badgeIcon;
 
     @Column(nullable = false)
-    private int rate;
+    private int badgeCount;
+
+    @Column(nullable = false)
+    private int memberTotal;
 
 
     public Badge(BadgeResponseDto add) {
@@ -36,5 +39,9 @@ public class Badge {
         this.badgeInfo = add.getBadgeInfo();
         this.badgeIcon = add.getBadgeIcon();
 
+    }
+
+    public void update(int size) {
+        this.badgeCount = size;
     }
 }
