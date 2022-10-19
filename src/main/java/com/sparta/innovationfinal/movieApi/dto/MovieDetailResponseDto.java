@@ -14,5 +14,6 @@ public class MovieDetailResponseDto {
     private String overview;
     private String poster_path;
     private String title;
+    private String release_date;
     private boolean favoriteCheck;
 }
