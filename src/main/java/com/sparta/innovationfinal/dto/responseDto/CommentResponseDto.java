@@ -5,22 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostResponseDto {
-    private Long postId;
+public class CommentResponseDto {
+    private Long commentId;
+    private String commentContent;
     private String nickname;
     private Long badgeId;
-    private String postTitle;
-    private String postCategory;
-    private String postContent;
-    private int LikeNum;
-    private List<CommentResponseDto> commentResponseDtoList;
     private String createdAt;
     private String modifiedAt;
 }
