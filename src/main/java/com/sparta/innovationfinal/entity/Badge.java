@@ -27,11 +27,21 @@ public class Badge {
     @Column(nullable = false)
     private String badgeIcon;
 
+    @Column(nullable = false)
+    private int badgeCount;
+
+    @Column(nullable = false)
+    private int memberTotal;
+
 
     public Badge(BadgeResponseDto add) {
         this.badgeName = add.getBadgeName();
         this.badgeInfo = add.getBadgeInfo();
         this.badgeIcon = add.getBadgeIcon();
 
+    }
+
+    public void update(int size) {
+        this.badgeCount = size;
     }
 }
