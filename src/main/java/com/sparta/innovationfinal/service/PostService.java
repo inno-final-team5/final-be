@@ -1,20 +1,14 @@
 package com.sparta.innovationfinal.service;
 
-import com.sparta.innovationfinal.entity.Badge;
-import com.sparta.innovationfinal.repository.BadgeRepository;
-import com.sparta.innovationfinal.entity.MemberBadge;
+import com.sparta.innovationfinal.dto.responseDto.CommentResponseDto;
+import com.sparta.innovationfinal.entity.*;
+import com.sparta.innovationfinal.repository.*;
 import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.AllPostResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.PostResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
-import com.sparta.innovationfinal.entity.Member;
-import com.sparta.innovationfinal.entity.Post;
-import com.sparta.innovationfinal.entity.PostLike;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
-import com.sparta.innovationfinal.repository.MemberBadgeRepository;
-import com.sparta.innovationfinal.repository.PostLikeRepository;
-import com.sparta.innovationfinal.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +26,7 @@ public class PostService {
     private final PostLikeRepository postLikeRepository;
     private final BadgeRepository badgeRepository;
     private final MemberBadgeRepository memberBadgeRepository;
+    private final CommentRepository commentRepository;
     private final TokenProvider tokenProvider;
 
     // 게시글 생성
@@ -191,6 +186,23 @@ public class PostService {
         if (null == post) {
             return ResponseDto.fail(ErrorCode.INVALID_POST);
         }
+
+        List<Comment> commentList = commentRepository.findAllByPost(post);
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+
+        for (Comment comment : commentList) {
+            commentResponseDtoList.add(
+                    CommentResponseDto.builder()
+                            .commentId(comment.getId())
+                            .nickname(comment.getMember().getNickname())
+                            .commentContent(comment.getCommentContent())
+                            .createdAt(String.valueOf(comment.getCreatedAt()))
+                            .modifiedAt(String.valueOf(comment.getModifiedAt()))
+                            .build()
+            );
+        }
+
+
         return ResponseDto.success(
                 PostResponseDto.builder()
                         .postId(post.getId())
@@ -200,6 +212,7 @@ public class PostService {
                         .postCategory(post.getPostCategory())
                         .postContent(post.getPostContent())
                         .LikeNum(post.getLikeNum())
+                        .commentResponseDtoList(commentResponseDtoList)
                         .createdAt(String.valueOf(post.getCreatedAt()))
                         .modifiedAt(String.valueOf(post.getModifiedAt()))
                         .build()
