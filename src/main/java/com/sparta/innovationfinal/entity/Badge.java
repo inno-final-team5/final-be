@@ -27,6 +27,9 @@ public class Badge {
     @Column(nullable = false)
     private String badgeIcon;
 
+    @Column(nullable = false)
+    private int rate;
+
 
     public Badge(BadgeResponseDto add) {
         this.badgeName = add.getBadgeName();
