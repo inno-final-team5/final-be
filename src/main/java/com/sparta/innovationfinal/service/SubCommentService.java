@@ -1,31 +1,37 @@
 package com.sparta.innovationfinal.service;
 
-import com.sparta.innovationfinal.dto.requestDto.CommentRequestDto;
+import com.sparta.innovationfinal.dto.requestDto.SubCommentModifyRequestDto;
+import com.sparta.innovationfinal.dto.requestDto.SubCommentRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.CommentResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
+import com.sparta.innovationfinal.dto.responseDto.SubCommentResponseDto;
 import com.sparta.innovationfinal.entity.Comment;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.entity.Post;
+import com.sparta.innovationfinal.entity.SubComment;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.CommentRepository;
 import com.sparta.innovationfinal.repository.PostRepository;
+import com.sparta.innovationfinal.repository.SubCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CommentService {
+public class SubCommentService {
     private final PostRepository postRepository;
     private final TokenProvider tokenProvider;
     private final CommentRepository commentRepository;
+    private final SubCommentRepository subCommentRepository;
 
-    // 댓글 작성
+    //대댓글작성
     @Transactional
-    public ResponseDto<?> creatComment(Long id, CommentRequestDto requestDto, HttpServletRequest request) {
+    public ResponseDto<?> creatSubComment(SubCommentRequestDto requestDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
@@ -33,7 +39,7 @@ public class CommentService {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
         // 내용 미입력 예외처리
-        if (null == requestDto.getCommentContent()) {
+        if (null == requestDto.getSubCommentContent()) {
             return ResponseDto.fail(ErrorCode.INVALID_CONTENT);
         }
 
@@ -43,35 +49,42 @@ public class CommentService {
         }
 
         // 게시글 없음 예외처리
-        Post post = postRepository.findPostById(id);
+        Post post = postRepository.findPostById(requestDto.getPostId());
         if (post == null) {
             return ResponseDto.fail(ErrorCode.INVALID_POST);
         }
 
-        Comment comment = Comment.builder()
+        // 댓글 없음 예외처리
+        Comment comment = commentRepository.findCommentById(requestDto.getCommentId());
+        if (comment == null) {
+            return ResponseDto.fail(ErrorCode.INVALID_COMMENT);
+        }
+
+        SubComment subComment = SubComment.builder()
                 .post(post)
+                .comment(comment)
                 .member(member)
-                .commentContent(requestDto.getCommentContent())
+                .subCommentContent(requestDto.getSubCommentContent())
                 .build();
 
-        commentRepository.save(comment);
+        subCommentRepository.save(subComment);
 
         return ResponseDto.success(
-                CommentResponseDto.builder()
-                        .commentId(comment.getId())
-                        .commentContent(comment.getCommentContent())
-                        .nickname(comment.getMember().getNickname())
-                        .badgeId(comment.getMember().getMainBadge())
-                        .createdAt(String.valueOf(comment.getCreatedAt()))
-                        .modifiedAt(String.valueOf(comment.getModifiedAt()))
-                        .build()
+                SubCommentResponseDto.builder()
+                .SubCommentId(subComment.getId())
+                .SubCommentContent(subComment.getSubCommentContent())
+                .nickname(subComment.getMember().getNickname())
+                .badgeId(subComment.getMember().getMainBadge())
+                .createdAt(String.valueOf(subComment.getCreatedAt()))
+                .modifiedAt(String.valueOf(subComment.getModifiedAt()))
+                .build()
         );
 
     }
 
-    //댓글 수정
+    // 댓글 수정
     @Transactional
-    public ResponseDto<?> updateComment(Long id, CommentRequestDto requestDto, HttpServletRequest request) {
+    public ResponseDto<?> updateSubComment(Long id, SubCommentModifyRequestDto requestDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
@@ -79,7 +92,7 @@ public class CommentService {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
         // 내용 미입력 예외처리
-        if (null == requestDto.getCommentContent()) {
+        if (null == requestDto.getSubCommentContent()) {
             return ResponseDto.fail(ErrorCode.INVALID_CONTENT);
         }
 
@@ -88,33 +101,32 @@ public class CommentService {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
         }
 
-        // 댓글 없음 예외처리
-        Comment comment = commentRepository.findCommentById(id);
-        if (comment == null) {
-            return ResponseDto.fail(ErrorCode.INVALID_COMMENT);
+        // 대댓글 없음 예외처리
+        SubComment subComment = subCommentRepository.findSubCommentById(id);
+        if (subComment == null) {
+            return ResponseDto.fail(ErrorCode.INVALID_SUBCOMMENT);
         }
-        if (!comment.getMember().validateMember(member)) {
+        if (!subComment.getMember().validateMember(member)) {
             return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
         }
 
-        comment.update(requestDto);
+        subComment.update(requestDto);
 
         return ResponseDto.success(
-                CommentResponseDto.builder()
-                        .commentId(comment.getId())
-                        .commentContent(comment.getCommentContent())
-                        .nickname(comment.getMember().getNickname())
-                        .badgeId(comment.getMember().getMainBadge())
-                        .createdAt(String.valueOf(comment.getCreatedAt()))
-                        .modifiedAt(String.valueOf(comment.getModifiedAt()))
+                SubCommentResponseDto.builder()
+                        .SubCommentId(subComment.getId())
+                        .SubCommentContent(subComment.getSubCommentContent())
+                        .nickname(subComment.getMember().getNickname())
+                        .badgeId(subComment.getMember().getMainBadge())
+                        .createdAt(String.valueOf(subComment.getCreatedAt()))
+                        .modifiedAt(String.valueOf(subComment.getModifiedAt()))
                         .build()
         );
-
     }
 
-    // 댓글 삭제
+    // 대댓글 삭제
     @Transactional
-    public ResponseDto<?> deleteComment(Long id, HttpServletRequest request) {
+    public ResponseDto<?> deleteSubComment(Long id, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
@@ -127,17 +139,19 @@ public class CommentService {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
         }
 
-        Comment comment = commentRepository.findCommentById(id);
-        if (comment == null) {
-            return ResponseDto.fail(ErrorCode.INVALID_COMMENT);
+        // 대댓글 없음 예외처리
+        SubComment subComment = subCommentRepository.findSubCommentById(id);
+        if (subComment == null) {
+            return ResponseDto.fail(ErrorCode.INVALID_SUBCOMMENT);
         }
-        if (!comment.getMember().validateMember(member)) {
+        if (!subComment.getMember().validateMember(member)) {
             return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
         }
-        commentRepository.delete(comment);
-        return ResponseDto.success("success delete");
 
+        subCommentRepository.delete(subComment);
+        return ResponseDto.success("success delete");
     }
+
 
     @Transactional
     public Member validateMember(HttpServletRequest request) {
@@ -146,4 +160,5 @@ public class CommentService {
         }
         return tokenProvider.getMemberFromAuthentication();
     }
+
 }

@@ -23,6 +23,7 @@ public enum ErrorCode {
     INVALID_MEMBER("INVALID_MEMBER","해당 유저 없음"),
     INVALID_POST("INVALID_POST","해당 포스트 없음"),
     INVALID_COMMENT("INVALID_COMMENT","해당 댓글 없음"),
+    INVALID_SUBCOMMENT("INVALID_SUBCOMMENT","해당 대댓글 없음"),
     INVALID_REVIEW("INVALID_REVIEW","해당 한줄평 없음"),
     INVALID_CONTENT("INVALID_CONTENT","해당 내용 없음"),
     INVALID_STAR("INVALID_STAR","한줄평 별점 없음"),

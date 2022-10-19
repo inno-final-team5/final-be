@@ -158,9 +158,6 @@ public class OneLineReviewService {
         }
 
         // 한줄평 삭제 로직
-        // 한줄평에 딸린 좋아요먼저 삭제
-        List<OneLineReviewLike> findOneLineReviewLike = oneLineReviewLikeRepository.findOneLineReviewLikeByOneLineReviewId(id);
-        oneLineReviewLikeRepository.deleteAll(findOneLineReviewLike);
         oneLineReviewRepository.delete(oneLineReview);
         return ResponseDto.success("success delete");
     }

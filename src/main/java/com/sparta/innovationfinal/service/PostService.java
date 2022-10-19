@@ -195,6 +195,7 @@ public class PostService {
                     CommentResponseDto.builder()
                             .commentId(comment.getId())
                             .nickname(comment.getMember().getNickname())
+                            .badgeId(comment.getMember().getMainBadge())
                             .commentContent(comment.getCommentContent())
                             .createdAt(String.valueOf(comment.getCreatedAt()))
                             .modifiedAt(String.valueOf(comment.getModifiedAt()))
@@ -286,9 +287,9 @@ public class PostService {
         if (!post.getMember().validateMember(member)) {
             return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
         }
-        // 게시글에 딸린 좋아요 먼저 삭제
-        List<PostLike> findPostLike = postLikeRepository.findPostLikeByPostId(id);
-        postLikeRepository.deleteAll(findPostLike);
+//        // 게시글에 딸린 좋아요 먼저 삭제
+//        List<PostLike> findPostLike = postLikeRepository.findPostLikeByPostId(id);
+//        postLikeRepository.deleteAll(findPostLike);
         postRepository.delete(post);
         return ResponseDto.success("success delete");
 

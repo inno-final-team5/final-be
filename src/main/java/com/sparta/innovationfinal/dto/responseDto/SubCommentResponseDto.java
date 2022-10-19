@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentResponseDto {
-    private Long commentId;
-    private String commentContent;
+public class SubCommentResponseDto {
+    private Long SubCommentId;
+    private String SubCommentContent;
     private String nickname;
     private Long badgeId;
     private String createdAt;
