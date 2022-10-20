@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SubCommentResponseDto {
-    private Long SubCommentId;
-    private String SubCommentContent;
+    private Long subCommentId;
+    private String subCommentContent;
     private String nickname;
     private Long badgeId;
     private String createdAt;

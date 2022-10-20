@@ -71,8 +71,8 @@ public class SubCommentService {
 
         return ResponseDto.success(
                 SubCommentResponseDto.builder()
-                .SubCommentId(subComment.getId())
-                .SubCommentContent(subComment.getSubCommentContent())
+                .subCommentId(subComment.getId())
+                .subCommentContent(subComment.getSubCommentContent())
                 .nickname(subComment.getMember().getNickname())
                 .badgeId(subComment.getMember().getMainBadge())
                 .createdAt(String.valueOf(subComment.getCreatedAt()))
@@ -114,8 +114,8 @@ public class SubCommentService {
 
         return ResponseDto.success(
                 SubCommentResponseDto.builder()
-                        .SubCommentId(subComment.getId())
-                        .SubCommentContent(subComment.getSubCommentContent())
+                        .subCommentId(subComment.getId())
+                        .subCommentContent(subComment.getSubCommentContent())
                         .nickname(subComment.getMember().getNickname())
                         .badgeId(subComment.getMember().getMainBadge())
                         .createdAt(String.valueOf(subComment.getCreatedAt()))

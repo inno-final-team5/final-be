@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @Getter
 @NoArgsConstructor
@@ -14,6 +16,7 @@ public class CommentResponseDto {
     private String commentContent;
     private String nickname;
     private Long badgeId;
+    List<SubCommentResponseDto> subCommentResponseDtoList;
     private String createdAt;
     private String modifiedAt;
 }
