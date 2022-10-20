@@ -332,6 +332,28 @@ public class PostService {
         return ResponseDto.success(responseDtoList);
     }
 
+    //제목 검색기능
+    public ResponseDto<?> PostSearch(String keyword) {
+
+        List<Post> postList = postRepository.findByPostTitleContaining(keyword);
+
+        List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
+        for (Post post : postList) {
+                allPostResponseDtos.add(
+                        AllPostResponseDto.builder()
+                                .postId(post.getId())
+                                .nickname(post.getMember().getNickname())
+                                .badgeId(post.getMember().getMainBadge())
+                                .postTitle(post.getPostTitle())
+                                .postCategory(post.getPostCategory())
+                                .createdAt(String.valueOf(post.getCreatedAt()))
+                                .build());
+
+        } return ResponseDto.success(allPostResponseDtos);
+    }
+
+
+
     @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
