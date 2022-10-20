@@ -98,6 +98,24 @@ public class MemberService {
         }
     }
 
+//    //회원 탈퇴
+    @Transactional
+    public ResponseDto<?> deleteMember(HttpServletRequest request) {
+
+        Member member = validateMember(request);
+
+        memberRepository.delete(member);
+        return ResponseDto.success("delete success");
+    }
+
+    @Transactional
+    public Member validateMember(HttpServletRequest request) {
+        if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
+            return null;
+        }
+        return tokenProvider.getMemberFromAuthentication();
+    }
+
     @Transactional(readOnly = true)
     public Member isPresentEmail(String email) {
         return (memberRepository.findByEmail(email)).orElse(null);
