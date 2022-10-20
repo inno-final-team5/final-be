@@ -8,10 +8,9 @@ import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.service.MemberService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -40,5 +39,15 @@ public class MemberController {
     @PostMapping(value = "/members/login")
     public ResponseDto<?> login(@RequestBody @Valid LoginRequestDto requestDto, HttpServletResponse response) {
         return memberService.login(requestDto, response);
+    }
+
+    @DeleteMapping(value = "/auth/members/leave")
+    public ResponseDto<?> deleteMember(HttpServletRequest request) {
+        return memberService.deleteMember(request);
+    }
+
+    @PutMapping(value = "/auth/members/nickname")
+    public ResponseDto<?> modifyNickname(@RequestBody NickNameCheckDto checkDto, HttpServletRequest request) {
+        return memberService.modifyNickname(checkDto, request);
     }
 }

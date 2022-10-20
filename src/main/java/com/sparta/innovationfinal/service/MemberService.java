@@ -98,6 +98,55 @@ public class MemberService {
         }
     }
 
+    //회원 탈퇴
+    @Transactional
+    public ResponseDto<?> deleteMember(HttpServletRequest request) {
+
+        Member member = validateMember(request);
+
+        memberRepository.delete(member);
+        return ResponseDto.success("delete success");
+    }
+
+    //회원 정보 수정 - 닉네임
+    @Transactional
+    public ResponseDto<?> modifyNickname(NickNameCheckDto checkDto, HttpServletRequest request) {
+        if (null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        if (null == request.getHeader("Authorization")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+        Member member = validateMember(request);
+        if (null == member) {
+            return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
+        }
+
+        Member findMember = memberRepository.findMemberByEmail(member.getEmail());
+        // 내 닉네임과 같을 경우
+        if (checkDto.getNickname().equals(findMember.getNickname())) {
+            return ResponseDto.fail(ErrorCode.DUPLICATE_MYNICKNAME);
+        }
+        // 닉네임 중복검사
+        if (isPresentNickname(checkDto.getNickname()) != null) {
+            return ResponseDto.fail(ErrorCode.DUPLICATE_NICKNAME);
+        }
+
+        findMember.updateNickname(checkDto.getNickname());
+
+        return ResponseDto.success(checkDto.getNickname());
+
+    }
+
+    @Transactional
+    public Member validateMember(HttpServletRequest request) {
+        if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
+            return null;
+        }
+        return tokenProvider.getMemberFromAuthentication();
+    }
+
     @Transactional(readOnly = true)
     public Member isPresentEmail(String email) {
         return (memberRepository.findByEmail(email)).orElse(null);

@@ -14,6 +14,7 @@ public enum ErrorCode {
     // 회원가입 관련 오류
     DUPLICATE_EMAIL("DUPLICATE_EMAIL","이메일 중복"),
     DUPLICATE_NICKNAME("DUPLICATE_NICKNAME","닉네임 중복"),
+    DUPLICATE_MYNICKNAME("DUPLICATE_MYNICKNAME","나의 닉네임과 같음"),
     DUPLICATE_LIKE("DUPLICATE_LIKE","이미 좋아요 누름"),
     DUPLICATE_REVIEW("DUPLICATE_REVIEW","이미 한줄평 있음"),
 
