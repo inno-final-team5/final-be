@@ -43,7 +43,7 @@ public class OneLineReviewController {
         return oneLineReviewService.getMyReview(request);
     }
 
-    @GetMapping(value = "/one-line-review")
+    @PostMapping(value = "/one-line-review")
     public ResponseDto<?> getAllReviewByNickname(@RequestBody NicknameCheckDto checkDto) {
         return oneLineReviewService.getAllReviewByNickname(checkDto);
     }
