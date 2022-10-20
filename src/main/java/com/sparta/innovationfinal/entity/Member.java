@@ -70,6 +70,10 @@ public class Member extends Timestamped{
         this.mainBadge = id;
     }
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
 
     public Member(MemberRequestDto memberRequestDto, String password) {
         this.email = memberRequestDto.getEmail();
