@@ -1,12 +1,9 @@
 package com.sparta.innovationfinal.service;
 
-import com.sparta.innovationfinal.dto.responseDto.CommentResponseDto;
+import com.sparta.innovationfinal.dto.responseDto.*;
 import com.sparta.innovationfinal.entity.*;
 import com.sparta.innovationfinal.repository.*;
 import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
-import com.sparta.innovationfinal.dto.responseDto.AllPostResponseDto;
-import com.sparta.innovationfinal.dto.responseDto.PostResponseDto;
-import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +24,7 @@ public class PostService {
     private final BadgeRepository badgeRepository;
     private final MemberBadgeRepository memberBadgeRepository;
     private final CommentRepository commentRepository;
+    private final SubCommentRepository subCommentRepository;
     private final TokenProvider tokenProvider;
 
     // 게시글 생성
@@ -177,7 +175,7 @@ public class PostService {
         return ResponseDto.success(allPostResponseDtos);
     }
 
-    
+
 
     // 게시글 개별 조회
     @Transactional(readOnly = true)
@@ -187,16 +185,35 @@ public class PostService {
             return ResponseDto.fail(ErrorCode.INVALID_POST);
         }
 
+        // 댓글 리스트
         List<Comment> commentList = commentRepository.findAllByPost(post);
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
         for (Comment comment : commentList) {
+            List<SubComment> subCommentList = subCommentRepository.findAllByComment(comment);
+            List<SubCommentResponseDto> subCommentResponseDtoList = new ArrayList<>();
+
+            // 댓글 안에 대댓글 리스트
+            for (SubComment subComment : subCommentList) {
+                subCommentResponseDtoList.add(
+                        SubCommentResponseDto.builder()
+                                .subCommentId(subComment.getId())
+                                .subCommentContent(subComment.getSubCommentContent())
+                                .nickname(subComment.getMember().getNickname())
+                                .badgeId(subComment.getMember().getMainBadge())
+                                .createdAt(String.valueOf(subComment.getCreatedAt()))
+                                .modifiedAt(String.valueOf(subComment.getModifiedAt()))
+                                .build()
+                );
+            }
+
             commentResponseDtoList.add(
                     CommentResponseDto.builder()
                             .commentId(comment.getId())
                             .nickname(comment.getMember().getNickname())
                             .badgeId(comment.getMember().getMainBadge())
                             .commentContent(comment.getCommentContent())
+                            .subCommentResponseDtoList(subCommentResponseDtoList)
                             .createdAt(String.valueOf(comment.getCreatedAt()))
                             .modifiedAt(String.valueOf(comment.getModifiedAt()))
                             .build()
@@ -287,9 +304,7 @@ public class PostService {
         if (!post.getMember().validateMember(member)) {
             return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
         }
-//        // 게시글에 딸린 좋아요 먼저 삭제
-//        List<PostLike> findPostLike = postLikeRepository.findPostLikeByPostId(id);
-//        postLikeRepository.deleteAll(findPostLike);
+
         postRepository.delete(post);
         return ResponseDto.success("success delete");
 
