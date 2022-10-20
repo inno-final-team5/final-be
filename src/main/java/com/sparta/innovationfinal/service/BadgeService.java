@@ -163,6 +163,27 @@ public class BadgeService {
                 .badgeInfo(memberBadge.getBadge().getBadgeInfo())
                 .build());
     }
+    public ResponseDto<?> getBadgeSuccess(Long badgeId) {
+        //badgeTotal 수 구하기
+        Badge badgeCategory = badgeRepository.findBadgeById(badgeId);
+        List<MemberBadge> memberBadgeList = memberBadgeRepository.findAllByBadge(badgeCategory);
+
+        List<BadgeResponseDto> allBadgeResponseDto = new ArrayList<>();
+
+
+
+            allBadgeResponseDto.add(
+                    BadgeResponseDto.builder()
+                            .badgeId(badgeCategory.getId())
+                            .badgeIcon(badgeCategory.getBadgeIcon())
+                            .badgeName(badgeCategory.getBadgeName())
+                            .badgeInfo(badgeCategory.getBadgeInfo())
+                            .memberTotal(memberRepository.findAll().size())
+                            .badgeTotal(memberBadgeList.size())
+                            .build()
+            );return ResponseDto.success(allBadgeResponseDto);
+        }
+
 
     @Transactional
     public Member validateMember(HttpServletRequest request) {
@@ -171,5 +192,6 @@ public class BadgeService {
         }
         return tokenProvider.getMemberFromAuthentication();
     }
+
 
 }
