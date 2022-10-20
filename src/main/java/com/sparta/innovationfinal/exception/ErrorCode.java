@@ -14,6 +14,7 @@ public enum ErrorCode {
     // 회원가입 관련 오류
     DUPLICATE_EMAIL("DUPLICATE_EMAIL","이메일 중복"),
     DUPLICATE_NICKNAME("DUPLICATE_NICKNAME","닉네임 중복"),
+    DUPLICATE_MYNICKNAME("DUPLICATE_MYNICKNAME","나의 닉네임과 같음"),
     DUPLICATE_LIKE("DUPLICATE_LIKE","이미 좋아요 누름"),
     DUPLICATE_REVIEW("DUPLICATE_REVIEW","이미 한줄평 있음"),
 
@@ -22,6 +23,8 @@ public enum ErrorCode {
     INVALID_MOVIE("INVALID_MOVIE","해당 영화 없음"),
     INVALID_MEMBER("INVALID_MEMBER","해당 유저 없음"),
     INVALID_POST("INVALID_POST","해당 포스트 없음"),
+    INVALID_COMMENT("INVALID_COMMENT","해당 댓글 없음"),
+    INVALID_SUBCOMMENT("INVALID_SUBCOMMENT","해당 대댓글 없음"),
     INVALID_REVIEW("INVALID_REVIEW","해당 한줄평 없음"),
     INVALID_CONTENT("INVALID_CONTENT","해당 내용 없음"),
     INVALID_STAR("INVALID_STAR","한줄평 별점 없음"),

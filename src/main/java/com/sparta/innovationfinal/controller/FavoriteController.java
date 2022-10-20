@@ -3,6 +3,7 @@ package com.sparta.innovationfinal.controller;
 import com.sparta.innovationfinal.dto.requestDto.FavoriteRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.service.FavoriteService;
+import io.swagger.annotations.Api;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"즐겨찾기 API"})
 public class FavoriteController {
 
     private final FavoriteService favoriteService;

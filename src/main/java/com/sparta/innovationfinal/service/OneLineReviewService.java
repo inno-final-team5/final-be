@@ -1,9 +1,9 @@
 package com.sparta.innovationfinal.service;
 
+import com.sparta.innovationfinal.dto.requestDto.NicknameCheckDto;
 import com.sparta.innovationfinal.entity.Badge;
-import com.sparta.innovationfinal.repository.BadgeRepository;
+import com.sparta.innovationfinal.repository.*;
 import com.sparta.innovationfinal.entity.MemberBadge;
-import com.sparta.innovationfinal.repository.MemberBadgeRepository;
 import com.sparta.innovationfinal.dto.requestDto.OneLineReviewRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.AllOneLineReviewResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.OneLineReviewResponseDto;
@@ -14,9 +14,6 @@ import com.sparta.innovationfinal.entity.OneLineReview;
 import com.sparta.innovationfinal.entity.OneLineReviewLike;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
-import com.sparta.innovationfinal.repository.MovieRepository;
-import com.sparta.innovationfinal.repository.OneLineReviewLikeRepository;
-import com.sparta.innovationfinal.repository.OneLineReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +31,7 @@ public class OneLineReviewService {
     private final MovieRepository movieRepository;
     private final MemberBadgeRepository memberBadgeRepository;
     private final BadgeRepository badgeRepository;
+    private final MemberRepository memberRepository;
     private final TokenProvider tokenProvider;
     @Transactional
     // 1.한줄평 작성 -- 한줄평 이중 작성 예외처리 필요
@@ -158,9 +156,6 @@ public class OneLineReviewService {
         }
 
         // 한줄평 삭제 로직
-        // 한줄평에 딸린 좋아요먼저 삭제
-        List<OneLineReviewLike> findOneLineReviewLike = oneLineReviewLikeRepository.findOneLineReviewLikeByOneLineReviewId(id);
-        oneLineReviewLikeRepository.deleteAll(findOneLineReviewLike);
         oneLineReviewRepository.delete(oneLineReview);
         return ResponseDto.success("success delete");
     }
@@ -212,7 +207,7 @@ public class OneLineReviewService {
             return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
         }
         // 한줄평 전체 조회 로직
-        List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findAllByMovie_MovieIdOrderByCreatedAtDesc(movieId);
+        List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findAllByMovie_MovieIdOrderByLikeNumDesc(movieId);
         List<AllOneLineReviewResponseDto> allOneLineReviewResponseDtos = new ArrayList<>();
         for(OneLineReview oneLineReview : oneLineReviewList){
             allOneLineReviewResponseDtos.add(AllOneLineReviewResponseDto.builder()
@@ -253,6 +248,28 @@ public class OneLineReviewService {
         }
         return ResponseDto.success(oneLineReviewResponseDtoList);
 
+    }
+
+    // 6.유저 별 한줄평 전체 조회
+    public ResponseDto<?> getAllReviewByNickname(NicknameCheckDto checkDto) {
+        Member member = memberRepository.findMemberByNickname(checkDto.getNickname());
+
+        List<OneLineReviewResponseDto> oneLineReviewResponseDtoList = new ArrayList<>();
+        List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findOneLineReviewByMemberOrderByCreatedAtDesc(member);
+
+        for(OneLineReview oneLineReview : oneLineReviewList){
+            oneLineReviewResponseDtoList.add(OneLineReviewResponseDto.builder()
+                    .movieId(oneLineReview.getMovie().getMovieId())
+                    .title(oneLineReview.getMovie().getTitle())
+                    .posterPath(oneLineReview.getMovie().getPosterPath())
+                    .nickname(oneLineReview.getMember().getNickname())
+                    .badgeId(oneLineReview.getMember().getMainBadge())
+                    .oneLineReviewId(oneLineReview.getId())
+                    .oneLineReviewStar(oneLineReview.getOneLineReviewStar())
+                    .oneLineReviewContent(oneLineReview.getOneLineReviewContent())
+                    .build());
+        }
+        return ResponseDto.success(oneLineReviewResponseDtoList);
     }
 
     @Transactional

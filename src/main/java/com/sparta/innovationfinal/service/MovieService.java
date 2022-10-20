@@ -3,7 +3,6 @@ package com.sparta.innovationfinal.service;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Movie;
 import com.sparta.innovationfinal.movieApi.dto.MovieFavoriteRankingDto;
-import com.sparta.innovationfinal.movieApi.dto.MovieResultResponseDto;
 import com.sparta.innovationfinal.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MovieServiece {
+public class MovieService {
 
     private final MovieRepository movieRepository;
 

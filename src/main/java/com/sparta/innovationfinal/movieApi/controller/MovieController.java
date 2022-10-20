@@ -5,7 +5,7 @@ import com.sparta.innovationfinal.movieApi.MovieGenre;
 import com.sparta.innovationfinal.movieApi.MovieSearchApi;
 import com.sparta.innovationfinal.movieApi.dto.*;
 
-import com.sparta.innovationfinal.service.MovieServiece;
+import com.sparta.innovationfinal.service.MovieService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class MovieController {
 
     private final String successMsg = "성공";
     private final String failMsg = "실패";
-    private final MovieServiece movieServiece;
+    private final MovieService movieService;
 
     MovieSearchApi movieSearchApi = new MovieSearchApi();
 
@@ -61,7 +61,7 @@ public class MovieController {
     // 제목 검색 조회
     @GetMapping("/main/bestfavorite")
     public ResponseDto<?> getBestFavorite() {
-        return movieServiece.getBestFavorite();
+        return movieService.getBestFavorite();
     }
 
 }

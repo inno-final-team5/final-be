@@ -4,7 +4,7 @@ import com.sparta.innovationfinal.dto.TokenDto;
 import com.sparta.innovationfinal.dto.requestDto.EmailCheckDto;
 import com.sparta.innovationfinal.dto.requestDto.LoginRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
-import com.sparta.innovationfinal.dto.requestDto.NickNameCheckDto;
+import com.sparta.innovationfinal.dto.requestDto.NicknameCheckDto;
 import com.sparta.innovationfinal.dto.responseDto.MemberResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
@@ -90,12 +90,61 @@ public class MemberService {
 
     // 닉네임 중복체크
     @Transactional
-    public ResponseDto<?> checkNicknameDuplicate(NickNameCheckDto nickname) {
+    public ResponseDto<?> checkNicknameDuplicate(NicknameCheckDto nickname) {
         if (isPresentNickname(nickname.getNickname()) != null) {
             return ResponseDto.fail(ErrorCode.DUPLICATE_NICKNAME);
         } else {
             return ResponseDto.success("사용가능한 닉네임입니다.");
         }
+    }
+
+    //회원 탈퇴
+    @Transactional
+    public ResponseDto<?> deleteMember(HttpServletRequest request) {
+
+        Member member = validateMember(request);
+
+        memberRepository.delete(member);
+        return ResponseDto.success("delete success");
+    }
+
+    //회원 정보 수정 - 닉네임
+    @Transactional
+    public ResponseDto<?> modifyNickname(NicknameCheckDto checkDto, HttpServletRequest request) {
+        if (null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        if (null == request.getHeader("Authorization")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+        Member member = validateMember(request);
+        if (null == member) {
+            return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
+        }
+
+        Member findMember = memberRepository.findMemberByEmail(member.getEmail());
+        // 내 닉네임과 같을 경우
+        if (checkDto.getNickname().equals(findMember.getNickname())) {
+            return ResponseDto.fail(ErrorCode.DUPLICATE_MYNICKNAME);
+        }
+        // 닉네임 중복검사
+        if (isPresentNickname(checkDto.getNickname()) != null) {
+            return ResponseDto.fail(ErrorCode.DUPLICATE_NICKNAME);
+        }
+
+        findMember.updateNickname(checkDto.getNickname());
+
+        return ResponseDto.success(checkDto.getNickname());
+
+    }
+
+    @Transactional
+    public Member validateMember(HttpServletRequest request) {
+        if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
+            return null;
+        }
+        return tokenProvider.getMemberFromAuthentication();
     }
 
     @Transactional(readOnly = true)

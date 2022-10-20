@@ -4,6 +4,7 @@ import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,6 +33,15 @@ public class Post extends Timestamped{
     @JoinColumn(name = "member_id", nullable = false)
     @ManyToOne
     private Member member;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> commentList;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubComment> subCommentList;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostLike> postLikeList;
 
     public void update(PostRequestDto requestDto) {
         this.postTitle = requestDto.getPostTitle();
