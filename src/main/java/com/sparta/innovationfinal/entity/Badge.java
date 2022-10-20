@@ -1,13 +1,10 @@
 package com.sparta.innovationfinal.entity;
 
 import com.sparta.innovationfinal.dto.responseDto.BadgeResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-
+@Builder
 @Entity
 @Getter
 @Setter
@@ -27,21 +24,13 @@ public class Badge {
     @Column(nullable = false)
     private String badgeIcon;
 
-    @Column(nullable = false)
-    private int badgeCount;
-
-    @Column(nullable = false)
-    private int memberTotal;
-
 
     public Badge(BadgeResponseDto add) {
         this.badgeName = add.getBadgeName();
         this.badgeInfo = add.getBadgeInfo();
         this.badgeIcon = add.getBadgeIcon();
 
+
     }
 
-    public void update(int size) {
-        this.badgeCount = size;
-    }
 }
