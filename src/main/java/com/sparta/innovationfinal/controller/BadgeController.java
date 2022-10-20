@@ -5,21 +5,25 @@ import com.sparta.innovationfinal.dto.responseDto.BadgeResponseDto;
 import com.sparta.innovationfinal.service.BadgeService;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Badge;
+
 import io.swagger.annotations.Api;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 
 @RestController
 @RequiredArgsConstructor
 @Api(tags = {"배지 CRUD API"})
 public class BadgeController {
     private final BadgeService badgeService;
+
     private final BadgeRepository badgeRepository;
 
     @GetMapping(value = "/badge")
-    public ResponseDto<?> getBadge() {
+    public ResponseDto<?> getBadge()  {
         return badgeService.getAllBadge();
     }
 
@@ -47,5 +51,11 @@ public class BadgeController {
     public void add(@RequestBody BadgeResponseDto add) {
         Badge badge = new Badge(add);
         badgeRepository.save(badge);
+    }
+
+    @GetMapping(value = "/badge/{badgeId}")
+    public ResponseDto<?> getBadgeSuccess(@PathVariable Long badgeId) {
+
+        return badgeService.getBadgeSuccess(badgeId);
     }
 }
