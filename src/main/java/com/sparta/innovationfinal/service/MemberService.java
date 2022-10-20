@@ -4,7 +4,7 @@ import com.sparta.innovationfinal.dto.TokenDto;
 import com.sparta.innovationfinal.dto.requestDto.EmailCheckDto;
 import com.sparta.innovationfinal.dto.requestDto.LoginRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
-import com.sparta.innovationfinal.dto.requestDto.NickNameCheckDto;
+import com.sparta.innovationfinal.dto.requestDto.NicknameCheckDto;
 import com.sparta.innovationfinal.dto.responseDto.MemberResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
@@ -90,7 +90,7 @@ public class MemberService {
 
     // 닉네임 중복체크
     @Transactional
-    public ResponseDto<?> checkNicknameDuplicate(NickNameCheckDto nickname) {
+    public ResponseDto<?> checkNicknameDuplicate(NicknameCheckDto nickname) {
         if (isPresentNickname(nickname.getNickname()) != null) {
             return ResponseDto.fail(ErrorCode.DUPLICATE_NICKNAME);
         } else {
@@ -110,7 +110,7 @@ public class MemberService {
 
     //회원 정보 수정 - 닉네임
     @Transactional
-    public ResponseDto<?> modifyNickname(NickNameCheckDto checkDto, HttpServletRequest request) {
+    public ResponseDto<?> modifyNickname(NicknameCheckDto checkDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }

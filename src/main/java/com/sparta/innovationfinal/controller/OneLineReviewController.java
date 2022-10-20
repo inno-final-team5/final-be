@@ -1,5 +1,6 @@
 package com.sparta.innovationfinal.controller;
 
+import com.sparta.innovationfinal.dto.requestDto.NicknameCheckDto;
 import com.sparta.innovationfinal.dto.requestDto.OneLineReviewRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.movieApi.MovieSearchApi;
@@ -40,6 +41,11 @@ public class OneLineReviewController {
     @GetMapping(value = "/auth/movie/one-line-review")
     public ResponseDto<?> getMyReview(HttpServletRequest request){
         return oneLineReviewService.getMyReview(request);
+    }
+
+    @GetMapping(value = "/one-line-review")
+    public ResponseDto<?> getAllReviewByNickname(@RequestBody NicknameCheckDto checkDto) {
+        return oneLineReviewService.getAllReviewByNickname(checkDto);
     }
 
     @GetMapping(value = "/main/best")

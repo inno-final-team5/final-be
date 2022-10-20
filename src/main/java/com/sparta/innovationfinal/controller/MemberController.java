@@ -3,7 +3,7 @@ package com.sparta.innovationfinal.controller;
 import com.sparta.innovationfinal.dto.requestDto.LoginRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.EmailCheckDto;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
-import com.sparta.innovationfinal.dto.requestDto.NickNameCheckDto;
+import com.sparta.innovationfinal.dto.requestDto.NicknameCheckDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.service.MemberService;
 import io.swagger.annotations.Api;
@@ -32,7 +32,7 @@ public class MemberController {
     }
 
     @PostMapping(value = "/members/signup/nickname")
-    public ResponseDto<?> nicknameCheck(@RequestBody @Valid NickNameCheckDto nickNameCheckDto) {
+    public ResponseDto<?> nicknameCheck(@RequestBody @Valid NicknameCheckDto nickNameCheckDto) {
         return memberService.checkNicknameDuplicate(nickNameCheckDto);
     }
 
@@ -47,7 +47,7 @@ public class MemberController {
     }
 
     @PutMapping(value = "/auth/members/nickname")
-    public ResponseDto<?> modifyNickname(@RequestBody NickNameCheckDto checkDto, HttpServletRequest request) {
+    public ResponseDto<?> modifyNickname(@RequestBody NicknameCheckDto checkDto, HttpServletRequest request) {
         return memberService.modifyNickname(checkDto, request);
     }
 }
