@@ -1,16 +1,11 @@
 package com.sparta.innovationfinal.controller;
 
 import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
-import com.sparta.innovationfinal.dto.responseDto.PostResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
-import com.sparta.innovationfinal.repository.PostRepository;
 import com.sparta.innovationfinal.service.PostService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -66,4 +61,17 @@ public class PostController {
     public ResponseDto<?> getMyPost(HttpServletRequest request) {
         return postService.getMyPost(request);
     }
+
+//    @GetMapping(value = "/post/search")
+//    public List<Post> PostSearch(@RequestParam (value = "keyword", required = false) String keyword, Model model) {
+//        String searchList = postService.PostSearch(keyword);
+//        model.addAttribute("searchList", searchList);
+//        return "post-PostSearch";
+//    }
+
+    @GetMapping(value = "/post/search")
+    public ResponseDto<?> PostSearch( @RequestParam (value = "keword",required = false) String keyword) {
+        return postService.PostSearch(keyword);
+    }
+
 }

@@ -52,10 +52,4 @@ public class BadgeController {
         Badge badge = new Badge(add);
         badgeRepository.save(badge);
     }
-
-    @GetMapping(value = "/badge/{badgeId}")
-    public ResponseDto<?> getBadgeSuccess(@PathVariable Long badgeId) {
-
-        return badgeService.getBadgeSuccess(badgeId);
-    }
 }
