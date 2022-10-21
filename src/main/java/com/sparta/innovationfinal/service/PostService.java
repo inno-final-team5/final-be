@@ -9,11 +9,11 @@ import com.sparta.innovationfinal.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -332,26 +332,41 @@ public class PostService {
         return ResponseDto.success(responseDtoList);
     }
 
-    //제목 검색기능
-    public ResponseDto<?> PostSearch(String keyword) {
-
-        List<Post> postList = postRepository.findByPostTitleContaining(keyword);
-
-        List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
-        for (Post post : postList) {
-                allPostResponseDtos.add(
-                        AllPostResponseDto.builder()
-                                .postId(post.getId())
-                                .nickname(post.getMember().getNickname())
-                                .badgeId(post.getMember().getMainBadge())
-                                .postTitle(post.getPostTitle())
-                                .postCategory(post.getPostCategory())
-                                .createdAt(String.valueOf(post.getCreatedAt()))
-                                .build());
-
-        } return ResponseDto.success(allPostResponseDtos);
-    }
-
+      public ResponseDto<?> PostSearch(String type, String keyword) {
+          if (type.equals("postTitle")) {
+              List<Post> postList = postRepository.findByPostTitleContaining(keyword);
+              List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
+              for (Post post : postList) {
+                  allPostResponseDtos.add(
+                          AllPostResponseDto.builder()
+                                  .postId(post.getId())
+                                  .nickname(post.getMember().getNickname())
+                                  .badgeId(post.getMember().getMainBadge())
+                                  .postTitle(post.getPostTitle())
+                                  .postContent(post.getPostContent())
+                                  .postCategory(post.getPostCategory())
+                                  .createdAt(String.valueOf(post.getCreatedAt()))
+                                  .build());
+              } return ResponseDto.success(allPostResponseDtos);
+          } else if (type.equals("postContent")) {
+              List<Post> postList = postRepository.findByPostContentContaining(keyword);
+              List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
+              for (Post post : postList) {
+                  allPostResponseDtos.add(
+                          AllPostResponseDto.builder()
+                                  .postId(post.getId())
+                                  .nickname(post.getMember().getNickname())
+                                  .badgeId(post.getMember().getMainBadge())
+                                  .postTitle(post.getPostTitle())
+                                  .postContent(post.getPostContent())
+                                  .postCategory(post.getPostCategory())
+                                  .createdAt(String.valueOf(post.getCreatedAt()))
+                                  .build());
+              } return ResponseDto.success(allPostResponseDtos);
+          } else {
+              return ResponseDto.fail(ErrorCode.BAD_RERUEST);
+          }
+      }
 
 
     @Transactional
