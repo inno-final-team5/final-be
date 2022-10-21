@@ -6,7 +6,6 @@ import com.sparta.innovationfinal.service.PostService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
@@ -19,11 +18,6 @@ public class PostController {
     public ResponseDto<?> creatPost(@RequestBody PostRequestDto requestDto,
                                     HttpServletRequest request) {
         return postService.createPost(requestDto, request);
-    }
-
-    @GetMapping(value = "/post")
-    public ResponseDto<?> getAllPost() {
-        return postService.getAllPost();
     }
 
     @GetMapping(value = "/post/movies")
@@ -62,16 +56,8 @@ public class PostController {
         return postService.getMyPost(request);
     }
 
-//    @GetMapping(value = "/post/search")
-//    public List<Post> PostSearch(@RequestParam (value = "keyword", required = false) String keyword, Model model) {
-//        String searchList = postService.PostSearch(keyword);
-//        model.addAttribute("searchList", searchList);
-//        return "post-PostSearch";
-//    }
-
-    @GetMapping(value = "/post/search")
-    public ResponseDto<?> PostSearch( @RequestParam (value = "keword",required = false) String keyword) {
-        return postService.PostSearch(keyword);
+    @GetMapping(value = "/post/search/{type}")
+    public ResponseDto<?> PostSearch(@PathVariable String type, @RequestParam(value = "keyword", required = false) String keyword) {
+        return postService.PostSearch(type, keyword);
     }
-
 }

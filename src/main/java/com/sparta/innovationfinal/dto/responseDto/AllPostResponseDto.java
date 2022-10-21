@@ -14,6 +14,7 @@ public class AllPostResponseDto {
     private String nickname;
     private Long badgeId;
     private String postTitle;
+    private String postContent;
     private String postCategory;
     private String createdAt;
 }

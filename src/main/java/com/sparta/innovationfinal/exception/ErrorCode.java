@@ -35,7 +35,10 @@ public enum ErrorCode {
     NOT_AUTHOR("NOT_AUTHOR","작성자와 요청자가 다름"),
     DUPLICATE_FAVORITE_MOVIE("DUPLICATE_FAVORITE_MOVIE", "영화가 이미 즐겨찾기에 추가됨"),
     INVALID_BADGE("INVALID_BADGE","멤버가 가지고 있는 배지 없음"),
-    INVALID_MAINBADGE("INVALID_MAINBADGE","메인배지가 설정되어 있지 않음");
+    INVALID_MAINBADGE("INVALID_MAINBADGE","메인배지가 설정되어 있지 않음"),
+
+    //잘못된 요청
+    BAD_RERUEST("BAD_RERUEST","잘못된 요청입니다.");
 
     private final String code;
     private final String message;
