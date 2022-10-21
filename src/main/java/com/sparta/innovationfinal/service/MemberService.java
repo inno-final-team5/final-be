@@ -101,8 +101,17 @@ public class MemberService {
     //회원 탈퇴
     @Transactional
     public ResponseDto<?> deleteMember(HttpServletRequest request) {
+        if (null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
 
+        if (null == request.getHeader("Authorization")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
         Member member = validateMember(request);
+        if (null == member) {
+            return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
+        }
 
         memberRepository.delete(member);
         return ResponseDto.success("delete success");
