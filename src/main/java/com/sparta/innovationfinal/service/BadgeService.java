@@ -32,14 +32,19 @@ public class BadgeService {
         List<Badge> badgeList = badgeRepository.findAll();
         List<BadgeResponseDto> allBadgeResponseDto = new ArrayList<>();
         for (Badge badge : badgeList) {
+            //배지 ID별 달성개수 조회
+            Badge badgeCategory = badgeRepository.findBadgeById(badge.getId());
+            List<MemberBadge> memberBadgeList = memberBadgeRepository.findAllByBadge(badgeCategory);
+
             allBadgeResponseDto.add(
                     BadgeResponseDto.builder()
                             .badgeId(badge.getId())
                             .badgeIcon(badge.getBadgeIcon())
                             .badgeName(badge.getBadgeName())
                             .badgeInfo(badge.getBadgeInfo())
-                            .build()
-            );
+                            .memberTotal(memberRepository.findAll().size())
+                            .badgeTotal(memberBadgeList.size())
+                            .build());
         }
         return ResponseDto.success(allBadgeResponseDto);
     }
@@ -163,27 +168,6 @@ public class BadgeService {
                 .badgeInfo(memberBadge.getBadge().getBadgeInfo())
                 .build());
     }
-    public ResponseDto<?> getBadgeSuccess(Long badgeId) {
-        //badgeTotal 수 구하기
-        Badge badgeCategory = badgeRepository.findBadgeById(badgeId);
-        List<MemberBadge> memberBadgeList = memberBadgeRepository.findAllByBadge(badgeCategory);
-
-        List<BadgeResponseDto> allBadgeResponseDto = new ArrayList<>();
-
-
-
-            allBadgeResponseDto.add(
-                    BadgeResponseDto.builder()
-                            .badgeId(badgeCategory.getId())
-                            .badgeIcon(badgeCategory.getBadgeIcon())
-                            .badgeName(badgeCategory.getBadgeName())
-                            .badgeInfo(badgeCategory.getBadgeInfo())
-                            .memberTotal(memberRepository.findAll().size())
-                            .badgeTotal(memberBadgeList.size())
-                            .build()
-            );return ResponseDto.success(allBadgeResponseDto);
-        }
-
 
     @Transactional
     public Member validateMember(HttpServletRequest request) {

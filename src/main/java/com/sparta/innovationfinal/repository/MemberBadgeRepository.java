@@ -14,6 +14,4 @@ public interface MemberBadgeRepository extends JpaRepository<MemberBadge,Long> {
     List<MemberBadge> findMemberBadgeByMember(Member member);
     MemberBadge findMemberBadgeByBadgeAndMember(Badge badge, Member member);
     List<MemberBadge> findAllByBadge(Badge badge);
-
-
 }
