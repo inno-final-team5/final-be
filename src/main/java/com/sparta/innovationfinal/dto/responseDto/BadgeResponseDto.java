@@ -17,4 +17,13 @@ public class BadgeResponseDto {
     private String badgeInfo;
     private int badgeTotal;
     private int memberTotal;
+    private int postTotal;
+    private int oneReviewTotal;
+    private int oneReviewLikeNumTotal;
+    private int postLikeNumTotal;
+    private int favoriteTotal;
+    private int reviewStarFiveTotal;
+    private int reviewStarOneTotal;
+    private int getBadgeTotal;
+    private int badgeNum;
 }

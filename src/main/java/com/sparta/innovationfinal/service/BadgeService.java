@@ -1,15 +1,14 @@
 package com.sparta.innovationfinal.service;
 
 import com.sparta.innovationfinal.dto.responseDto.BadgeResponseDto;
+import com.sparta.innovationfinal.entity.Favorite;
 import com.sparta.innovationfinal.entity.MemberBadge;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Badge;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
-import com.sparta.innovationfinal.repository.BadgeRepository;
-import com.sparta.innovationfinal.repository.MemberBadgeRepository;
-import com.sparta.innovationfinal.repository.MemberRepository;
+import com.sparta.innovationfinal.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +24,11 @@ public class BadgeService {
     private final MemberBadgeRepository memberBadgeRepository;
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
+    private final PostRepository postRepository;
+    private final PostLikeRepository postLikeRepository;
+    private final OneLineReviewLikeRepository oneLineReviewLikeRepository;
+    private final OneLineReviewRepository oneLineReviewRepository;
+    private final FavoriteRepository favoriteRepository;
 
     // 전체 배지 조회
     @Transactional
@@ -57,14 +61,25 @@ public class BadgeService {
         List<MemberBadge> memberBadges = memberBadgeRepository.findMemberBadgeByMember(member);
 
         for (MemberBadge memberBadge : memberBadges) {
+            int badgeNum = 5;
             responseDtoList.add(BadgeResponseDto.builder()
                     .badgeId(memberBadge.getBadge().getId())
                     .badgeIcon(memberBadge.getBadge().getBadgeIcon())
                     .badgeName(memberBadge.getBadge().getBadgeName())
                     .badgeInfo(memberBadge.getBadge().getBadgeInfo())
+                    .postTotal(postRepository.findPostByMember(member).size())
+                    .oneReviewTotal(oneLineReviewRepository.findOneLineReviewByMember(member).size())
+                    .oneReviewLikeNumTotal(oneLineReviewLikeRepository.findOneLineReviewLikeByMember(member).size())
+                    .postLikeNumTotal(postLikeRepository.findPostLikeByMember(member).size())
+                    .favoriteTotal(favoriteRepository.findFavoriteByMember(member).size())
+                    .reviewStarOneTotal(oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 1).size())
+                    .reviewStarFiveTotal(oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 5).size())
+                    .getBadgeTotal(memberBadgeRepository.findMemberBadgeByMember(member).size())
+                    .badgeNum(badgeNum)
                     .build()
             );
         }
+
 
         // 모든배지 획득(배지 개수가 7개)일 시 배지 부여(8번배지)
         Badge badge = badgeRepository.findBadgeByBadgeName("배지 마스터");
