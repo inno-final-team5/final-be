@@ -56,6 +56,11 @@ public class PostController {
         return postService.getMyPost(request);
     }
 
+    @GetMapping(value = "/post")
+    public ResponseDto<?> getAllPost() {
+        return postService.getAllPost();
+    }
+
     @GetMapping(value = "/post/search/{type}")
     public ResponseDto<?> PostSearch(@PathVariable String type, @RequestParam(value = "keyword", required = false) String keyword) {
         return postService.PostSearch(type, keyword);
