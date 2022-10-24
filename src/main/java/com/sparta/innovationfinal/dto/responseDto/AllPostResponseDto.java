@@ -16,5 +16,7 @@ public class AllPostResponseDto {
     private String postTitle;
     private String postContent;
     private String postCategory;
+    private int commentNum;
+    private int likeNum;
     private String createdAt;
 }

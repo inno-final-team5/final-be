@@ -98,6 +98,8 @@ public class PostService {
     @Transactional
     public ResponseDto<?> getAllPost() {
         List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+//        Post post = postRepository.
+//        List<Comment> commentList = commentRepository.findAllByPost(postList);
         List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
         for (Post post : postList) {
             allPostResponseDtos.add(
@@ -107,6 +109,8 @@ public class PostService {
                             .badgeId(post.getMember().getMainBadge())
                             .postTitle(post.getPostTitle())
                             .postCategory(post.getPostCategory())
+                            .commentNum(post.getCommentList().size())
+                            .likeNum(post.getLikeNum())
                             .createdAt(String.valueOf(post.getCreatedAt()))
                             .build()
             );
@@ -127,6 +131,8 @@ public class PostService {
                             .badgeId(post.getMember().getMainBadge())
                             .postTitle(post.getPostTitle())
                             .postCategory(post.getPostCategory())
+                            .commentNum(post.getCommentList().size())
+                            .likeNum(post.getLikeNum())
                             .createdAt(String.valueOf(post.getCreatedAt()))
                             .build()
             );
@@ -147,6 +153,8 @@ public class PostService {
                             .badgeId(post.getMember().getMainBadge())
                             .postTitle(post.getPostTitle())
                             .postCategory(post.getPostCategory())
+                            .commentNum(post.getCommentList().size())
+                            .likeNum(post.getLikeNum())
                             .createdAt(String.valueOf(post.getCreatedAt()))
                             .build()
             );
@@ -168,6 +176,8 @@ public class PostService {
                             .badgeId(post.getMember().getMainBadge())
                             .postTitle(post.getPostTitle())
                             .postCategory(post.getPostCategory())
+                            .commentNum(post.getCommentList().size())
+                            .likeNum(post.getLikeNum())
                             .createdAt(String.valueOf(post.getCreatedAt()))
                             .build()
             );
@@ -345,6 +355,8 @@ public class PostService {
                                   .postTitle(post.getPostTitle())
                                   .postContent(post.getPostContent())
                                   .postCategory(post.getPostCategory())
+                                  .commentNum(post.getCommentList().size())
+                                  .likeNum(post.getLikeNum())
                                   .createdAt(String.valueOf(post.getCreatedAt()))
                                   .build());
               } return ResponseDto.success(allPostResponseDtos);
@@ -360,6 +372,8 @@ public class PostService {
                                   .postTitle(post.getPostTitle())
                                   .postContent(post.getPostContent())
                                   .postCategory(post.getPostCategory())
+                                  .commentNum(post.getCommentList().size())
+                                  .likeNum(post.getLikeNum())
                                   .createdAt(String.valueOf(post.getCreatedAt()))
                                   .build());
               } return ResponseDto.success(allPostResponseDtos);
