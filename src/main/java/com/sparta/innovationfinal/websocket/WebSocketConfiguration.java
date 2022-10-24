@@ -16,13 +16,14 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("https://www.moviecritic.site/","https://www.moviecritic.site","http://localhost:3000")
+                .setAllowedOrigins("https://yjcoding.shop","https://www.moviecritic.site","*")
                 .withSockJS();
 
 //        registry.addEndpoint("/ws")
 //                .setAllowedOrigins("http://localhost:3000","http://localhost:8080");
-//
+
 //        registry.addEndpoint("/ws")
 //                .setAllowedOrigins("http://localhost:3000","http://localhost:8080").withSockJS();
 

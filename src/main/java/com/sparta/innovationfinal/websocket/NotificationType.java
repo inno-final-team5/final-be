@@ -7,6 +7,4 @@ public enum NotificationType {
 
     postLike, postComment, oneLineReviewLike, badge
 
-//    @JsonProperty("achieve")
-//    achieve
 }
