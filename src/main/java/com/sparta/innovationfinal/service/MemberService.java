@@ -153,6 +153,10 @@ public class MemberService {
     @Transactional
     public ResponseDto<?> getMyActiveInfo(HttpServletRequest request) {
         Member member = validateMember(request);
+        if (null == member) {
+            return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
+        }
+
         List<MemberActiveResponseDto> memberActiveResponseDtos = new ArrayList<>();
         memberActiveResponseDtos.add(MemberActiveResponseDto.builder()
                 .postTotal(postRepository.findPostByMember(member).size())
