@@ -152,6 +152,12 @@ public class MemberService {
     }
     @Transactional
     public ResponseDto<?> getMyActiveInfo(HttpServletRequest request) {
+        if (null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
+        if (null == request.getHeader("Authorization")) {
+            return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
+        }
         Member member = validateMember(request);
         if (null == member) {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
