@@ -1,6 +1,8 @@
 package com.sparta.innovationfinal.websocket.event;
 
+import com.sparta.innovationfinal.entity.Comment;
 import com.sparta.innovationfinal.entity.Member;
+import com.sparta.innovationfinal.entity.Post;
 import com.sparta.innovationfinal.websocket.NotificationType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,14 +13,14 @@ public class PostCommentEvent {
 
     Member receiver;
     Member sender;
-    Object object;
+    Comment comment;
     NotificationType notificationType;
 
-    public PostCommentEvent(Member receiver, Member sender, Object object, NotificationType notificationType) {
+    public PostCommentEvent(Member receiver, Member sender, Comment comment, NotificationType notificationType) {
 
         this.receiver = receiver;
         this.sender = sender;
-        this.object = object;
+        this.comment = comment;
         this.notificationType = notificationType;
     }
 }
