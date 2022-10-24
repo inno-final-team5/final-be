@@ -52,4 +52,5 @@ public class BadgeController {
         Badge badge = new Badge(add);
         badgeRepository.save(badge);
     }
+
 }
