@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,6 +153,7 @@ public class MemberService {
     }
     @Transactional
     public ResponseDto<?> getMyActiveInfo(HttpServletRequest request) {
+
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
@@ -163,21 +165,39 @@ public class MemberService {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
         }
 
-        List<MemberActiveResponseDto> memberActiveResponseDtos = new ArrayList<>();
-        memberActiveResponseDtos.add(MemberActiveResponseDto.builder()
-                .postTotal(postRepository.findPostByMember(member).size())
-                .oneReviewTotal(oneLineReviewRepository.findOneLineReviewByMember(member).size())
-                .oneReviewLikeNumTotal(oneLineReviewLikeRepository.findOneLineReviewLikeByMember(member).size())
-                .postLikeNumTotal(postLikeRepository.findPostLikeByMember(member).size())
-                .favoriteTotal(favoriteRepository.findFavoriteByMember(member).size())
-                .reviewStarOneTotal(oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 1).size())
-                .reviewStarFiveTotal(oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 5).size())
-                .getBadgeTotal(memberBadgeRepository.findMemberBadgeByMember(member).size())
-                .badgeNum(badgeNum).build());
+        List<BadgeResponseDto> responseDtoList = new ArrayList<>();
+        List<MemberBadge> memberBadges = memberBadgeRepository.findMemberBadgeByMember(member);
 
+        for (MemberBadge memberBadge : memberBadges) {
+
+            responseDtoList.add(BadgeResponseDto.builder()
+                    .badgeId(memberBadge.getBadge().getId())
+                    .badgeIcon(memberBadge.getBadge().getBadgeIcon())
+                    .badgeName(memberBadge.getBadge().getBadgeName())
+                    .badgeInfo(memberBadge.getBadge().getBadgeInfo())
+                    .memberTotal(memberRepository.findAll().size())
+                    .badgeTotal(memberBadges.size())
+                    .build()
+            );
+        }
+
+            List<MemberActiveResponseDto> memberActiveResponseDtos = new ArrayList<>();
+            memberActiveResponseDtos.add(MemberActiveResponseDto.builder()
+                    .postTotal(postRepository.findPostByMember(member).size())
+                    .oneReviewTotal(oneLineReviewRepository.findOneLineReviewByMember(member).size())
+                    .oneReviewLikeNumTotal(oneLineReviewLikeRepository.findOneLineReviewLikeByMember(member).size())
+                    .postLikeNumTotal(postLikeRepository.findPostLikeByMember(member).size())
+                    .favoriteTotal(favoriteRepository.findFavoriteByMember(member).size())
+                    .reviewStarOneTotal(oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 1).size())
+                    .reviewStarFiveTotal(oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 5).size())
+                    .getBadgeTotal(memberBadgeRepository.findMemberBadgeByMember(member).size())
+                    .badgeNum(badgeNum)
+                    .badgeResponseDtoList(responseDtoList)
+                    .build());
         return ResponseDto.success(memberActiveResponseDtos);
+        }
 
-    }
+
 
     @Transactional
     public Member validateMember(HttpServletRequest request) {
