@@ -24,11 +24,6 @@ public class BadgeService {
     private final MemberBadgeRepository memberBadgeRepository;
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
-    private final PostRepository postRepository;
-    private final PostLikeRepository postLikeRepository;
-    private final OneLineReviewLikeRepository oneLineReviewLikeRepository;
-    private final OneLineReviewRepository oneLineReviewRepository;
-    private final FavoriteRepository favoriteRepository;
 
     // 전체 배지 조회
     @Transactional
@@ -61,21 +56,12 @@ public class BadgeService {
         List<MemberBadge> memberBadges = memberBadgeRepository.findMemberBadgeByMember(member);
 
         for (MemberBadge memberBadge : memberBadges) {
-            int badgeNum = 5;
+
             responseDtoList.add(BadgeResponseDto.builder()
                     .badgeId(memberBadge.getBadge().getId())
                     .badgeIcon(memberBadge.getBadge().getBadgeIcon())
                     .badgeName(memberBadge.getBadge().getBadgeName())
                     .badgeInfo(memberBadge.getBadge().getBadgeInfo())
-                    .postTotal(postRepository.findPostByMember(member).size())
-                    .oneReviewTotal(oneLineReviewRepository.findOneLineReviewByMember(member).size())
-                    .oneReviewLikeNumTotal(oneLineReviewLikeRepository.findOneLineReviewLikeByMember(member).size())
-                    .postLikeNumTotal(postLikeRepository.findPostLikeByMember(member).size())
-                    .favoriteTotal(favoriteRepository.findFavoriteByMember(member).size())
-                    .reviewStarOneTotal(oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 1).size())
-                    .reviewStarFiveTotal(oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 5).size())
-                    .getBadgeTotal(memberBadgeRepository.findMemberBadgeByMember(member).size())
-                    .badgeNum(badgeNum)
                     .build()
             );
         }

@@ -5,12 +5,15 @@ import com.sparta.innovationfinal.dto.requestDto.EmailCheckDto;
 import com.sparta.innovationfinal.dto.requestDto.LoginRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.NicknameCheckDto;
+import com.sparta.innovationfinal.dto.responseDto.BadgeResponseDto;
+import com.sparta.innovationfinal.dto.responseDto.MemberActiveResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.MemberResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
+import com.sparta.innovationfinal.entity.MemberBadge;
 import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
-import com.sparta.innovationfinal.repository.MemberRepository;
+import com.sparta.innovationfinal.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +31,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+    private final PostRepository postRepository;
+    private final PostLikeRepository postLikeRepository;
+    private final OneLineReviewLikeRepository oneLineReviewLikeRepository;
+    private final OneLineReviewRepository oneLineReviewRepository;
+    private final FavoriteRepository favoriteRepository;
+    private final MemberBadgeRepository memberBadgeRepository;
+    int badgeNum = 5;
 
     // 회원가입
     @Transactional
@@ -145,6 +157,24 @@ public class MemberService {
         findMember.updateNickname(checkDto.getNickname());
 
         return ResponseDto.success(checkDto.getNickname());
+
+    }
+    @Transactional
+    public ResponseDto<?> getMyActiveInfo(HttpServletRequest request) {
+        Member member = validateMember(request);
+        List<MemberActiveResponseDto> memberActiveResponseDtos = new ArrayList<>();
+        memberActiveResponseDtos.add(MemberActiveResponseDto.builder()
+                .postTotal(postRepository.findPostByMember(member).size())
+                .oneReviewTotal(oneLineReviewRepository.findOneLineReviewByMember(member).size())
+                .oneReviewLikeNumTotal(oneLineReviewLikeRepository.findOneLineReviewLikeByMember(member).size())
+                .postLikeNumTotal(postLikeRepository.findPostLikeByMember(member).size())
+                .favoriteTotal(favoriteRepository.findFavoriteByMember(member).size())
+                .reviewStarOneTotal(oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 1).size())
+                .reviewStarFiveTotal(oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 5).size())
+                .getBadgeTotal(memberBadgeRepository.findMemberBadgeByMember(member).size())
+                .badgeNum(badgeNum).build());
+
+        return ResponseDto.success(memberActiveResponseDtos);
 
     }
 

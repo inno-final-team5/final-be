@@ -50,4 +50,8 @@ public class MemberController {
     public ResponseDto<?> modifyNickname(@RequestBody NicknameCheckDto checkDto, HttpServletRequest request) {
         return memberService.modifyNickname(checkDto, request);
     }
+    @GetMapping(value= "auth/active")
+    public ResponseDto<?> getMyActiveInfo(HttpServletRequest request) {
+        return memberService.getMyActiveInfo(request);
+    }
 }
