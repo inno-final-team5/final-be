@@ -2,6 +2,8 @@ package com.sparta.innovationfinal.dto.responseDto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @Getter
 @NoArgsConstructor
@@ -18,4 +20,5 @@ public class MemberActiveResponseDto {
     private int reviewStarOneTotal;
     private int getBadgeTotal;
     private int badgeNum;
+    List<BadgeResponseDto> badgeResponseDtoList;
 }
