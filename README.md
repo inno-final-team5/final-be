@@ -139,7 +139,7 @@ BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](h
 
 ## 🔎 <b>사이트 미리보기</b>
 
-![방구석평론가](https://user-images.githubusercontent.com/83802168/194562175-ebba120e-5cd7-4620-8e30-966bcf364a34.png)
+![image](https://user-images.githubusercontent.com/109592005/197546591-4c4d3d21-f046-455f-b3a4-80810d9ca811.png)
 
 ## 📁 Directory Structure 📂
 </div>
