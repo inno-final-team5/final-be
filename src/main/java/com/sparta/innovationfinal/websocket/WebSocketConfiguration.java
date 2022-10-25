@@ -26,10 +26,10 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("https://www.moviecritic.site/");
+                .setAllowedOrigins("https://www.moviecritic.site","https://yjcoding.shop");
 
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("https://www.moviecritic.site/")
+                .setAllowedOrigins("https://www.moviecritic.site","https://yjcoding.shop")
                 .withSockJS();
 
 //        registry.addEndpoint("/ws")
