@@ -1,23 +1,40 @@
 package com.sparta.innovationfinal.websocket;
 
-import com.sparta.innovationfinal.entity.Member;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.innovationfinal.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import springfox.documentation.service.ResponseMessage;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class NotificationService {
 
     private final NotificationRepository notificationRepository;
+
+    private final ObjectMapper objectMapper;
+    private final SimpMessageSendingOperations messagingTemplate;
+
+
+    public void sendMessage(String publishMessage) {
+        log.info("데이터가 잘 들어오나요? publishMessage={}", publishMessage);
+        try {
+            NotificationResponseDto notification = objectMapper.readValue(publishMessage, NotificationResponseDto.class);
+
+            log.info("notification.getReceiverId() = {}", notification.getReceiverId());
+            log.info("/notification/{}", notification.getReceiverId());
+            messagingTemplate.convertAndSend("/sub/notification/user/" + notification.getReceiverId(), notification);
+        } catch (Exception e) {
+            log.error("Exception {}", e);
+        }
+    }
 
     // 알림 전체 조회
     public List<NotificationResponseDto> getNotification(UserDetailsImpl userDetails) {

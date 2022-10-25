@@ -2,7 +2,6 @@ package com.sparta.innovationfinal.websocket.event;
 
 import com.sparta.innovationfinal.entity.Comment;
 import com.sparta.innovationfinal.entity.Member;
-import com.sparta.innovationfinal.entity.Post;
 import com.sparta.innovationfinal.websocket.NotificationType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
