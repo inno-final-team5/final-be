@@ -13,7 +13,8 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     // jwt 토큰 인증 핸들러
     private final StompHandler stompHandler;
-
+    
+    // 연결하려면 반드시 필요
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
 
@@ -26,10 +27,10 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("https://www.moviecritic.site","https://yjcoding.shop");
+                .setAllowedOrigins("https://www.moviecritic.site","https://yjcoding.shop","http://localhost:3000");
 
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("https://www.moviecritic.site","https://yjcoding.shop")
+                .setAllowedOrigins("https://www.moviecritic.site","https://yjcoding.shop","http://localhost:3000")
                 .withSockJS();
 
 //        registry.addEndpoint("/ws")
