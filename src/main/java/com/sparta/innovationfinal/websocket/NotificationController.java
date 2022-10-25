@@ -24,8 +24,8 @@ public class NotificationController {
     private final SimpMessageSendingOperations messagingTemplate;
 
     @MessageMapping("/{nickname}")
-    public void message(@DestinationVariable("userId") Long userId) {
-        messagingTemplate.convertAndSend("/sub/" + userId, "alarm socket connection completed.");
+    public void message(@DestinationVariable("nickname") String nickname) {
+        messagingTemplate.convertAndSend("/sub/" + nickname, "alarm socket connection completed.");
     }
 
     // 알림 전체조회
