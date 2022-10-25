@@ -23,7 +23,7 @@ public class NotificationController {
     private final NotificationService notificationService;
     private final SimpMessageSendingOperations messagingTemplate;
 
-    @MessageMapping("/{userId}")
+    @MessageMapping("/{nickname}")
     public void message(@DestinationVariable("userId") Long userId) {
         messagingTemplate.convertAndSend("/sub/" + userId, "alarm socket connection completed.");
     }
