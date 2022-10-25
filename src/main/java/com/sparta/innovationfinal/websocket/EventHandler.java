@@ -88,18 +88,21 @@ public class EventHandler {
     private void commentNotification(Member receiver, Member sender, Comment object, NotificationType notificationType) {
         Notification saveNotification = notificationRepository
                 .save(new Notification(receiver, sender.getNickname(), notificationType, object.getId(), object.getCommentContent()));
+        notificationService.notificationByMessage(new NotificationResponseDto(saveNotification));
     }
 
     // 게시글 좋아요
     private void postLikeNotification(Member receiver, Member sender, Post object, NotificationType notificationType) {
         Notification saveNotification = notificationRepository
                 .save(new Notification(receiver, sender.getNickname(), notificationType, object.getId(), object.getPostTitle()));
+        notificationService.notificationByMessage(new NotificationResponseDto(saveNotification));
     }
 
     // 한줄평 좋아요
     private void oneLineReviewNotification(Member receiver, Member sender, OneLineReview object, NotificationType notificationType) {
-        Notification savaNotification = notificationRepository
+        Notification saveNotification = notificationRepository
                 .save(new Notification(receiver, sender.getNickname(), notificationType, object.getId(), object.getOneLineReviewContent()));
+        notificationService.notificationByMessage(new NotificationResponseDto(saveNotification));
     }
 
 
