@@ -77,11 +77,12 @@ public class EventHandler {
         }
     }
 
-//    // 배지 획득 이벤트
-//    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-//    public void BadgeEvent(BadgeEvent badgeEvent) {
-//        Member findMember =
-//    }
+    // 배지 획득 이벤트
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    public void BadgeEvent(BadgeEvent badgeEvent) {
+        Member findMember = badgeEvent.getReceiver();
+    }
+
 
     // 게시글 댓글
     private void commentNotification(Member receiver, Member sender, Comment object, NotificationType notificationType) {

@@ -3,8 +3,10 @@ package com.sparta.innovationfinal.websocket;
 import com.sparta.innovationfinal.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,12 @@ import java.util.List;
 public class NotificationController {
 
     private final NotificationService notificationService;
+    private final SimpMessageSendingOperations messagingTemplate;
+
+    @MessageMapping("/{userId}")
+    public void message(@DestinationVariable("userId") Long userId) {
+        messagingTemplate.convertAndSend("/sub/" + userId, "alarm socket connection completed.");
+    }
 
     // 알림 전체조회
     @GetMapping("/auth/notification")
