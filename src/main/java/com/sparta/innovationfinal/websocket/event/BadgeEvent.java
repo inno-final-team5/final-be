@@ -15,7 +15,7 @@ public class BadgeEvent {
     Badge badge;
     NotificationType notificationType;
 
-    public BadgeEvent(Member receiver, Member sender, Badge badge,NotificationType notificationType) {
+    public BadgeEvent(Member receiver, Member sender, Badge badge, NotificationType notificationType) {
 
         this.receiver = receiver;
         this.sender = sender;
