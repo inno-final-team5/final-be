@@ -5,21 +5,22 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-
-public interface NotificationRepository extends JpaRepository<Notification, Long> {
+public interface NotificationRepository extends JpaRepository <Notification, Long> {
 
     // 알림 전체 조회
-    List<Notification> findAllNotificationsByReceiver(Long MemberId);
+//    List<Notification> findAllByReceiverOrderByCreatedAtDesc(Member member);
 
     // 알림 리딩 전체 확인
-    List<Notification> findNotificationByReceiver(Long MemberId);
+    List<Notification> findAllByReceiver(Member member);
 
     // 리딩 안된 알림 개수 조회
     Long countByReadingStatusAndReceiver(ReadingStatus N, Member member);
 
+    // 알림 전체삭제
+    void deleteByReceiver(Member member);
+
 //    // 알림 삭제
 //    void deleteByNotificationIdAndReceiver(Long notificationId, Member member);
 
-    // 알림 전체삭제
-    void deleteByReceiver(Member member);
+
 }
