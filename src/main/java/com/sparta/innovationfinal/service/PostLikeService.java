@@ -12,7 +12,9 @@ import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.PostLikeRepository;
 import com.sparta.innovationfinal.repository.PostRepository;
+import com.sparta.innovationfinal.websocket.event.PostLikeEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,7 @@ public class PostLikeService {
     private final PostRepository postRepository;
     private final BadgeRepository badgeRepository;
     private final MemberBadgeRepository memberBadgeRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     // 게시글 좋아요
     @Transactional
@@ -51,7 +54,8 @@ public class PostLikeService {
         if (post == null) {
             return ResponseDto.fail(ErrorCode.INVALID_POST);
         }
-        
+
+        Member postWriter = post.getMember();
 
         // 이미 좋아요를 눌렀다면 오류코드 반환
         PostLike findPostLike = postLikeRepository.findPostByMemberAndPost(member, post);
@@ -64,6 +68,7 @@ public class PostLikeService {
                     .build();
 
             postLikeRepository.save(postLike);
+            applicationEventPublisher.publishEvent(new PostLikeEvent(postWriter,member,post));
 
             // 해당 게시글의 좋아요 수도 업데이트
             List<PostLike> posts = postLikeRepository.findAllByPost(post);

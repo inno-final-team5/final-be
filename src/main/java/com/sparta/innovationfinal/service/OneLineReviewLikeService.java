@@ -14,7 +14,10 @@ import com.sparta.innovationfinal.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.MovieRepository;
 import com.sparta.innovationfinal.repository.OneLineReviewLikeRepository;
 import com.sparta.innovationfinal.repository.OneLineReviewRepository;
+import com.sparta.innovationfinal.websocket.event.OneLineReviewLikeEvent;
+import com.sparta.innovationfinal.websocket.event.PostLikeEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +36,7 @@ public class OneLineReviewLikeService {
     private final MovieRepository movieRepository;
     private final BadgeRepository badgeRepository;
     private final MemberBadgeRepository memberBadgeRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Transactional
     // 1.한줄평 좋아요
@@ -58,6 +62,8 @@ public class OneLineReviewLikeService {
             return ResponseDto.fail(ErrorCode.INVALID_REVIEW);
         }
 
+        Member oneLineReviewWriter = oneLineReview.getMember();
+
         // 좋아요를 이미 눌렀을 경우 오류 코드 반환 -> 안눌렀을 경우 좋아요 저장
         OneLineReviewLike findReviewLike = oneLineReviewLikeRepository.findOneLineReviewByMemberAndOneLineReview(member, oneLineReview);
         if (findReviewLike != null) {
@@ -69,6 +75,7 @@ public class OneLineReviewLikeService {
                     .oneLineReview(oneLineReview)
                     .build();
             oneLineReviewLikeRepository.save(oneLineReviewLike);
+            applicationEventPublisher.publishEvent(new OneLineReviewLikeEvent(oneLineReviewWriter,member,oneLineReview));
 
             //좋아요 수 카운트 ++
             List<OneLineReviewLike> oneLineReviewLikes = oneLineReviewLikeRepository.findAllByOneLineReview(oneLineReview);
