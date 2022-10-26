@@ -58,8 +58,6 @@ public class OneLineReviewLikeService {
             return ResponseDto.fail(ErrorCode.INVALID_REVIEW);
         }
 
-        Member oneLineReviewWriter = oneLineReview.getMember();
-
         // 좋아요를 이미 눌렀을 경우 오류 코드 반환 -> 안눌렀을 경우 좋아요 저장
         OneLineReviewLike findReviewLike = oneLineReviewLikeRepository.findOneLineReviewByMemberAndOneLineReview(member, oneLineReview);
         if (findReviewLike != null) {
