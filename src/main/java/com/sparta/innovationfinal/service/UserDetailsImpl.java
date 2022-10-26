@@ -1,19 +1,13 @@
 package com.sparta.innovationfinal.service;
 
 import com.sparta.innovationfinal.entity.Member;
-import com.sparta.innovationfinal.shared.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import com.sparta.innovationfinal.entity.Member;
-import org.springframework.security.core.GrantedAuthority;
-
 import java.util.Collection;
 
 @Data

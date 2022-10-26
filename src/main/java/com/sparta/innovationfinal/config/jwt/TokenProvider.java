@@ -8,7 +8,6 @@ import com.sparta.innovationfinal.entity.RefreshToken;
 import com.sparta.innovationfinal.dto.ErrorCode;
 import com.sparta.innovationfinal.repository.RefreshTokenRepository;
 import com.sparta.innovationfinal.service.UserDetailsImpl;
-import com.sparta.innovationfinal.shared.Authority;
 import io.jsonwebtoken.*;
 
 import lombok.extern.slf4j.Slf4j;
