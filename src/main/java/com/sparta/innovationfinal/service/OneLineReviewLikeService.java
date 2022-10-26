@@ -14,10 +14,7 @@ import com.sparta.innovationfinal.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.MovieRepository;
 import com.sparta.innovationfinal.repository.OneLineReviewLikeRepository;
 import com.sparta.innovationfinal.repository.OneLineReviewRepository;
-import com.sparta.innovationfinal.websocket.event.OneLineReviewLikeEvent;
-import com.sparta.innovationfinal.websocket.event.PostLikeEvent;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

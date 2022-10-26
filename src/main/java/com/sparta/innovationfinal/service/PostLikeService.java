@@ -12,9 +12,7 @@ import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.PostLikeRepository;
 import com.sparta.innovationfinal.repository.PostRepository;
-import com.sparta.innovationfinal.websocket.event.PostLikeEvent;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
