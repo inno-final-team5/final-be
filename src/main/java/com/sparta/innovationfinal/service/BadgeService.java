@@ -79,7 +79,6 @@ public class BadgeService {
             memberBadgeRepository.save(memberBadge);
 
         }
-        
 
         return ResponseDto.success(responseDtoList);
     }
