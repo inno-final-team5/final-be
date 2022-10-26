@@ -10,10 +10,7 @@ import com.sparta.innovationfinal.exception.ErrorCode;
 import com.sparta.innovationfinal.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.CommentRepository;
 import com.sparta.innovationfinal.repository.PostRepository;
-import com.sparta.innovationfinal.websocket.NotificationType;
-import com.sparta.innovationfinal.websocket.event.PostCommentEvent;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +22,6 @@ public class CommentService {
     private final PostRepository postRepository;
     private final TokenProvider tokenProvider;
     private final CommentRepository commentRepository;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
     // 댓글 작성
     @Transactional
@@ -59,7 +55,6 @@ public class CommentService {
                 .build();
 
         commentRepository.save(comment);
-        applicationEventPublisher.publishEvent(new PostCommentEvent(post.getMember(), member, comment, NotificationType.postComment));
 
         return ResponseDto.success(
                 CommentResponseDto.builder()

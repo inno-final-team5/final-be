@@ -36,7 +36,6 @@ public class OneLineReviewLikeService {
     private final MovieRepository movieRepository;
     private final BadgeRepository badgeRepository;
     private final MemberBadgeRepository memberBadgeRepository;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Transactional
     // 1.한줄평 좋아요
@@ -75,7 +74,6 @@ public class OneLineReviewLikeService {
                     .oneLineReview(oneLineReview)
                     .build();
             oneLineReviewLikeRepository.save(oneLineReviewLike);
-            applicationEventPublisher.publishEvent(new OneLineReviewLikeEvent(oneLineReviewWriter,member,oneLineReview));
 
             //좋아요 수 카운트 ++
             List<OneLineReviewLike> oneLineReviewLikes = oneLineReviewLikeRepository.findAllByOneLineReview(oneLineReview);
