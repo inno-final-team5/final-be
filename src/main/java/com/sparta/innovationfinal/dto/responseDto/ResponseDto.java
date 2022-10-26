@@ -1,6 +1,6 @@
 package com.sparta.innovationfinal.dto.responseDto;
 
-import com.sparta.innovationfinal.exception.ErrorCode;
+import com.sparta.innovationfinal.dto.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

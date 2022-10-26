@@ -1,4 +1,4 @@
-package com.sparta.innovationfinal.jwt;
+package com.sparta.innovationfinal.service;
 
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.shared.Authority;
@@ -25,9 +25,9 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(Authority.ROLE_MEMBER.toString());
+//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(Authority.ROLE_MEMBER.toString());
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(authority);
+//        authorities.add(authority);
         return authorities;
     }
 

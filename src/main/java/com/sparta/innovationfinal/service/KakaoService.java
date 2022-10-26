@@ -1,16 +1,16 @@
-package com.sparta.innovationfinal.OAuth;
+package com.sparta.innovationfinal.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.innovationfinal.dto.responseDto.OAuthMemberDto;
+import com.sparta.innovationfinal.dto.responseDto.OAuthResponseDto;
 import com.sparta.innovationfinal.dto.TokenDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
-import com.sparta.innovationfinal.jwt.TokenProvider;
-import com.sparta.innovationfinal.jwt.UserDetailsImpl;
+import com.sparta.innovationfinal.config.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

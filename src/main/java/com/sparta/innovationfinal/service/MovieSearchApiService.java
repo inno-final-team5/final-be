@@ -1,23 +1,24 @@
-package com.sparta.innovationfinal.movieApi;
+package com.sparta.innovationfinal.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.sparta.innovationfinal.movieApi.dto.MovieAllResponseDto;
-import com.sparta.innovationfinal.movieApi.dto.MovieDetailResponseDto;
-import com.sparta.innovationfinal.movieApi.dto.MovieGenreResponseDto;
-import com.sparta.innovationfinal.movieApi.dto.MovieTitleSearchResponseDto;
+import com.sparta.innovationfinal.dto.MovieGenre;
+import com.sparta.innovationfinal.dto.responseDto.MovieAllResponseDto;
+import com.sparta.innovationfinal.dto.responseDto.MovieDetailResponseDto;
+import com.sparta.innovationfinal.dto.responseDto.MovieGenreResponseDto;
+import com.sparta.innovationfinal.dto.responseDto.MovieTitleSearchResponseDto;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
 
-@Component
-public class MovieSearchApi {
+@Service
+public class MovieSearchApiService {
 
     private static final String api_key = "945d4a8051fd9cafc9c1a4bc1e8fcc36";
 

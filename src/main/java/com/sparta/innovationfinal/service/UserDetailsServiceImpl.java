@@ -1,4 +1,4 @@
-package com.sparta.innovationfinal.jwt;
+package com.sparta.innovationfinal.service;
 
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.repository.MemberRepository;

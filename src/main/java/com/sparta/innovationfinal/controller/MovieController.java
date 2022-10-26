@@ -1,9 +1,8 @@
-package com.sparta.innovationfinal.movieApi.controller;
+package com.sparta.innovationfinal.controller;
 
-import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
-import com.sparta.innovationfinal.movieApi.MovieGenre;
-import com.sparta.innovationfinal.movieApi.MovieSearchApi;
-import com.sparta.innovationfinal.movieApi.dto.*;
+import com.sparta.innovationfinal.dto.responseDto.*;
+import com.sparta.innovationfinal.dto.MovieGenre;
+import com.sparta.innovationfinal.service.MovieSearchApiService;
 
 import com.sparta.innovationfinal.service.MovieService;
 import io.swagger.annotations.Api;
@@ -21,13 +20,13 @@ public class MovieController {
     private final String failMsg = "실패";
     private final MovieService movieService;
 
-    MovieSearchApi movieSearchApi = new MovieSearchApi();
+    MovieSearchApiService movieSearchApiService = new MovieSearchApiService();
 
     // 전체 영화 조회
     @GetMapping("/movie/{pageNum}")
     public MovieResponseDto allMovie(@PathVariable int pageNum) throws Exception {
 
-        MovieAllResponseDto movieAllResponseDto = movieSearchApi.movieAllSearch(pageNum);
+        MovieAllResponseDto movieAllResponseDto = movieSearchApiService.movieAllSearch(pageNum);
 
         return new MovieResponseDto(200L, successMsg, movieAllResponseDto);
     }
@@ -35,7 +34,7 @@ public class MovieController {
     @GetMapping("/movie/detail/{movieId}")
     public MovieResponseDto detailMovie(@PathVariable int movieId) throws Exception {
 
-        MovieDetailResponseDto movieDetailResponseDto = movieSearchApi.movieDetailSearch(movieId);
+        MovieDetailResponseDto movieDetailResponseDto = movieSearchApiService.movieDetailSearch(movieId);
 
         return new MovieResponseDto(200L, successMsg, movieDetailResponseDto);
     }
@@ -44,7 +43,7 @@ public class MovieController {
     @GetMapping(value = {"/main/search/{genre}/{pageNum}"})
     public MovieResponseDto genreMovie(@PathVariable MovieGenre genre, @PathVariable int pageNum) throws Exception {
 
-        MovieGenreResponseDto movieGenreResponseDto = movieSearchApi.MovieGenreSearch(genre, pageNum);
+        MovieGenreResponseDto movieGenreResponseDto = movieSearchApiService.MovieGenreSearch(genre, pageNum);
 
         return new MovieResponseDto(200L, successMsg, movieGenreResponseDto);
     }
@@ -53,7 +52,7 @@ public class MovieController {
     @GetMapping("/main/search/title/{movieTitle}/{pageNum}")
     public MovieResponseDto titleSearchMovie(@PathVariable String movieTitle, @PathVariable int pageNum) throws Exception {
 
-        MovieTitleSearchResponseDto movieTitleSearchResponseDto = movieSearchApi.MovieTitleSearch(movieTitle, pageNum);
+        MovieTitleSearchResponseDto movieTitleSearchResponseDto = movieSearchApiService.MovieTitleSearch(movieTitle, pageNum);
 
         return new MovieResponseDto(200L, successMsg, movieTitleSearchResponseDto);
     }

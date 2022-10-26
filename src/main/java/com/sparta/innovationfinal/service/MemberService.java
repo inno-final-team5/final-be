@@ -11,8 +11,8 @@ import com.sparta.innovationfinal.dto.responseDto.MemberResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.entity.MemberBadge;
-import com.sparta.innovationfinal.exception.ErrorCode;
-import com.sparta.innovationfinal.jwt.TokenProvider;
+import com.sparta.innovationfinal.dto.ErrorCode;
+import com.sparta.innovationfinal.config.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.sparta.innovationfinal.movieApi;
+package com.sparta.innovationfinal.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

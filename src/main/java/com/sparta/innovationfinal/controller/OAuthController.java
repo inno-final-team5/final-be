@@ -1,7 +1,8 @@
-package com.sparta.innovationfinal.OAuth;
+package com.sparta.innovationfinal.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
+import com.sparta.innovationfinal.service.KakaoService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
