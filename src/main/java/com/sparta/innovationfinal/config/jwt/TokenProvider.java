@@ -1,6 +1,7 @@
 package com.sparta.innovationfinal.config.jwt;
 
 
+import com.sparta.innovationfinal.dto.Authority;
 import com.sparta.innovationfinal.dto.TokenDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
@@ -54,7 +55,7 @@ public class TokenProvider {
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
                 .setSubject(member.getEmail())
-//                .claim(AUTHORITIES_KEY, Authority.ROLE_MEMBER.toString())
+                .claim(AUTHORITIES_KEY, Authority.ROLE_MEMBER.toString())
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
