@@ -41,6 +41,8 @@ FE &nbsp; - &nbsp; [문지웅](https://github.com/woongsnote) &nbsp; [유민아]
 
 BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](https://github.com/Jei-you) &nbsp; [정수민](https://github.com/jsm6943)
 
+<br>
+
 ## ⚙️ <b>Tech Stack</b>
 
 ### 🛠 <b>FrontEnd</b> 🛠 
@@ -67,6 +69,7 @@ BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](h
 <img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/GitHub Actions-2088FF?style=flat-square&logo=GitHub Actions&logoColor=white"/>
 <img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/AWS-232f3e?style=flat-square&logo=amazon&logoColor=white"/>
 
+<br>
 
 ## <b>📚 주요 기능</b>
 
@@ -147,6 +150,9 @@ BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](h
    - 문제점 : 매개변수로 받은 값은 JPA 반영이 안됨
    - 해결법 : memberRepository에서 member를 찾아서 찾은 member에 update를 적용함
 
+<br>
+</div>
+<div align="center">   
 <br>
 
 ## 🔎 <b>사이트 미리보기</b>
