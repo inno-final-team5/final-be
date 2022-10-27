@@ -42,23 +42,33 @@ FE &nbsp; - &nbsp; [문지웅](https://github.com/woongsnote) &nbsp; [유민아]
 BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](https://github.com/Jei-you) &nbsp; [정수민](https://github.com/jsm6943)
 
 ## ⚙️ <b>Tech Stack</b> 🛠
-<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/Java-yellow?style=flat-square&logo=java&logoColor=white"/>
-<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/Spring-green?style=flat-square&logo=Spring&logoColor=white"/> 
-<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/AWS-232f3e?style=flat-square&logo=amazon&logoColor=white"/>
-<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/JPA-N?style=flat-square&logo=JPA&logoColor=white"/>
-<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/GitHub Actions-2088FF?style=flat-square&logo=GitHub Actions&logoColor=white"/>
-<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/>
-<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/Amazon RDS-527FFF?style=flat-square&logo=Amazon RDS&logoColor=white"/>
-<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/mysql-4479A1?style=flat-square&logo=mysql&logoColor=white"/>
 
+### 🛠 <b>FrontEnd</b> 🛠 
 <br>
 <img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/javascript-yellow?style=flat-square&logo=javascript&logoColor=white"/>
 <img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/React-blue?style=flat-square&logo=React&logoColor=white"/> 
 <img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/React query-FF4154?style=flat-square&logo=React query&logoColor=white"/> 
 <img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/axios-5A29E4?style=flat-square&logo=axios&logoColor=white"/> 
-<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/Redux-764ABC?style=flat-square&logo=Redux&logoColor=white"/> 
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/TailwindCSS-blue?style=flat-square&logo=tailwindcss&logoColor=white"/>
 <img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/React Router-CA4245?style=flat-square&logo=React Router&logoColor=white"/> 
 <img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/CloudFront-black?style=flat-square&logoColor=white"/> 
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/GitHub Actions-2088FF?style=flat-square&logo=GitHub Actions&logoColor=white"/>
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/AWS-232f3e?style=flat-square&logo=amazon&logoColor=white"/>
+
+
+### 🛠 <b>BackEnd</b> 🛠
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/Java-yellow?style=flat-square&logo=java&logoColor=white"/>
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/SpringBoot-green?style=flat-square&logo=SpringBoot&logoColor=white"/>
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/JWT-purple?style=flat-square&logo=jwt&logoColor=white"/>
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/JPA-N?style=flat-square&logo=JPA&logoColor=white"/>
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/OAuth2-gray?style=flat-square&logo=OAuth2&logoColor=white"/>
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/Amazon RDS-527FFF?style=flat-square&logo=Amazon RDS&logoColor=white"/>
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/mysql-4479A1?style=flat-square&logo=mysql&logoColor=white"/>
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/GitHub Actions-2088FF?style=flat-square&logo=GitHub Actions&logoColor=white"/>
+<img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/AWS-232f3e?style=flat-square&logo=amazon&logoColor=white"/>
+
+
+
 
 </div>
 
@@ -106,7 +116,7 @@ BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](h
 ## 🎈 <b>Trouble Shooting</b> 🎈
 <br>
 
-- **CI 적용**
+- **CI/CD 적용**
    - 문제점 : 협업 시 코드배포를 해야하는 상황이 발생함. filezila를 통한 수동배포와 배포 이후 에러가 확인되어 재배포하는 일이 잦아짐에 따라 배포에 많은 시간이 소요됨
    - 해결법 : 배포 자동화를 통해 효율적인 협업 및 작업 환경을 구축하기 위해 Github Actions을 사용하기로 결정
 
@@ -117,6 +127,12 @@ BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](h
    - 해결법 : DB의 리소스 절약을 위해서 필요할 때만 영화데이터를 자체 DB에 저장하기로 결정
 
      <br>
+
+- **토큰 재발급**
+    - 문제점 : 사용자가 활동 중 Access Token이 만료되면 로그아웃되어 로그인 전 화면으로 돌아감
+    - 해결법 : Access Token의 만료기간은 보안상 짧게 설정하되 Refresh Token으로 토큰을 재발급해 로그인 유지를 하기로 결정
+
+      <br>
 
 - **post 작성 시 created, modified 값이 null 값으로 생성**
    - 오류 : post 작성을 했을 때 createAt와 modifiedAt이 null값으로만 출력되는 오류
@@ -135,5 +151,4 @@ BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](h
 
 ![image](https://user-images.githubusercontent.com/109592005/197546591-4c4d3d21-f046-455f-b3a4-80810d9ca811.png)
 
-## 📁 Directory Structure 📂
 </div>
