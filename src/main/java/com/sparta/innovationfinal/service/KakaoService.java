@@ -11,6 +11,7 @@ import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.config.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -37,11 +38,11 @@ public class KakaoService {
     private final MemberRepository memberRepository;
     private final TokenProvider jwtTokenProvider;
 
-//    @Value("${kakao.client-id}")
-//    private String KakaoClientId;
-//
-//    @Value("${kakao.redirect-uri}")
-//    private String KakaoRedirectUri;
+    @Value("${kakao.client-id}")
+    private String KakaoClientId;
+
+    @Value("${kakao.redirect-uri}")
+    private String KakaoRedirectUri;
 
     public ResponseDto<?> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
@@ -72,8 +73,8 @@ public class KakaoService {
         // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", "3ad9053f0b013a449d0f5d06dfb86796");
-        body.add("redirect_uri", "https://www.moviecritic.site/kakaoLogin");
+        body.add("client-id}", KakaoClientId);
+        body.add("redirect_uri", KakaoRedirectUri);
         body.add("code", code);
 
         // HTTP 요청 보내기
