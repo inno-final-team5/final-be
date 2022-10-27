@@ -2,7 +2,6 @@ package com.sparta.innovationfinal.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.innovationfinal.dto.requestDto.MemberRequestDto;
-import com.sparta.innovationfinal.dto.requestDto.PostRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

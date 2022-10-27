@@ -4,7 +4,6 @@ import com.sparta.innovationfinal.dto.requestDto.FavoriteRequestDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.service.FavoriteService;
 import io.swagger.annotations.Api;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

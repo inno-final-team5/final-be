@@ -1,7 +1,5 @@
 package com.sparta.innovationfinal.entity;
 
-
-import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
 import com.sparta.innovationfinal.dto.requestDto.OneLineReviewRequestDto;
 import lombok.*;
 

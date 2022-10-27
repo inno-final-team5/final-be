@@ -9,13 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface OneLineReviewRepository extends JpaRepository <OneLineReview,Long> {
-    static List<OneLineReview> findTop10ByOrderBylikeNumDesc() {
-        return null;
-    }
-
-    List<OneLineReview> findAllByOrderByCreatedAtDesc();
     List<OneLineReview> findAllByMovie_MovieIdOrderByLikeNumDesc(Long movieId);
-
     List<OneLineReview> findOneLineReviewByMember(Member member);
     List<OneLineReview> findOneLineReviewByMemberOrderByCreatedAtDesc(Member member);
     OneLineReview findOneLineReviewById(Long id);

@@ -1,8 +1,6 @@
 package com.sparta.innovationfinal.entity;
 
-import com.sparta.innovationfinal.dto.requestDto.CommentRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.SubCommentModifyRequestDto;
-import com.sparta.innovationfinal.dto.requestDto.SubCommentRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

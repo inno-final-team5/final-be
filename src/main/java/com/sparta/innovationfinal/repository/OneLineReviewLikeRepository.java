@@ -10,12 +10,10 @@ import java.util.List;
 
 @Repository
 public interface OneLineReviewLikeRepository extends JpaRepository<OneLineReviewLike,Long> {
-
     OneLineReviewLike findOneLineReviewLikeByMemberAndOneLineReview(Member member, OneLineReview oneLineReview);
 
     List<OneLineReviewLike> findAllByOneLineReview(OneLineReview oneLineReview);
 
     OneLineReviewLike findOneLineReviewByMemberAndOneLineReview(Member member, OneLineReview oneLineReview);
-    List<OneLineReviewLike> findOneLineReviewLikeByOneLineReviewId(Long id);
     List<OneLineReviewLike> findOneLineReviewLikeByMember(Member member);
 }

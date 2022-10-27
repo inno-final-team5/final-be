@@ -24,13 +24,10 @@ public class Badge {
     @Column(nullable = false)
     private String badgeIcon;
 
-
     public Badge(BadgeResponseDto add) {
         this.badgeName = add.getBadgeName();
         this.badgeInfo = add.getBadgeInfo();
         this.badgeIcon = add.getBadgeIcon();
-
-
     }
 
 }
