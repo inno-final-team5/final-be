@@ -25,6 +25,7 @@ public class BadgeService {
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
 
+    
     // 전체 배지 조회
     @Transactional
     public ResponseDto<?> getAllBadge() {
