@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = {"배지 CRUD API"})
 public class BadgeController {
     private final BadgeService badgeService;
-
     private final BadgeRepository badgeRepository;
 
     @GetMapping(value = "/badge")

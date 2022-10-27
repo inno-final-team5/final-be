@@ -35,19 +35,15 @@ public class PostService {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         if (null == request.getHeader("Authorization")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         if (null == requestDto.getPostCategory()) {
             return ResponseDto.fail(ErrorCode.INVALID_CATEGORY);
         }
-
         if (null == requestDto.getPostContent()) {
             return ResponseDto.fail(ErrorCode.INVALID_CONTENT);
         }
-
         if (null == requestDto.getPostTitle()) {
             return ResponseDto.fail(ErrorCode.INVALID_TITLE);
         }
@@ -181,8 +177,6 @@ public class PostService {
         return ResponseDto.success(allPostResponseDtos);
     }
 
-
-
     // 게시글 개별 조회
     @Transactional(readOnly = true)
     public ResponseDto<?> getPost(Long id) {
@@ -225,8 +219,6 @@ public class PostService {
                             .build()
             );
         }
-
-
         return ResponseDto.success(
                 PostResponseDto.builder()
                         .postId(post.getId())

@@ -51,13 +51,13 @@ public class FavoriteService{
         // 해당 영화 없음
         Movie findMovie = movieRepository.findMovieByMovieId(favoriteRequestDto.getMovieId());
         if (findMovie == null) {
-            Movie movie1 = Movie.builder()
+            Movie saveMovie = Movie.builder()
                     .movieId(favoriteRequestDto.getMovieId())
                     .title(favoriteRequestDto.getTitle())
                     .posterPath(favoriteRequestDto.getPosterPath())
                     .build();
 
-            movieRepository.save(movie1);
+            movieRepository.save(saveMovie);
         }
 
         Movie movie = movieRepository.findMovieByMovieIdAndTitle(favoriteRequestDto.getMovieId(), favoriteRequestDto.getTitle());
@@ -73,12 +73,11 @@ public class FavoriteService{
 
             favoriteRepository.save(favorite);
 
-            Movie movie2 = movieRepository.findMovieById(movie.getId());
+            Movie updateMovie = movieRepository.findMovieById(movie.getId());
             List<Favorite> favorites = favoriteRepository.findAllByMovie(movie);
 
-            movie2.update(favorites.size());
+            updateMovie.update(favorites.size());
         }
-
 
         // 즐겨찾기 한 영화 5개 이상일 시 배지 부여(5번배지)
         List<Favorite> findFavoriteByMember = favoriteRepository.findFavoriteByMember(member);
@@ -100,13 +99,11 @@ public class FavoriteService{
     }
 
     // 즐겨찾기 삭제
-    @Transactional
     public ResponseDto<?> deleteFavorite(Long id, HttpServletRequest request) {
 
         if (null == request.getHeader(("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         if (null == request.getHeader(("Authorization"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
@@ -118,7 +115,6 @@ public class FavoriteService{
 
         // 해당 즐겨찾기 없음
         Favorite favorite = favoriteRepository.findFavoriteById(id);
-
         if (favorite == null) {
             return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
         }
@@ -126,6 +122,7 @@ public class FavoriteService{
             return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
         }
         favoriteRepository.delete(favorite);
+
         //즐겨찾기 수 카운트 --
         List<Favorite> favorites = favoriteRepository.findAllByMovie(favorite.getMovie());
 
@@ -134,7 +131,6 @@ public class FavoriteService{
     }
 
     // 즐겨찾기 전체조회
-    @Transactional
     public ResponseDto<?> getAllFavorite(HttpServletRequest request) {
         Member member = validateMember(request);
         List<Favorite> favoriteList = favoriteRepository.findFavoriteByMemberOrderByCreatedAtDesc(member);
@@ -152,8 +148,6 @@ public class FavoriteService{
         return ResponseDto.success(allFavoriteResponseDtos);
     }
 
-
-    @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return null;

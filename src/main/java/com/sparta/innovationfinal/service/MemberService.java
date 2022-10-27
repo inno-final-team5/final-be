@@ -225,21 +225,4 @@ public class MemberService {
         response.addHeader("Refresh-Token", tokenDto.getRefreshToken());
     }
 
-    public ResponseDto<?> checkMember(HttpServletRequest request) {
-        if(null == request.getHeader("Refresh-Token")) {
-            return ResponseDto.fail(ErrorCode.NULL_TOKEN);
-        }
-
-        if(null == request.getHeader("Authorization")) {
-            return ResponseDto.fail(ErrorCode.NULL_TOKEN);
-        }
-
-        if(!tokenProvider.validateToken(request.getHeader("Refresh-Token")))
-            return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
-
-        Member member = tokenProvider.getMemberFromAuthentication();
-
-        return ResponseDto.success(member);
-    }
-
 }
