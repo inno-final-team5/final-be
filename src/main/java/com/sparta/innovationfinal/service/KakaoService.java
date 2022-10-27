@@ -38,12 +38,6 @@ public class KakaoService {
     private final MemberRepository memberRepository;
     private final TokenProvider jwtTokenProvider;
 
-    //로그인 구현 시 필요한 정보
-    @Value("${kakao.client-id}")
-    private String KakaoClientId;
-    @Value("${kakao.redirect-uri}")
-    private String KakaoRedirectUri;
-
     public ResponseDto<?> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
@@ -73,8 +67,8 @@ public class KakaoService {
         // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client-id}", KakaoClientId);
-        body.add("redirect_uri", KakaoRedirectUri);
+        body.add("client-id}", "3ad9053f0b013a449d0f5d06dfb86796");
+        body.add("redirect_uri", "https://www.moviecritic.site/kakaoLogin");
         body.add("code", code);
 
         // HTTP 요청 보내기
