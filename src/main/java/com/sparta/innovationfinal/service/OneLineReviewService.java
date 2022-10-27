@@ -23,28 +23,28 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class OneLineReviewService {
     private final OneLineReviewRepository oneLineReviewRepository;
-    private final OneLineReviewLikeRepository oneLineReviewLikeRepository;
     private final MovieRepository movieRepository;
     private final MemberBadgeRepository memberBadgeRepository;
     private final BadgeRepository badgeRepository;
     private final MemberRepository memberRepository;
     private final TokenProvider tokenProvider;
-    @Transactional
-    // 1.한줄평 작성 -- 한줄평 이중 작성 예외처리 필요
+
+    private static final int MIN_BADGE_SIZE = 4;
+
+    // 한줄평 작성
     public ResponseDto<?> createReview(OneLineReviewRequestDto requestDto, HttpServletRequest request) {
-        // 로그인 예외처리
         if (null == request.getHeader(("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         if (null == request.getHeader(("Authorization"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-        // 예외처리(한줄평)
-        // 해당영화 없음
+
+        // 해당영화 없음 예외처리
         Movie findMovie = movieRepository.findMovieByMovieId(requestDto.getMovieId());
         if (findMovie == null) {
             Movie movie = Movie.builder()
@@ -59,10 +59,8 @@ public class OneLineReviewService {
         if (null == member) {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
         }
+
         // 한줄평 작성 로직
-//        if (requestDto.getMovieId() == null) {
-//            return ResponseDto.fail(ErrorCode.INVALID_REVIEW);//movie Id가 없으면 상세정보가 없는 것이니 해당 한줄평 없음으로 변경
-//        }
         Movie movie = movieRepository.findMovieByMovieIdAndTitle(requestDto.getMovieId(), requestDto.getTitle());
         OneLineReview findOneLineReview = oneLineReviewRepository.findOneLineReviewByMemberAndMovie(member, movie);
         OneLineReview oneLineReview;
@@ -83,7 +81,7 @@ public class OneLineReviewService {
         List<OneLineReview> findReviewByFiveStar = oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 5);
         Badge badge = badgeRepository.findBadgeByBadgeName("후한 평론가");
         MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
-        if (findReviewByFiveStar.size() > 4 && findMemberBadge == null) {
+        if (findReviewByFiveStar.size() > MIN_BADGE_SIZE && findMemberBadge == null) {
             // 맴버배지 테이블에 저장
             MemberBadge memberBadge = MemberBadge.builder()
                     .member(member)
@@ -98,7 +96,7 @@ public class OneLineReviewService {
         List<OneLineReview> findReviewByOneStar = oneLineReviewRepository.findOneLineReviewByMemberAndOneLineReviewStar(member, 1);
         Badge badge1 = badgeRepository.findBadgeByBadgeName("야박한 평론가");
         MemberBadge findMemberBadge1 = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge1);
-        if (findReviewByOneStar.size() > 4 && findMemberBadge1 == null) {
+        if (findReviewByOneStar.size() > MIN_BADGE_SIZE && findMemberBadge1 == null) {
             // 맴버배지 테이블에 저장
             MemberBadge memberBadge1 = MemberBadge.builder()
                     .member(member)
@@ -113,7 +111,7 @@ public class OneLineReviewService {
         List<OneLineReview> findReview = oneLineReviewRepository.findOneLineReviewByMember(member);
         Badge badge2 = badgeRepository.findBadgeByBadgeName("어엿한 평론가");
         MemberBadge findMemberBadge2 = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge2);
-        if (findReview.size() > 4 && findMemberBadge2 == null) {
+        if (findReview.size() > MIN_BADGE_SIZE && findMemberBadge2 == null) {
             // 맴버배지 테이블에 저장
             MemberBadge memberBadge2 = MemberBadge.builder()
                     .member(member)
@@ -140,8 +138,7 @@ public class OneLineReviewService {
 
     }
 
-    @Transactional
-    // 2.한줄평 삭제
+    // 한줄평 삭제
     public ResponseDto<?> deleteReview(Long id, HttpServletRequest request){
         OneLineReview oneLineReview = isPresentOneLineReview(id);
         if(oneLineReview == null){
@@ -159,8 +156,7 @@ public class OneLineReviewService {
         return ResponseDto.success("success delete");
     }
 
-    @Transactional
-    // 3.한줄평 수정
+    // 한줄평 수정
     public ResponseDto<?> updateReview(Long movieId, OneLineReviewRequestDto requestDto, HttpServletRequest request){
         // 예외처리(한줄평)
         if (movieId == 0){
@@ -199,7 +195,7 @@ public class OneLineReviewService {
         );
     }
 
-    // 4.한줄평 전체 조회
+    // 한줄평 전체 조회
     public ResponseDto<?> getAllReview(Long movieId) {
         // 예외처리
         if (movieId == null){
@@ -226,7 +222,7 @@ public class OneLineReviewService {
         return ResponseDto.success(allOneLineReviewResponseDtos);
     }
 
-    // 5.즐겨찾기 나의 한줄평 전체 조회
+    // 즐겨찾기 나의 한줄평 전체 조회
     public ResponseDto<?> getMyReview(HttpServletRequest request){
         Member member = validateMember(request);
         List<OneLineReviewResponseDto> oneLineReviewResponseDtoList = new ArrayList<>();
@@ -249,7 +245,7 @@ public class OneLineReviewService {
 
     }
 
-    // 6.유저 별 한줄평 전체 조회
+    // 유저 별 한줄평 전체 조회
     public ResponseDto<?> getAllReviewByNickname(NicknameCheckDto checkDto) {
         Member member = memberRepository.findMemberByNickname(checkDto.getNickname());
 
@@ -271,7 +267,6 @@ public class OneLineReviewService {
         return ResponseDto.success(oneLineReviewResponseDtoList);
     }
 
-    @Transactional
     // 6. 베스트 나의 한줄평 조회
     public ResponseDto<?> getBestReview() {
         List<OneLineReview> oneLineReviewList = oneLineReviewRepository.findTop5ByOrderByLikeNumDesc();

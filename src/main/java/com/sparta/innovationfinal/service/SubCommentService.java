@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class SubCommentService {
     private final PostRepository postRepository;
@@ -28,7 +29,6 @@ public class SubCommentService {
     private final SubCommentRepository subCommentRepository;
 
     //대댓글작성
-    @Transactional
     public ResponseDto<?> creatSubComment(SubCommentRequestDto requestDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -36,7 +36,6 @@ public class SubCommentService {
         if (null == request.getHeader("Authorization")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-        // 내용 미입력 예외처리
         if (null == requestDto.getSubCommentContent()) {
             return ResponseDto.fail(ErrorCode.INVALID_CONTENT);
         }
@@ -81,7 +80,6 @@ public class SubCommentService {
     }
 
     // 댓글 수정
-    @Transactional
     public ResponseDto<?> updateSubComment(Long id, SubCommentModifyRequestDto requestDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -123,7 +121,6 @@ public class SubCommentService {
     }
 
     // 대댓글 삭제
-    @Transactional
     public ResponseDto<?> deleteSubComment(Long id, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -151,7 +148,6 @@ public class SubCommentService {
     }
 
 
-    @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return null;

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MemberService {
 
@@ -37,10 +38,9 @@ public class MemberService {
     private final OneLineReviewRepository oneLineReviewRepository;
     private final FavoriteRepository favoriteRepository;
     private final MemberBadgeRepository memberBadgeRepository;
-    int badgeNum = 5;
+    private static final int badgeNum = 5;
 
     // 회원가입
-    @Transactional
     public ResponseDto<?> createMember(MemberRequestDto memberRequestDto) {
         if (isPresentEmail(memberRequestDto.getEmail()) != null) {
             return ResponseDto.fail(ErrorCode.DUPLICATE_EMAIL);
@@ -66,7 +66,7 @@ public class MemberService {
         );
     }
 
-    @Transactional
+    // 로그인
     public ResponseDto<?> login(LoginRequestDto requestDto, HttpServletResponse response) {
         Member member = isPresentEmail(requestDto.getEmail());
         if (member == null) {
@@ -91,7 +91,6 @@ public class MemberService {
     }
 
     // 이메일 중복체크
-    @Transactional
     public ResponseDto<?> checkEmailDuplicate(EmailCheckDto email) {
         if (isPresentEmail(email.getEmail()) != null) {
             return ResponseDto.fail(ErrorCode.DUPLICATE_EMAIL);
@@ -101,7 +100,6 @@ public class MemberService {
     }
 
     // 닉네임 중복체크
-    @Transactional
     public ResponseDto<?> checkNicknameDuplicate(NicknameCheckDto nickname) {
         if (isPresentNickname(nickname.getNickname()) != null) {
             return ResponseDto.fail(ErrorCode.DUPLICATE_NICKNAME);
@@ -111,7 +109,6 @@ public class MemberService {
     }
 
     //회원 탈퇴
-    @Transactional
     public ResponseDto<?> deleteMember(HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -130,7 +127,6 @@ public class MemberService {
     }
 
     //회원 정보 수정 - 닉네임
-    @Transactional
     public ResponseDto<?> modifyNickname(NicknameCheckDto checkDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -159,7 +155,8 @@ public class MemberService {
         return ResponseDto.success(checkDto.getNickname());
 
     }
-    @Transactional
+
+    // 나의 활동정보 조회
     public ResponseDto<?> getMyActiveInfo(HttpServletRequest request) {
 
         if (null == request.getHeader("Refresh-Token")) {
@@ -206,8 +203,6 @@ public class MemberService {
         }
 
 
-
-    @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return null;
@@ -225,13 +220,11 @@ public class MemberService {
         return (memberRepository.findByNickname(nickname)).orElse(null);
     }
 
-    @Transactional
     public void tokenToHeaders(TokenDto tokenDto, HttpServletResponse response) {
         response.addHeader("Authorization", "Bearer " + tokenDto.getAccessToken());
         response.addHeader("Refresh-Token", tokenDto.getRefreshToken());
     }
 
-    @Transactional
     public ResponseDto<?> checkMember(HttpServletRequest request) {
         if(null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.NULL_TOKEN);
@@ -248,6 +241,5 @@ public class MemberService {
 
         return ResponseDto.success(member);
     }
-
 
 }

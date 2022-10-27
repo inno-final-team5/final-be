@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PostLikeService {
     private final PostLikeRepository postLikeRepository;
@@ -28,15 +29,13 @@ public class PostLikeService {
     private final BadgeRepository badgeRepository;
     private final MemberBadgeRepository memberBadgeRepository;
 
-    // 게시글 좋아요
-    @Transactional
-    public ResponseDto<?> pushPostLike(Long id, HttpServletRequest request) {
+    private static final int MIN_BADGE_SIZE = 4;
 
-        // 로그인 예외처리
+    // 게시글 좋아요
+    public ResponseDto<?> pushPostLike(Long id, HttpServletRequest request) {
         if (null == request.getHeader(("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         if (null == request.getHeader(("Authorization"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
@@ -74,7 +73,7 @@ public class PostLikeService {
         List<PostLike> findPostLikeByMember = postLikeRepository.findPostLikeByMember(member);
         Badge badge = badgeRepository.findBadgeByBadgeName("공감의 달인");
         MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
-        if (findPostLikeByMember.size() > 4 && findMemberBadge == null) {
+        if (findPostLikeByMember.size() > MIN_BADGE_SIZE && findMemberBadge == null) {
             // 맴버배지 테이블에 저장
             MemberBadge memberBadge = MemberBadge.builder()
                     .member(member)
@@ -90,7 +89,6 @@ public class PostLikeService {
     }
 
     // 게시글 좋아요 취소
-    @Transactional
     public ResponseDto<?> postLikeCancel(Long id, HttpServletRequest request) {
         // 로그인 예외처리
         if (null == request.getHeader(("Refresh-Token"))) {
@@ -127,7 +125,6 @@ public class PostLikeService {
     }
 
     // 게시글 좋아요 조회
-    @Transactional
     public ResponseDto<?> getPostLike(Long id, HttpServletRequest request) {
         // 로그인 예외처리
         if (null == request.getHeader(("Refresh-Token"))) {
@@ -152,11 +149,9 @@ public class PostLikeService {
             return ResponseDto.success("false");
         }
         return ResponseDto.success("true");
-
     }
 
 
-    @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return null;

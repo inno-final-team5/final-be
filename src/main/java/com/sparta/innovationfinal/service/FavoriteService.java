@@ -24,22 +24,21 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class FavoriteService{
-
     private final TokenProvider tokenProvider;
     private final FavoriteRepository favoriteRepository;
     private final MovieRepository movieRepository;
     private final BadgeRepository badgeRepository;
     private final MemberBadgeRepository memberBadgeRepository;
 
-    // 즐겨찾기 추가
-    @Transactional
-    public ResponseDto<?> checkFavorite(FavoriteRequestDto favoriteRequestDto, HttpServletRequest request) {
+    private static final int MIN_BADGE_SIZE = 4;
 
+    // 즐겨찾기 추가
+    public ResponseDto<?> checkFavorite(FavoriteRequestDto favoriteRequestDto, HttpServletRequest request) {
         if (null == request.getHeader(("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         if (null == request.getHeader(("Authorization"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
@@ -52,8 +51,6 @@ public class FavoriteService{
         // 해당 영화 없음
         Movie findMovie = movieRepository.findMovieByMovieId(favoriteRequestDto.getMovieId());
         if (findMovie == null) {
-//            return ResponseDto.fail(ErrorCode.INVAILD_MOVIE);
-//        } else {
             Movie movie1 = Movie.builder()
                     .movieId(favoriteRequestDto.getMovieId())
                     .title(favoriteRequestDto.getTitle())
@@ -76,9 +73,7 @@ public class FavoriteService{
 
             favoriteRepository.save(favorite);
 
-            //즐겨찾기 수 카운트++
             Movie movie2 = movieRepository.findMovieById(movie.getId());
-
             List<Favorite> favorites = favoriteRepository.findAllByMovie(movie);
 
             movie2.update(favorites.size());
@@ -89,7 +84,8 @@ public class FavoriteService{
         List<Favorite> findFavoriteByMember = favoriteRepository.findFavoriteByMember(member);
         Badge badge = badgeRepository.findBadgeByBadgeName("영화 수집가");
         MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
-        if (findFavoriteByMember.size() > 4 && findMemberBadge == null) {
+
+        if (findFavoriteByMember.size() > MIN_BADGE_SIZE && findMemberBadge == null) {
             // 맴버배지 테이블에 저장
             MemberBadge memberBadge = MemberBadge.builder()
                     .member(member)

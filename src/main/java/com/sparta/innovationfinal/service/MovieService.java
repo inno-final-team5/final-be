@@ -12,13 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MovieService {
-
     private final MovieRepository movieRepository;
 
-
-    @Transactional
+    // 메인페이지 - 즐겨찾기 순 베스트 영화 10개 조회
     public ResponseDto<?> getBestFavorite() {
         List<Movie> movieList = movieRepository.findTop10ByOrderByFavoriteNumDesc();
         List<MovieFavoriteRankingDto> movieFavoriteRankingDto = new ArrayList<>();

@@ -11,7 +11,6 @@ import com.sparta.innovationfinal.entity.OneLineReview;
 import com.sparta.innovationfinal.entity.OneLineReviewLike;
 import com.sparta.innovationfinal.dto.ErrorCode;
 import com.sparta.innovationfinal.config.jwt.TokenProvider;
-import com.sparta.innovationfinal.repository.MovieRepository;
 import com.sparta.innovationfinal.repository.OneLineReviewLikeRepository;
 import com.sparta.innovationfinal.repository.OneLineReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,29 +24,27 @@ import java.util.List;
 
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class OneLineReviewLikeService {
     private final OneLineReviewLikeRepository oneLineReviewLikeRepository;
     private final TokenProvider tokenProvider;
     private final OneLineReviewRepository oneLineReviewRepository;
-    private final MovieRepository movieRepository;
     private final BadgeRepository badgeRepository;
     private final MemberBadgeRepository memberBadgeRepository;
 
-    @Transactional
-    // 1.한줄평 좋아요
+    private static final int MIN_BADGE_SIZE = 4;
+
+    // 한줄평 좋아요
     public ResponseDto<?> reviewLike(Long id, HttpServletRequest request) {
-    // 로그인 예외처리
         if(null == request.getHeader(("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         if (null == request.getHeader(("Authorization"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
 
         Member member = validateMember(request);
-         // 예외처리(유저를 찾을 수 없는 경우)
         if (member == null){
             return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
@@ -79,7 +76,7 @@ public class OneLineReviewLikeService {
         List<OneLineReviewLike> findOneLineReviewLike = oneLineReviewLikeRepository.findOneLineReviewLikeByMember(member);
         Badge badge = badgeRepository.findBadgeByBadgeName("넘치는 동료애");
         MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
-        if (findOneLineReviewLike.size() > 4 && findMemberBadge == null) {
+        if (findOneLineReviewLike.size() > MIN_BADGE_SIZE && findMemberBadge == null) {
             // 맴버배지 테이블에 저장
             MemberBadge memberBadge = MemberBadge.builder()
                     .member(member)
@@ -95,28 +92,23 @@ public class OneLineReviewLikeService {
                 .oneLineReviewContent(oneLineReview.getOneLineReviewContent())
                 .build());
     }
-    @Transactional
-    // 2.한줄평 좋아요 취소
+
+    // 한줄평 좋아요 취소
     public ResponseDto<?> reviewLikeCancel(Long id, HttpServletRequest request) {
-        // 로그인 예외처리
         if (null == request.getHeader(("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         if (null == request.getHeader(("Authorization"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
+
         Member member = validateMember(request);
-        // 예외처리(유저를 찾을 수 없는 경우)
         if (member == null){
             return ResponseDto.fail(ErrorCode.INVALID_MEMBER);
         }
 
         // 예외처리(한줄평이 없을 경우)
         OneLineReview oneLineReview = oneLineReviewRepository.findOneLineReviewById(id);
-//        if (oneLineReview == null){
-//            return ResponseDto.fail(ErrorCode.INVALID_REVIEW);
-//        }
 
         // 좋아요를 누르지 않았을 경우 오류 코드 반환 -> 눌렀을 경우 좋아요 삭제
         OneLineReviewLike findReviewLike = oneLineReviewLikeRepository.findOneLineReviewLikeByMemberAndOneLineReview(member, oneLineReview);
@@ -133,7 +125,6 @@ public class OneLineReviewLikeService {
         }
 
         // 나의 한줄평좋아요 전체 조회
-        @Transactional
         public ResponseDto<?> getAllReviewLike(HttpServletRequest request) {
 
             Member member = validateMember(request);
@@ -150,7 +141,6 @@ public class OneLineReviewLikeService {
             return ResponseDto.success(responseDtoList);
         }
 
-    @Transactional
     public Member validateMember(HttpServletRequest request){
         if(!tokenProvider.validateToken(request.getHeader("Refresh-Token"))){
     return null;

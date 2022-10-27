@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BadgeService {
     private final BadgeRepository badgeRepository;
@@ -24,9 +25,10 @@ public class BadgeService {
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
 
+    private static final int MAX_BADGE_SIZE = 7;
+
     
     // 전체 배지 조회
-    @Transactional
     public ResponseDto<?> getAllBadge() {
         List<Badge> badgeList = badgeRepository.findAll();
         List<BadgeResponseDto> allBadgeResponseDto = new ArrayList<>();
@@ -49,7 +51,6 @@ public class BadgeService {
     }
 
     // 마이페이지 나의 배지 조회
-    @Transactional
     public ResponseDto<?> getMyBadge(HttpServletRequest request) {
         Member member = validateMember(request);
         List<BadgeResponseDto> responseDtoList = new ArrayList<>();
@@ -66,28 +67,22 @@ public class BadgeService {
             );
         }
 
-
         // 모든배지 획득(배지 개수가 7개)일 시 배지 부여(8번배지)
         Badge badge = badgeRepository.findBadgeByBadgeName("배지 마스터");
         MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
-        if (memberBadges.size() == 7 && findMemberBadge == null) {
-            // 맴버배지 테이블에 저장
+        if (memberBadges.size() == MAX_BADGE_SIZE && findMemberBadge == null) {
             MemberBadge memberBadge = MemberBadge.builder()
                     .member(member)
                     .badge(badge)
                     .build();
 
             memberBadgeRepository.save(memberBadge);
-
         }
-
         return ResponseDto.success(responseDtoList);
     }
 
     // 대표 배지 설정
-    @Transactional
     public ResponseDto<?> addMainBadge(Long id, HttpServletRequest request) {
-        // 로그인 예외처리
         if (null == request.getHeader(("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
@@ -118,7 +113,6 @@ public class BadgeService {
     }
 
     // 대표 배지 취소
-    @Transactional
     public ResponseDto<?> cancelMainBadge(HttpServletRequest request) {
         // 로그인 예외처리
         if (null == request.getHeader(("Refresh-Token"))) {
@@ -141,8 +135,6 @@ public class BadgeService {
     }
 
     // 대표 배지 조회
-
-    @Transactional
     public ResponseDto<?> getMainBadge(HttpServletRequest request) {
         if (null == request.getHeader(("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -170,7 +162,6 @@ public class BadgeService {
                 .build());
     }
 
-    @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return null;

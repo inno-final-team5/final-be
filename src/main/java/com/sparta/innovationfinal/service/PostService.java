@@ -16,6 +16,7 @@ import java.util.Optional;
 
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PostService {
 
@@ -27,8 +28,9 @@ public class PostService {
     private final SubCommentRepository subCommentRepository;
     private final TokenProvider tokenProvider;
 
+    private static final int MIN_BADGE_SIZE = 4;
+
     // 게시글 생성
-    @Transactional
     public ResponseDto<?> createPost(PostRequestDto requestDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -68,7 +70,7 @@ public class PostService {
         List<Post> findPost = postRepository.findPostByMember(member);
         Badge badge = badgeRepository.findBadgeByBadgeName("커뮤니티 인싸");
         MemberBadge findMemberBadge = memberBadgeRepository.findMemberBadgeByMemberAndBadge(member, badge);
-        if (findPost.size() > 4 && findMemberBadge == null) {
+        if (findPost.size() > MIN_BADGE_SIZE && findMemberBadge == null) {
             // 맴버배지 테이블에 저장
             MemberBadge memberBadge = MemberBadge.builder()
                     .member(member)
@@ -95,11 +97,8 @@ public class PostService {
     }
 
     // 게시글 전체 조회
-    @Transactional
     public ResponseDto<?> getAllPost() {
         List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-//        Post post = postRepository.
-//        List<Comment> commentList = commentRepository.findAllByPost(postList);
         List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
         for (Post post : postList) {
             allPostResponseDtos.add(
@@ -119,7 +118,6 @@ public class PostService {
     }
 
     // 커뮤니티게시판 영화 카테고리 전체 조회
-    @Transactional
     public ResponseDto<?> getAllMoviePost() {
         List<Post> postList = postRepository.findPostByPostCategoryOrderByCreatedAtDesc("영화");
         List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
@@ -141,7 +139,6 @@ public class PostService {
     }
 
     // 커뮤니티게시판 영화관 카테고리 전체 조회
-    @Transactional
     public ResponseDto<?> getAllCinemasPost() {
         List<Post> postList = postRepository.findPostByPostCategoryOrderByCreatedAtDesc("영화관");
         List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
@@ -164,7 +161,6 @@ public class PostService {
 
 
     // 메인페이지 최신 게시글 10개 조회
-    @Transactional
     public ResponseDto<?> getRecentPost() {
         List<Post> postList = postRepository.findTop5ByOrderByCreatedAtDesc();
         List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
@@ -248,24 +244,19 @@ public class PostService {
     }
 
     // 게시글 수정
-    @Transactional
     public ResponseDto<?> updatePost(Long id, PostRequestDto requestDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         if (null == request.getHeader("Authorization")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
         }
-
         if (null == requestDto.getPostCategory()) {
             return ResponseDto.fail(ErrorCode.INVALID_CATEGORY);
         }
-
         if (null == requestDto.getPostContent()) {
             return ResponseDto.fail(ErrorCode.INVALID_CONTENT);
         }
-
         if (null == requestDto.getPostTitle()) {
             return ResponseDto.fail(ErrorCode.INVALID_TITLE);
         }
@@ -342,48 +333,50 @@ public class PostService {
         return ResponseDto.success(responseDtoList);
     }
 
-      public ResponseDto<?> PostSearch(String type, String keyword) {
-          if (type.equals("postTitle")) {
-              List<Post> postList = postRepository.findByPostTitleContaining(keyword);
-              List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
-              for (Post post : postList) {
-                  allPostResponseDtos.add(
-                          AllPostResponseDto.builder()
-                                  .postId(post.getId())
-                                  .nickname(post.getMember().getNickname())
-                                  .badgeId(post.getMember().getMainBadge())
-                                  .postTitle(post.getPostTitle())
-                                  .postContent(post.getPostContent())
-                                  .postCategory(post.getPostCategory())
-                                  .commentNum(post.getCommentList().size())
-                                  .likeNum(post.getLikeNum())
-                                  .createdAt(String.valueOf(post.getCreatedAt()))
-                                  .build());
-              } return ResponseDto.success(allPostResponseDtos);
-          } else if (type.equals("postContent")) {
-              List<Post> postList = postRepository.findByPostContentContaining(keyword);
-              List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
-              for (Post post : postList) {
-                  allPostResponseDtos.add(
-                          AllPostResponseDto.builder()
-                                  .postId(post.getId())
-                                  .nickname(post.getMember().getNickname())
-                                  .badgeId(post.getMember().getMainBadge())
-                                  .postTitle(post.getPostTitle())
-                                  .postContent(post.getPostContent())
-                                  .postCategory(post.getPostCategory())
-                                  .commentNum(post.getCommentList().size())
-                                  .likeNum(post.getLikeNum())
-                                  .createdAt(String.valueOf(post.getCreatedAt()))
-                                  .build());
-              } return ResponseDto.success(allPostResponseDtos);
-          } else {
-              return ResponseDto.fail(ErrorCode.BAD_RERUEST);
-          }
-      }
+    // 커뮤니티 게시글 조회
+    public ResponseDto<?> PostSearch(String type, String keyword) {
+        if (type.equals("postTitle")) {
+            List<Post> postList = postRepository.findByPostTitleContaining(keyword);
+            List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
+            for (Post post : postList) {
+                allPostResponseDtos.add(
+                        AllPostResponseDto.builder()
+                                .postId(post.getId())
+                                .nickname(post.getMember().getNickname())
+                                .badgeId(post.getMember().getMainBadge())
+                                .postTitle(post.getPostTitle())
+                                .postContent(post.getPostContent())
+                                .postCategory(post.getPostCategory())
+                                .commentNum(post.getCommentList().size())
+                                .likeNum(post.getLikeNum())
+                                .createdAt(String.valueOf(post.getCreatedAt()))
+                                .build());
+            }
+            return ResponseDto.success(allPostResponseDtos);
+        } else if (type.equals("postContent")) {
+            List<Post> postList = postRepository.findByPostContentContaining(keyword);
+            List<AllPostResponseDto> allPostResponseDtos = new ArrayList<>();
+            for (Post post : postList) {
+                allPostResponseDtos.add(
+                        AllPostResponseDto.builder()
+                                .postId(post.getId())
+                                .nickname(post.getMember().getNickname())
+                                .badgeId(post.getMember().getMainBadge())
+                                .postTitle(post.getPostTitle())
+                                .postContent(post.getPostContent())
+                                .postCategory(post.getPostCategory())
+                                .commentNum(post.getCommentList().size())
+                                .likeNum(post.getLikeNum())
+                                .createdAt(String.valueOf(post.getCreatedAt()))
+                                .build());
+            }
+            return ResponseDto.success(allPostResponseDtos);
+        } else {
+            return ResponseDto.fail(ErrorCode.BAD_RERUEST);
+        }
+    }
 
 
-    @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return null;

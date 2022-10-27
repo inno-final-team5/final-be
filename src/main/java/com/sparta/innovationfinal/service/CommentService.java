@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CommentService {
     private final PostRepository postRepository;
@@ -24,7 +25,6 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     // 댓글 작성
-    @Transactional
     public ResponseDto<?> creatComment(Long id, CommentRequestDto requestDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -66,11 +66,9 @@ public class CommentService {
                         .modifiedAt(String.valueOf(comment.getModifiedAt()))
                         .build()
         );
-
     }
 
     //댓글 수정
-    @Transactional
     public ResponseDto<?> updateComment(Long id, CommentRequestDto requestDto, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -109,11 +107,9 @@ public class CommentService {
                         .modifiedAt(String.valueOf(comment.getModifiedAt()))
                         .build()
         );
-
     }
 
     // 댓글 삭제
-    @Transactional
     public ResponseDto<?> deleteComment(Long id, HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail(ErrorCode.MEMBER_NOT_FOUND);
@@ -139,7 +135,6 @@ public class CommentService {
 
     }
 
-    @Transactional
     public Member validateMember(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return null;

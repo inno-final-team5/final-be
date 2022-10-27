@@ -22,9 +22,6 @@ public class MovieSearchApiService {
 
     private static final String api_key = "945d4a8051fd9cafc9c1a4bc1e8fcc36";
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     // 전체 조회
     public MovieAllResponseDto movieAllSearch(int pageNum) throws Exception {
 
@@ -36,7 +33,6 @@ public class MovieSearchApiService {
                     "https://api.themoviedb.org/3/movie/popular?api_key=" + api_key + "&language=ko&page=" + pageNum + "&region=KR",
                     HttpMethod.GET, httpEntity, String.class);
 
-
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(responseEntity.getBody().toString());
 
@@ -46,7 +42,7 @@ public class MovieSearchApiService {
         return movieAllResponseDto;
     }
 
-    // 상세조회
+    // 상세 조회
     public MovieDetailResponseDto movieDetailSearch(int movieId) throws Exception{
         HttpHeaders httpHeaders = makeHeaders();
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
@@ -58,18 +54,9 @@ public class MovieSearchApiService {
 
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(responseEntity.getBody().toString());
-//        JSONArray jsonArray = (JSONArray)jsonObject.get("genres");
-//
-//        if(jsonArray.size() > 0) {
-//            for(int i = 0; i <jsonArray.size(); i++) {
-//                jsonObject = (JSONObject)jsonArray.get(i);
-//                System.out.println((String)jsonObject.get("name"));
-//            }
-//        }
 
         Gson gson = new Gson();
         MovieDetailResponseDto movieDetailResponseDto = gson.fromJson(jsonObject.toString(), MovieDetailResponseDto.class);
-
 
         return movieDetailResponseDto;
     }
@@ -118,7 +105,7 @@ public class MovieSearchApiService {
     }
 
     private static HttpHeaders makeHeaders() {
-        // SSL 버전 맞지 않는 것 때문에 추가 해줌
+        // SSL 버전 맞지 않는 것 때문에 추가
         System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,SSLv3");
         //헤더 설정
         HttpHeaders httpHeaders = new HttpHeaders();
