@@ -1,25 +1,30 @@
-package com.sparta.innovationfinal.OAuth;
+package com.sparta.innovationfinal.service;
 
+import com.sparta.innovationfinal.dto.Authority;
 import com.sparta.innovationfinal.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
+
     private Member member;
-
-    public Member getAccount() {
-        return this.member;
-    }
-
-    public void setAccount(Member member) {
-        this.member = member;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(Authority.ROLE_MEMBER.toString());
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        return authorities;
     }
 
     @Override
@@ -51,4 +56,9 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
+    public void setAccount(Member kakaoUser) {
+    }
+
+
 }

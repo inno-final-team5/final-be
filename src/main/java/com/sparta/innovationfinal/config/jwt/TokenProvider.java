@@ -1,13 +1,14 @@
-package com.sparta.innovationfinal.jwt;
+package com.sparta.innovationfinal.config.jwt;
 
 
+import com.sparta.innovationfinal.dto.Authority;
 import com.sparta.innovationfinal.dto.TokenDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.entity.RefreshToken;
-import com.sparta.innovationfinal.exception.ErrorCode;
+import com.sparta.innovationfinal.dto.ErrorCode;
 import com.sparta.innovationfinal.repository.RefreshTokenRepository;
-import com.sparta.innovationfinal.shared.Authority;
+import com.sparta.innovationfinal.service.UserDetailsImpl;
 import io.jsonwebtoken.*;
 
 import lombok.extern.slf4j.Slf4j;

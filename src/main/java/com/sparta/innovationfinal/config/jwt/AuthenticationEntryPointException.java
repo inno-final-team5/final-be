@@ -1,4 +1,4 @@
-package com.sparta.innovationfinal.jwt;
+package com.sparta.innovationfinal.config.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;

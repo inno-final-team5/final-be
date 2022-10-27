@@ -1,4 +1,4 @@
-package com.sparta.innovationfinal.OAuth;
+package com.sparta.innovationfinal.dto.responseDto;
 
 import com.sparta.innovationfinal.dto.TokenDto;
 import com.sparta.innovationfinal.entity.Member;

@@ -1,4 +1,4 @@
-package com.sparta.innovationfinal.OAuth;
+package com.sparta.innovationfinal.dto.responseDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

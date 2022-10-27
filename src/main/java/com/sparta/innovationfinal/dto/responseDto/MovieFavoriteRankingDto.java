@@ -1,4 +1,4 @@
-package com.sparta.innovationfinal.movieApi.dto;
+package com.sparta.innovationfinal.dto.responseDto;
 
 import lombok.*;
 

@@ -1,8 +1,8 @@
 package com.sparta.innovationfinal.config;
 
-import com.sparta.innovationfinal.jwt.JwtAuthFilter;
-import com.sparta.innovationfinal.jwt.TokenProvider;
-import com.sparta.innovationfinal.jwt.UserDetailsServiceImpl;
+import com.sparta.innovationfinal.config.jwt.JwtAuthFilter;
+import com.sparta.innovationfinal.config.jwt.TokenProvider;
+import com.sparta.innovationfinal.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

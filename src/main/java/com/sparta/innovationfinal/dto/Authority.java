@@ -1,4 +1,4 @@
-package com.sparta.innovationfinal.shared;
+package com.sparta.innovationfinal.dto;
 
 public enum Authority {
     ROLE_MEMBER,

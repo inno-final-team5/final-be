@@ -1,6 +1,7 @@
-package com.sparta.innovationfinal.jwt;
+package com.sparta.innovationfinal.config.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.innovationfinal.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

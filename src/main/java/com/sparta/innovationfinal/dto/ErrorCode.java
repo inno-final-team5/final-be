@@ -1,4 +1,4 @@
-package com.sparta.innovationfinal.exception;
+package com.sparta.innovationfinal.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,15 +2,14 @@ package com.sparta.innovationfinal.service;
 
 import com.sparta.innovationfinal.dto.requestDto.SubCommentModifyRequestDto;
 import com.sparta.innovationfinal.dto.requestDto.SubCommentRequestDto;
-import com.sparta.innovationfinal.dto.responseDto.CommentResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.ResponseDto;
 import com.sparta.innovationfinal.dto.responseDto.SubCommentResponseDto;
 import com.sparta.innovationfinal.entity.Comment;
 import com.sparta.innovationfinal.entity.Member;
 import com.sparta.innovationfinal.entity.Post;
 import com.sparta.innovationfinal.entity.SubComment;
-import com.sparta.innovationfinal.exception.ErrorCode;
-import com.sparta.innovationfinal.jwt.TokenProvider;
+import com.sparta.innovationfinal.dto.ErrorCode;
+import com.sparta.innovationfinal.config.jwt.TokenProvider;
 import com.sparta.innovationfinal.repository.CommentRepository;
 import com.sparta.innovationfinal.repository.PostRepository;
 import com.sparta.innovationfinal.repository.SubCommentRepository;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
