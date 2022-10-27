@@ -38,9 +38,9 @@ public class KakaoService {
     private final MemberRepository memberRepository;
     private final TokenProvider jwtTokenProvider;
 
+    //로그인 구현 시 필요한 정보
     @Value("${kakao.client-id}")
     private String KakaoClientId;
-
     @Value("${kakao.redirect-uri}")
     private String KakaoRedirectUri;
 
