@@ -372,7 +372,7 @@ public class PostService {
             }
             return ResponseDto.success(allPostResponseDtos);
         } else {
-            return ResponseDto.fail(ErrorCode.BAD_RERUEST);
+            return ResponseDto.fail(ErrorCode.BAD_REQUEST);
         }
     }
 

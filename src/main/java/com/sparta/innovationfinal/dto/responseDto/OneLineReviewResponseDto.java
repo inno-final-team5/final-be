@@ -1,6 +1,5 @@
 package com.sparta.innovationfinal.dto.responseDto;
 
-import com.sparta.innovationfinal.entity.Movie;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

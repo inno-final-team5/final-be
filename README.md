@@ -112,9 +112,12 @@ BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](h
     - [x] 나의 즐겨찾기, 게시글, 한줄평, 획득 뱃지 확인
     - [x] 뱃지별 획득률 확인
     - [x] 닉네임 수정, 회원탈퇴 기능
-      
+
+<div align="center">   
+
 ## 🎈 <b>Trouble Shooting</b> 🎈
 <br>
+</div>
 
 - **CI/CD 적용**
    - 문제점 : 협업 시 코드배포를 해야하는 상황이 발생함. filezila를 통한 수동배포와 배포 이후 에러가 확인되어 재배포하는 일이 잦아짐에 따라 배포에 많은 시간이 소요됨

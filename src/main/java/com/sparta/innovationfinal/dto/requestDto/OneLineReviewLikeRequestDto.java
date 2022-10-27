@@ -10,9 +10,5 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OneLineReviewLikeRequestDto {
-//    private Long movieId;
-//    private String title;
-//    private String poster_path;
     private Long OneLineReviewId;
-
 }
