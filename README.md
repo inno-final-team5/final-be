@@ -3,26 +3,26 @@
 
 # 🎬 방구석평론가 🎬
 
-> 누구나 평론가가 되어 영화에 대한 정보를 마음껏 공유하는 **영화 커뮤니티** 입니다.
+### 누구나 평론가가 되어 영화에 대한 정보를 마음껏 공유하는 **영화 커뮤니티** 입니다.
 
 <br>
 
 ## 🎥<b> 프로젝트 주소 </b>
 
-[방구석평론가 사이트](https://www.moviecritic.site/)
+### [사이트 구경하러 가기](https://www.moviecritic.site/)
 
-[팀 노션 주소](https://www.notion.so/woongsnote/aacf5be13a1242b29f4e3d215f0f516f)
+### [팀 노션 구경하러 가기](https://www.notion.so/woongsnote/aacf5be13a1242b29f4e3d215f0f516f)
 
-[API 설계](https://www.notion.so/woongsnote/API-9b2ab4a006184615bcd961851fdfdb99)
+### [ERD 보러가기](https://www.notion.so/woongsnote/ERD-3ccf85a44ac0457cb70fe08e34261f19)
 
-[ERD](https://www.notion.so/woongsnote/ERD-3ccf85a44ac0457cb70fe08e34261f19)
+### [발표 영상 보러가기](https://www.notion.so/woongsnote/ERD-3ccf85a44ac0457cb70fe08e34261f19)
 
 
 <br>
 
 ## 📆 <b>프로젝트 기간</b>
 
-### 2022.09.16 - 2022.10.28
+### 2022.09.16 - 2022.10.28 (6주)
 
 <br>
 
@@ -41,7 +41,7 @@ FE &nbsp; - &nbsp; [문지웅](https://github.com/woongsnote) &nbsp; [유민아]
 
 BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](https://github.com/Jei-you) &nbsp; [정수민](https://github.com/jsm6943)
 
-## ⚙️ <b>Tech Stack</b> 🛠
+## ⚙️ <b>Tech Stack</b>
 
 ### 🛠 <b>FrontEnd</b> 🛠 
 <br>
@@ -68,11 +68,9 @@ BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](h
 <img style="margin:5px; border: 2px solid white; border-radius: 20px" src="https://img.shields.io/badge/AWS-232f3e?style=flat-square&logo=amazon&logoColor=white"/>
 
 
-
+## <b>📚 주요 기능</b>
 
 </div>
-
-## <b>📚 주요 기능</b>
 <div align="left">
 <br>
 
@@ -114,6 +112,7 @@ BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](h
     - [x] 닉네임 수정, 회원탈퇴 기능
 
 <div align="center">   
+<br>
 
 ## 🎈 <b>Trouble Shooting</b> 🎈
 <br>
