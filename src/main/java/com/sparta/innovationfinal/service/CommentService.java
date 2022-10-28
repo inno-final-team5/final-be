@@ -91,9 +91,9 @@ public class CommentService {
         if (comment == null) {
             return ResponseDto.fail(ErrorCode.INVALID_COMMENT);
         }
-        if (!comment.getMember().validateMember(member)) {
-            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-        }
+//        if (!comment.getMember().validateMember(member)) {
+//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+//        }
 
         comment.update(requestDto);
 
@@ -127,9 +127,9 @@ public class CommentService {
         if (comment == null) {
             return ResponseDto.fail(ErrorCode.INVALID_COMMENT);
         }
-        if (!comment.getMember().validateMember(member)) {
-            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-        }
+//        if (!comment.getMember().validateMember(member)) {
+//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+//        }
         commentRepository.delete(comment);
         return ResponseDto.success("success delete");
 

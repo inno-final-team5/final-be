@@ -118,9 +118,9 @@ public class FavoriteService{
         if (favorite == null) {
             return ResponseDto.fail(ErrorCode.INVALID_MOVIE);
         }
-        if (!favorite.getMember().validateMember(member)) {
-            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-        }
+//        if (!favorite.getMember().validateMember(member)) {
+//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+//        }
         favoriteRepository.delete(favorite);
 
         //즐겨찾기 수 카운트 --

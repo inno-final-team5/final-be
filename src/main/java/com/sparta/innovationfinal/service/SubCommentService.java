@@ -102,9 +102,9 @@ public class SubCommentService {
         if (subComment == null) {
             return ResponseDto.fail(ErrorCode.INVALID_SUBCOMMENT);
         }
-        if (!subComment.getMember().validateMember(member)) {
-            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-        }
+//        if (!subComment.getMember().validateMember(member)) {
+//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+//        }
 
         subComment.update(requestDto);
 
@@ -139,9 +139,9 @@ public class SubCommentService {
         if (subComment == null) {
             return ResponseDto.fail(ErrorCode.INVALID_SUBCOMMENT);
         }
-        if (!subComment.getMember().validateMember(member)) {
-            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-        }
+//        if (!subComment.getMember().validateMember(member)) {
+//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+//        }
 
         subCommentRepository.delete(subComment);
         return ResponseDto.success("success delete");

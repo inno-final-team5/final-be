@@ -147,9 +147,9 @@ public class OneLineReviewService {
 
         // 예외처리(작성자가 아닌 경우)
         Member member = validateMember(request);
-        if (!oneLineReview.getMember().validateMember(member)) {
-            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-        }
+//        if (!oneLineReview.getMember().validateMember(member)) {
+//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+//        }
 
         // 한줄평 삭제 로직
         oneLineReviewRepository.delete(oneLineReview);
@@ -171,13 +171,13 @@ public class OneLineReviewService {
 
         // 예외처리(작성자가 아닌 경우)
         Member member = validateMember(request);
-        if (member == null) {
-            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-        }
+//        if (member == null) {
+//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+//        }
         OneLineReview oneLineReview = isPresentOneLineReview(movieId);
-        if(!oneLineReview.getMember().validateMember(member)){
-            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-        }
+//        if(!oneLineReview.getMember().validateMember(member)){
+//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
+//        }
 
         // 한줄평 수정 로직
         oneLineReview.update(requestDto);
