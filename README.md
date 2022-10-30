@@ -15,7 +15,7 @@
 
 ### [ERD 보러가기](https://www.notion.so/woongsnote/ERD-3ccf85a44ac0457cb70fe08e34261f19)
 
-### [발표 영상 보러가기](https://www.notion.so/woongsnote/ERD-3ccf85a44ac0457cb70fe08e34261f19)
+### [발표 영상 보러가기](https://www.youtube.com/watch?v=sHVIiqPfBVU)
 
 
 <br>
@@ -30,16 +30,16 @@
 
 <br>
 
-[Front-end](https://github.com/inno-final-team5/final-fe)
+### <b>[Front-end](https://github.com/inno-final-team5/final-fe)</b>
 
-[Back-end](https://github.com/inno-final-team5/final-be)
+### <b>[Back-end](https://github.com/inno-final-team5/final-be)</b>
 
 <br>
 
 ## 👩🏻‍💻 <b>Contributors</b> 🧑🏻‍💻
-FE &nbsp; - &nbsp; [문지웅](https://github.com/woongsnote) &nbsp; [유민아](https://github.com/maydec2298) &nbsp; [전혜림](https://github.com/hyelim-JEON) &nbsp; [장소정](https://github.com/sydneyyyyyyy)
+### <b>FE &nbsp; - &nbsp; [문지웅](https://github.com/woongsnote) &nbsp; [유민아](https://github.com/maydec2298) &nbsp; [전혜림](https://github.com/hyelim-JEON) &nbsp; [장소정](https://github.com/sydneyyyyyyy)</b>
 
-BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](https://github.com/Jei-you) &nbsp; [정수민](https://github.com/jsm6943)
+### <b>BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](https://github.com/Jei-you) &nbsp; [정수민](https://github.com/jsm6943)</b>
 
 <br>
 
