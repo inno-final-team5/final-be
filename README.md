@@ -28,8 +28,6 @@
 
 ## 💻 <b>github</b>  💻
 
-<br>
-
 ### <b>[Front-end](https://github.com/inno-final-team5/final-fe)</b>
 
 ### <b>[Back-end](https://github.com/inno-final-team5/final-be)</b>
@@ -37,6 +35,7 @@
 <br>
 
 ## 👩🏻‍💻 <b>Contributors</b> 🧑🏻‍💻
+
 ### <b>FE &nbsp; - &nbsp; [문지웅](https://github.com/woongsnote) &nbsp; [유민아](https://github.com/maydec2298) &nbsp; [전혜림](https://github.com/hyelim-JEON) &nbsp; [장소정](https://github.com/sydneyyyyyyy)</b>
 
 ### <b>BE &nbsp; - &nbsp; [전선향](https://github.com/petal416) &nbsp; [유연정](https://github.com/Jei-you) &nbsp; [정수민](https://github.com/jsm6943)</b>
@@ -159,7 +158,7 @@
 <br />
    
 - 유저 피드백 정리 [Notion](https://www.notion.so/woongsnote/e55f501796ed44c58d6fb21230d6c815)
-- 유저 피드백 기간 : 22년 10월 17일 ~ 22년 10월 23일
+- 유저 피드백 기간 : 22년 10월 17일 ~ 22년 10월 23일 (7일)
    
 <br />
    
