@@ -151,11 +151,8 @@
    - 해결법 : memberRepository에서 member를 찾아서 찾은 member에 update를 적용함
 
 <br>
-</div>
-<div align="center">   
-<br>
 
-
+<br />
 
 ## 🧐 <b>유저 피드백 및 개선사항</b>
    
@@ -177,4 +174,6 @@
 
 
 </div>
+
+
 
