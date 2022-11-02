@@ -21,7 +21,6 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final PostLikeRepository postLikeRepository;
     private final BadgeRepository badgeRepository;
     private final MemberBadgeRepository memberBadgeRepository;
     private final CommentRepository commentRepository;
@@ -262,9 +261,7 @@ public class PostService {
         if (null == post) {
             return ResponseDto.fail(ErrorCode.INVALID_POST);
         }
-//        if (!post.getMember().validateMember(member)) {
-//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-//        }
+
         post.update(requestDto);
         return ResponseDto.success(
                 PostResponseDto.builder()
@@ -294,9 +291,6 @@ public class PostService {
             return ResponseDto.fail(ErrorCode.INVALID_POST);
         }
         Member member = validateMember(request);
-//        if (!post.getMember().validateMember(member)) {
-//            return ResponseDto.fail(ErrorCode.NOT_AUTHOR);
-//        }
 
         postRepository.delete(post);
         return ResponseDto.success("success delete");
